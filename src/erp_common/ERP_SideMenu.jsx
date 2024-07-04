@@ -75,6 +75,27 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
 
+                        <li className="nav-small-cap">
+                            <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span className="hide-menu">유지 | 보수</span>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/items/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">아이템 리스트</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/warehouse/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">창고 리스트</span>
+                            </a>
+                        </li>
+
                         
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -89,11 +110,11 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/client/list" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-alert-circle"></i>
                                 </span>
-                                <span className="hide-menu">Alerts</span>
+                                <span className="hide-menu">고객 리스트</span>
                             </a>
                         </li>
                         <li className="sidebar-item">
