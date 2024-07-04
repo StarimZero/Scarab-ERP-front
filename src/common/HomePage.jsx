@@ -11,10 +11,10 @@ const HomePage = () => {
   };
 
   return (
-    <div className='container mt-5'>
+    <div className='web-container mt-5'>
       
       
-      <div className='image-wrapper'>
+      <div className='web-image-wrapper'>
         <img
           src="/images/menupage/co2.png"
           alt="Company Page"
