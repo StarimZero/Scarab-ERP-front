@@ -5,6 +5,10 @@ import '../common/assets/erp/css/styles.min.css';
 import ERP_SideMenu from '../erp_common/ERP_SideMenu';
 import ERP_TopMenu from '../erp_common/ERP_TopMenu';
 import AttendancePage from '../components/jun/AttendancePage';
+import SalesRouter from './starim/SalesRouter';
+import ItemsRouter from './starim/ItemsRouter';
+import WareHouseRouter from './starim/WareHouseRouter';
+import ClientRouter from './starim/ClientRouter';
 
 
 const ERP_RouterPage = () => {
@@ -19,6 +23,10 @@ const ERP_RouterPage = () => {
                     <Routes>
                         <Route path='' element={<ERP_HomePage />} />
                         <Route path='member/attendance' element={<AttendancePage />} />
+                        <Route path='/sales/*' element={<SalesRouter/>}/>
+                        <Route path='/items/*' element={<ItemsRouter/>}/>
+                        <Route path='/client/*' element={<ClientRouter/>}/>
+                        <Route path='/warehouse/*' element={<WareHouseRouter/>}/>
                     </Routes>
                 </div>
             </div>
