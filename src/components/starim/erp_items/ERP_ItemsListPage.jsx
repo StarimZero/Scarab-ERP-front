@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Col, Row, Table } from 'react-bootstrap'
+import { Button, Col, Row, Table } from 'react-bootstrap'
 
 const ERP_ItemsListPage = () => {
 
@@ -19,11 +19,16 @@ const ERP_ItemsListPage = () => {
     },[])
 
 
+    const onClickWareItemsInsert = (e) => {
+        window.location.href="/erp/items/insert";
+    }
+
 
   return (
-    <Row>
+    <Row className='justify-content-center'>
         <h1>아이템리스트</h1>
-        <Col>
+        <div><Button onClick={onClickWareItemsInsert}>아이템등록</Button></div>
+        <Col lg={5}>
             <Table>
                 <thead>
                     <tr>

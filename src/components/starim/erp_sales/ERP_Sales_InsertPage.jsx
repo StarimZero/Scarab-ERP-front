@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Col, Container, Form, InputGroup, Row, Table } from 'react-bootstrap'
+import { Button, Card, Col,  Form,  Row, Table } from 'react-bootstrap'
 
 const ERP_Sales_InsertPage = () => {
   return (

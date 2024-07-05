@@ -6,7 +6,6 @@ const ERP_Sales_ListPage = () => {
 
 
     const onClickSaleInsert = (e) => {
-        e.preventDefault();
         window.location.href="/erp/sales/insert";
     }
 
