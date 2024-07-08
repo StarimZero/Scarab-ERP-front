@@ -9,13 +9,21 @@ const AddressModal = ({setForm, form}) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+  
 
-    const onComplete =(e) => {
-        console.log(e)
-        const address=e.buildingName ? `${e.address}(${e.buildingName})` : e.address;
-        setForm({...form, client_address : address});
-        handleClose();
-    }
+    const onComplete = (e) => {
+      try {
+          // console.log(e);
+          const realaddress = e.buildingName ? `${e.address} (${e.buildingName})` : e.address;
+          setForm({ ...form, visitor_address1: realaddress });
+          handleClose();
+          // console.log(realaddress);
+      } catch (error) {
+          console.error("Error in onComplete function:", error);
+      }
+  }
+  
+  
 
   return  (
 
