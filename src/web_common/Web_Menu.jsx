@@ -19,6 +19,14 @@ const Web_Menu = () => {
         setShowDropdown(false);
     };
 
+    const onClickLogout = (e) => {
+        e.preventDefault();
+        if(window.confirm("정말로 로그아웃하실래요?")){
+          sessionStorage.clear();
+          window.location.reload();
+        }
+    }    
+
     return (
         <div>
             <div className='my-5'>
@@ -122,8 +130,14 @@ const Web_Menu = () => {
                         <a className="web-nav-link web-nav-link-custom" href="#"><IoPersonCircleOutline size={32} /></a>
                         {showDropdownLog && (
                             <div className="web-dropdown1-menu">
-                                <a className="web-dropdown1-item" href="/web/login">로그인</a>
-                                <a className="web-dropdown1-item" href="/web/mypage">마이페이지</a>
+                                {sessionStorage.getItem("visitor_id") ?
+                                    <>
+                                    <a className="web-dropdown1-item" href="#" onClick={onClickLogout}>로그아웃</a>
+                                    <a className="web-dropdown1-item" href="/web/visitor/mypage">마이페이지</a>
+                                    </>
+                                    :                                
+                                    <a className="web-dropdown1-item" href="/web/visitor/login">로그인</a>
+                            }
                             </div>
                         )}
                     </div>
