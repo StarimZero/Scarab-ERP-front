@@ -12,12 +12,18 @@ const ERP_WareHouseReadPage = ({warehouse}) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        setWarehouse_address(warehouse.warehouse_address);
+        setWarehouse_name(warehouse.warehouse_name);
+    }
 
     const onClickWareHouseUpdate = async () => {
         if(!window.confirm(`${warehouse_id}의 창고정보를 수정하시겠습니까?`)) return;
         await axios.put(`/erp/warehouse`, {warehouse_id, warehouse_name, warehouse_address})
         alert("수정완료")
+        handleClose();
+        window.location.reload();
     }
 
 
