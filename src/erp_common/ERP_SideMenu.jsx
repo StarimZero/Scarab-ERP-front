@@ -35,7 +35,7 @@ const ERP_SideMenu = () => {
                             <span className="hide-menu">인사관리</span>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="/erp/member/attendance" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/attendance/list" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-article"></i>
                                 </span>
@@ -148,7 +148,7 @@ const ERP_SideMenu = () => {
 
 
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/member/login" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-login"></i>
                                 </span>
@@ -156,7 +156,7 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/member/register" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-user-plus"></i>
                                 </span>
