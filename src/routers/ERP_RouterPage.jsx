@@ -8,8 +8,10 @@ import SalesRouter from './starim/SalesRouter';
 import ItemsRouter from './starim/ItemsRouter';
 import WareHouseRouter from './starim/WareHouseRouter';
 import ClientRouter from './starim/ClientRouter';
+import MessageRouter from './bj/MessageRouter';
 import AttendanceRouter from './jun/AttendanceRouter';
 import MemberRouter from './jun/MemberRouter';
+
 
 
 const ERP_RouterPage = () => {
@@ -29,6 +31,7 @@ const ERP_RouterPage = () => {
                         <Route path='/items/*' element={<ItemsRouter/>}/>
                         <Route path='/client/*' element={<ClientRouter/>}/>
                         <Route path='/warehouse/*' element={<WareHouseRouter/>}/>
+                        <Route path='/message/*' element={<MessageRouter/>}/>
                     </Routes>
                 </div>
             </div>

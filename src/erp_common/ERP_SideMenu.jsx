@@ -163,6 +163,14 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">Register</span>
                             </a>
                         </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/message" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-user-plus"></i>
+                                </span>
+                                <span className="hide-menu">메신저</span>
+                            </a>
+                        </li>
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span className="hide-menu">EXTRA</span>
