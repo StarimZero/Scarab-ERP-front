@@ -4,12 +4,14 @@ import ERP_HomePage from '../erp_common/ERP_HomePage'
 import '../common/assets/erp/css/styles.min.css';
 import ERP_SideMenu from '../erp_common/ERP_SideMenu';
 import ERP_TopMenu from '../erp_common/ERP_TopMenu';
-import AttendancePage from '../components/jun/AttendancePage';
 import SalesRouter from './starim/SalesRouter';
 import ItemsRouter from './starim/ItemsRouter';
 import WareHouseRouter from './starim/WareHouseRouter';
 import ClientRouter from './starim/ClientRouter';
 import MessageRouter from './bj/MessageRouter';
+import AttendanceRouter from './jun/AttendanceRouter';
+import MemberRouter from './jun/MemberRouter';
+
 
 
 const ERP_RouterPage = () => {
@@ -23,7 +25,8 @@ const ERP_RouterPage = () => {
                 <div className="container-fluid">
                     <Routes>
                         <Route path='' element={<ERP_HomePage />} />
-                        <Route path='member/attendance' element={<AttendancePage />} />
+                        <Route path='member/*' element={<MemberRouter />} />
+                        <Route path='attendance/*' element={<AttendanceRouter />} />
                         <Route path='/sales/*' element={<SalesRouter/>}/>
                         <Route path='/items/*' element={<ItemsRouter/>}/>
                         <Route path='/client/*' element={<ClientRouter/>}/>
