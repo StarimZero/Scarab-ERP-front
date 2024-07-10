@@ -1,57 +1,96 @@
 import React from 'react'
+import { Navbar, Nav, NavDropdown, Image, Button } from 'react-bootstrap';
+import { AiOutlineMenu, AiOutlineBell, AiOutlineUser, AiOutlineMail, AiOutlineUnorderedList } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ERP_TopMenu = () => {
+    const member_info_id = sessionStorage.getItem('member_info_id');
+    const member_info_key = sessionStorage.getItem('member_info_key');
+    const member_info_name = sessionStorage.getItem('member_info_name');
+    const navigate = useNavigate('');
+
+    const onClickMyPage = () => {
+        navigate('/erp/member/mypage');
+    }
+
+    const onLogout = (e) => {
+        e.preventDefault();
+        Swal.fire({
+            title: "로그아웃 하시겠습니까?",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Logout"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sessionStorage.clear();
+                window.location.href = "/";
+            }
+        });
+    }
+
     return (
-        <header class="app-header">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-block d-xl-none">
-                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse"
-                            href="javascript:void(0)">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                            <i class="ti ti-bell-ringing"></i>
-                            <div class="notification bg-primary rounded-circle"></div>
-                        </a>
-                    </li>
-                </ul>
-                <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35"
-                                    class="rounded-circle"/>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
-                                aria-labelledby="drop2">
-                                <div class="message-body">
-                                    <a href="javascript:void(0)"
-                                        class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-user fs-6"></i>
-                                        <p class="mb-0 fs-3">My Profile</p>
-                                    </a>
-                                    <a href="javascript:void(0)"
-                                        class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-mail fs-6"></i>
-                                        <p class="mb-0 fs-3">My Account</p>
-                                    </a>
-                                    <a href="javascript:void(0)"
-                                        class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-list-check fs-6"></i>
-                                        <p class="mb-0 fs-3">My Task</p>
-                                    </a>
-                                    <a href="./authentication-login.html"
-                                        class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+        <header className="app-header">
+            <Navbar expand="lg" variant="light">
+                <Nav className="me-auto">
+                    <Nav.Item className="d-block d-xl-none">
+                        <Nav.Link href="javascript:void(0)" id="headerCollapse">
+                            <AiOutlineMenu />
+                        </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="javascript:void(0)">
+                            <AiOutlineBell />
+                            <div className="notification bg-primary rounded-circle"></div>
+                        </Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                <Navbar.Collapse className="justify-content-end px-0" id="navbarNav">
+                    <Nav className="ms-auto align-items-center">
+                        {member_info_id ?
+                            <span className="me-3">
+                                {member_info_name}({member_info_id})님
+                            </span>
+                            :
+                            <></>
+                        }
+                        {member_info_id ?
+                            <NavDropdown
+                                title={<Image src="../common/assets/erp/images/profile/user-1.jpg" width="35" height="35" roundedCircle />}
+                                id="drop2"
+                                align="end"
+                            >
+                                <div className="message-body">
+                                    <NavDropdown.Item onClick={onClickMyPage} className="d-flex align-items-center gap-2 mypage">
+                                        <AiOutlineUser className="fs-6" />
+                                        <p className="mb-0 fs-6">My Profile</p>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="javascript:void(0)" className="d-flex align-items-center gap-2">
+                                        <AiOutlineMail className="fs-6" />
+                                        <p className="mb-0 fs-6">My Account</p>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="javascript:void(0)" className="d-flex align-items-center gap-2">
+                                        <AiOutlineUnorderedList className="fs-6" />
+                                        <p className="mb-0 fs-6">My Task</p>
+                                    </NavDropdown.Item>
+                                    <div className="d-block text-center">
+                                        <Button variant="outline-primary" className="mx-3 mt-2" onClick={onLogout}>
+                                            Logout
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+                            </NavDropdown>
+                            :
+                            <Button href="/erp/member/login" variant="outline-primary" className="mx-3 mt-2">
+                                Login
+                            </Button>
+                        }
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
         </header>
     )
 }
