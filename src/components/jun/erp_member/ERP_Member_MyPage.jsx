@@ -24,8 +24,8 @@ const ERP_Member_MyPage = () => {
         navigate('/erp/member/updateInfo');
     }
 
-    const onUpdatePass = () => {
-        navigate('/erp/member/updatePass');
+    const onUpdateLoginInfo = () => {
+        navigate('/erp/member/updateLoginInfo');
     }
 
     const callMember = async () => {
@@ -89,8 +89,8 @@ const ERP_Member_MyPage = () => {
                                     </tbody>
                                 </Table>
                                 <div className='text-center my-5'>
-                                    <Button className='me-2' variant='dark'>정보수정</Button>
-                                    <Button variant='secondary'>비밀번호 변경</Button>
+                                    <Button className='px-5 me-3' variant='dark' onClick={onUpdateInfo}>기본정보수정</Button>
+                                    <Button className='px-5' variant='secondary' onClick={onUpdateInfo}>로그인정보수정</Button>
                                 </div>
                             </div>
                         </Row>
