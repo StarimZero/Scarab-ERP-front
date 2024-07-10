@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 
-const ERP_ItemsReadPage = ({item}) => {
+const ERP_ItemsReadPage = ({item, file, setFile}) => {
 
     const [show, setShow] = useState(false);
     const refFile = useRef();
@@ -20,16 +20,8 @@ const ERP_ItemsReadPage = ({item}) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [file, setFile] = useState({
-        name:"",
-        byte:null
-    });
-    const onChangeFile = (e) => {
-        setFile({
-            name:URL.createObjectURL(e.target.files[0]),
-            byte:e.target.files[0]
-        });
-    }
+
+
 
 
     const photoStyle ={
@@ -50,7 +42,7 @@ const ERP_ItemsReadPage = ({item}) => {
             //사진저장하기
             const formData = new FormData();
             formData.append("byte", file.byte);
-            await axios.put(`/erp/items/photo`, formData);
+            await axios.post(`/erp/items/update/image/${item.items_id}`, formData);
             alert("이미지 변경 완료")
         }else{
             alert("사진을 변경해주세요")
@@ -69,6 +61,12 @@ const ERP_ItemsReadPage = ({item}) => {
         window.location.reload();
     }
 
+    const onChangeFile = (e) => {
+        setFile({
+            name:URL.createObjectURL(e.target.files[0]),
+            byte:e.target.files[0]
+        });
+    }
 
   return (
 
@@ -105,7 +103,7 @@ const ERP_ItemsReadPage = ({item}) => {
                                 </InputGroup>
                                 <InputGroup className='mb-2'>
                                     <InputGroup.Text className='me-5'>물품사진</InputGroup.Text>
-                                    <img src={file.name || "http://via.placeholder.com/250x260"} style={photoStyle} width="50%" onClick={()=>refFile.current.click()}  />
+                                    <img src={file.name || items_photo || "http://via.placeholder.com/50x50"} style={photoStyle} width="50%" onClick={()=>refFile.current.click()}  />
                                     <input ref={refFile} type='file' onChange={onChangeFile} style={{display:"none"}}/>
                                     <Button variant='outline-success' size='sm' className='mt-1 w-100' onClick={onUploadImage}>이미지 저장</Button>
                                 </InputGroup>
