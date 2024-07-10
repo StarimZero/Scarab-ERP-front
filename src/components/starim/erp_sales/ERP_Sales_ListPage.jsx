@@ -42,31 +42,31 @@ const ERP_Sales_ListPage = () => {
     <Row className='justify-content-center'>
     <h1>판매리스트</h1>
     <div><Button onClick={onClickSaleInsert}>판매입력하기</Button></div>
-    <Col lg={5}>
-        <Table>
-            <thead>
-                <tr>
-                    <td>코드</td>
-                    <td>이름</td>
-                    <td>판매일</td>
-                    <td>판매물건</td>
-                    <td>삭제</td>
-                </tr>
-            </thead>
-            <tbody>
-                {list && list.map(sales=>
+        <Col lg={5}>
+            <Table>
+                <thead>
                     <tr>
-                        <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales}/></div></td>
-                        <td>{sales.sales_employee}</td>
-                        <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
-                        <td>{sales.sales_items_id}</td>
-                        <td><Button onClick={()=>onClickItemDelete(sales)}>삭제</Button></td>
+                        <td>코드</td>
+                        <td>이름</td>
+                        <td>판매일</td>
+                        <td>판매물건</td>
+                        <td>삭제</td>
                     </tr>
-                )}
-            </tbody>
-        </Table>
-    </Col>
-</Row>
+                </thead>
+                <tbody>
+                    {list && list.map(sales=>
+                        <tr>
+                            <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales}/></div></td>
+                            <td>{sales.sales_employee}</td>
+                            <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
+                            <td>{sales.sales_items_id}</td>
+                            <td><Button onClick={()=>onClickItemDelete(sales)}>삭제</Button></td>
+                        </tr>
+                    )}
+                </tbody>
+            </Table>
+        </Col>
+    </Row>
   )
 }
 

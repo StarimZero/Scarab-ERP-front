@@ -77,6 +77,27 @@ const ERP_SideMenu = () => {
 
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span className="hide-menu">구매 | 발주 </span>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/vendor/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">구매처관리</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/purchase/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">구매리스트</span>
+                            </a>
+                        </li>
+
+                        <li className="nav-small-cap">
+                            <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span className="hide-menu">유지 | 보수</span>
                         </li>
                         <li className="sidebar-item">
@@ -117,30 +138,7 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">고객 리스트</span>
                             </a>
                         </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-card.html" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-cards"></i>
-                                </span>
-                                <span className="hide-menu">Card</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-forms.html" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-file-description"></i>
-                                </span>
-                                <span className="hide-menu">Forms</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-typography.html" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-typography"></i>
-                                </span>
-                                <span className="hide-menu">Typography</span>
-                            </a>
-                        </li>
+                        
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span className="hide-menu">AUTH</span>
@@ -189,6 +187,30 @@ const ERP_SideMenu = () => {
                                     <i className="ti ti-aperture"></i>
                                 </span>
                                 <span className="hide-menu">Sample Page</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-cards"></i>
+                                </span>
+                                <span className="hide-menu">Card</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-file-description"></i>
+                                </span>
+                                <span className="hide-menu">Forms</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-typography"></i>
+                                </span>
+                                <span className="hide-menu">Typography</span>
                             </a>
                         </li>
                     </ul>
