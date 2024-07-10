@@ -97,7 +97,7 @@ const JoinPage = () => {
         if (!window.confirm("저장하시겠습니까?")) return;
         try {
             console.log(form)
-            await axios.post('/web/visitor/update', form);
+            await axios.put('/web/visitor/update', form);
             alert("저장완료! 마이페이지로 이동합니다.");
             window.location.href = '/web/visitor/mypage';
         } catch (error) {
