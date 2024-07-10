@@ -82,6 +82,11 @@ return (
                             회원가입
                         </Button>
                         </div>
+                        <div className='text-end mt-2' style={{fontSize:'15px'}}>
+                            <a href='/web/visitor/searchid'>아이디찾기</a>
+                             / 
+                            <a href='/web/visitor/searchpass'>비밀번호찾기</a>
+                        </div>
                     </Form>
                 </Card.Body>
             </Card>
