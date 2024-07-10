@@ -4,28 +4,28 @@ import { useState } from 'react';
 import { Card, Col, Form, Row, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ERP_Items_Modal from '../starim_common/ERP_Items_Modal';
+
 
 const ERP_Sales_ReadPage = ({sales}) => {
 
-    const today = new Date().toISOString().slice(0, 10);
 
     const [form, setForm] = useState({
+        sales_id : sales.sales_id,
         sales_items_id : sales.sales_items_id,
         sales_qnt : sales.sales_qnt,
         sales_employee : sales.sales_employee,
         sales_location : sales.sales_location,
         sales_date : sales.sales_date,
-        sales_warehouse : sales.sales_warehouse,
-        sales_price : sales.sales_price,
+        sales_warehouse: parseInt(sales.sales_warehouse),
+        sales_price : parseInt(sales.sales_price),
     });
 
-    const {sales_qnt, sales_employee, sales_location, sales_warehouse, sales_date,  sales_price, sales_items_id } = form;
+    const {sales_qnt, sales_employee, sales_location, sales_warehouse, sales_date,  sales_price, sales_items_id, sales_id } = form;
 
-  const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
      //거래처불러오기
      const [clientList, setClientList] = useState([]);
@@ -43,6 +43,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
      const callAPIWarehouse = async() => {
          const res = await axios.get("/erp/warehouse");
          setWarehouseList(res.data);
+         
  
      }
  
@@ -53,7 +54,28 @@ const ERP_Sales_ReadPage = ({sales}) => {
      useEffect(()=>{
          callAPIClient();
          callAPIWarehouse();
+         
      },[])
+
+
+     const onChangeForm = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value});
+      };
+
+      const onClickSaleUpdate = async () => {
+        if(sales_warehouse==="0" || sales_location==="0"){
+            alert("모든정보를 입력하세요")
+            return;
+        }
+        if(!window.confirm(`${sales.sales_id}의 판매정보를 수정하시겠습니까?`)) return;
+            await axios.put(`/erp/sales`, form);
+            console.log(form);
+            alert("수정완료")
+            handleClose();
+
+
+       
+    }
 
 
   return (
@@ -82,14 +104,14 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                         <div>일자:</div>
                                     </Col>
                                     <Col >
-                                        <Form.Control type='date' defaultValue={today}/>
+                                        <Form.Control type='date' value={new Date(sales_date).toISOString().substring(0, 10)} name='sales_date' onChange={onChangeForm}/>
                                     </Col>
                                     <Col lg={2}>
                                         거래처 : 
                                     </Col>
                                     <Col>
-                                        <Form.Select value={sales_location} >
-                                            <option>거래처를선택하세요</option>
+                                        <Form.Select value={sales_location} name='sales_location' onChange={onChangeForm}>
+                                            <option value={0}>거래처를선택하세요</option>
                                             {clientList && clientList.map(cli=>
                                                 <option key={cli.client_id} >
                                                     {cli.client_id}
@@ -103,19 +125,19 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                         <div>담당자:</div>
                                     </Col>
                                     <Col>
-                                        <Form.Select value={sales_employee} >
-                                            <option>담당자를선택하세요</option>
-                                            <option >test</option>
+                                        <Form.Select value={sales_employee} name='sales_employee' onChange={onChangeForm} >
+                                            <option value={0}>담당자를선택하세요</option>
+                                            <option>test</option>
                                         </Form.Select>
                                     </Col>
                                     <Col lg={2}>
                                         <div>출하창고 : </div>
                                     </Col>
                                     <Col>
-                                        <Form.Select value={sales_warehouse} >
-                                            <option>출하창고를선택하세요</option>
+                                        <Form.Select value={parseInt(sales_warehouse)} name='sales_warehouse' onChange={onChangeForm}>
+                                            <option value={0}>출하창고를선택하세요</option>
                                             {warehouseList && warehouseList.map(ware=>
-                                                <option key={ware.warehouse_id} >
+                                                <option key={ware.warehouse_id} value={ware.warehouse_id} >
                                                     {ware.warehouse_id}
                                                 </option>
                                             )}
@@ -138,9 +160,9 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><Form.Control value={sales_items_id} /> </td>
-                                                    <td><Form.Control value={sales_qnt}/></td>
-                                                    <td><Form.Control value={sales_price} /></td>
+                                                    <td><Form.Control value={sales_items_id}/> </td>
+                                                    <td><Form.Control value={parseInt(sales_qnt)} name='sales_qnt' onChange={onChangeForm}/></td>
+                                                    <td><Form.Control value={sales_price} name='sales_price' onChange={onChangeForm}/></td>
                                                     <td><Form.Control value={Math.ceil(`${sales_price}` * 0.1) + "원"} /></td>
                                                     <td><Form.Control value={Math.ceil(`${sales_price}` * 1.1 * `${sales_qnt}`) + "원"} /></td>
                                                 </tr>
@@ -156,7 +178,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary">수정하기</Button>
+                <Button variant="primary" onClick={onClickSaleUpdate}>수정하기</Button>
             </Modal.Footer>
         </Modal>
     </>

@@ -6,6 +6,10 @@ import ERP_ItemsReadPage from './ERP_ItemsReadPage';
 
 const ERP_ItemsListPage = () => {
 
+    const [file, setFile] = useState({
+        name:"",
+        byte:null
+    });
 
     const [list, setList] = useState([]);
 
@@ -13,6 +17,7 @@ const ERP_ItemsListPage = () => {
         const res = await axios.get("/erp/items/list.json");
         //console.log(res.data);
         setList(res.data);
+        setFile({name:res.data.image, byte:null})
 
     }
 
@@ -21,7 +26,7 @@ const ERP_ItemsListPage = () => {
     },[])
 
 
-    const onClickWareItemsInsert = (e) => {
+    const onClickItemsInsert = (e) => {
         window.location.href="/erp/items/insert";
     }
 
@@ -40,13 +45,15 @@ const ERP_ItemsListPage = () => {
 
 
 
+
+
   return (
     <Row className='justify-content-center'>
         <h1>아이템리스트</h1>
-        <div><Button onClick={onClickWareItemsInsert}>아이템등록</Button></div>
-        <Col lg={5}>
+        <div><Button onClick={onClickItemsInsert}>아이템등록</Button></div>
+        <Col lg={10}>
             <Table>
-                <thead>
+                <thead className='text-center'>
                     <tr>
                         <td>코드</td>
                         <td>이름</td>
@@ -55,12 +62,12 @@ const ERP_ItemsListPage = () => {
                         <td>삭제</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='align-middle text-center'>
                     {list && list.map(item=>
                         <tr>
-                            <td><div style={{cursor: "pointer"}}><ERP_ItemsReadPage item={item} /></div></td>
+                            <td><div style={{cursor: "pointer"}}><ERP_ItemsReadPage item={item} file={file} setFile={setFile}/></div></td>
                             <td>{item.items_name}</td>
-                            <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"} /></td>
+                            <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"}  width="30%"/></td>
                             <td>
                                 {item.items_type === 0 ? "음료" : item.items_type === 1 ? "면" : item.items_type === 2 ? "스낵" : item.items_type === 3 ? "간편식" : item.items_type}
                             </td>

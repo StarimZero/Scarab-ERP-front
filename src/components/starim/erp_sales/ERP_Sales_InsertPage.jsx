@@ -14,13 +14,13 @@ const ERP_Sales_InsertPage = () => {
 
 
     const [sales_items_id, setSales_items_id] = useState("");
-    const [sales_name, setSales_name] = useState("");
     const [sales_qnt, setSales_qnt] = useState("");
     const [sales_employee, setSales_employee] = useState("");
     const [sales_location, setSales_location ] = useState("");
     const [sales_date, setSales_date ] = useState(today);
     const [sales_warehouse, setSales_warehouse ] = useState("");
     const [sales_price, setsales_price ] = useState("");
+
 
 
 
@@ -68,10 +68,10 @@ const ERP_Sales_InsertPage = () => {
             return;
         }
         if(!window.confirm("판매를 등록하시겠습니까?")) return;
-        console.log();
         await axios.post(`/erp/sales`, {sales_items_id : selectedItemId, sales_date, sales_qnt, sales_employee, sales_location, sales_date, sales_warehouse, sales_price} )
-        alert("판매완료")
+        alert("판매등록완료")
         window.location.href="/erp/sales/list"
+
 
     }
     console.log(selectedItemId)
