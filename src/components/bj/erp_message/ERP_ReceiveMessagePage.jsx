@@ -8,8 +8,8 @@ import { IoIosArrowBack } from "react-icons/io";
 const ERP_ReceiveMessagePage = () => {
   const [messages, setMessages] = useState([]);
 
-  const [checked, setChecked] = useState([]);
-  const[list, setList] = useState([]);
+  const [checked, setChecked] = useState(0);
+
 
   const uid=sessionStorage.getItem('member_info_id');
 
@@ -20,13 +20,49 @@ const ERP_ReceiveMessagePage = () => {
     setMessages(data);
   }
 
-  const onAllChecked = () => {
+  const onAllChecked = (e) => {
+    const data=messages.map(msg=>msg && {...msg, checked:e.target.checked});
+    setMessages(data);
+  }
 
+  const onSingleChecked = (e, message_id) => {
+    const data=messages.map(msg=>msg.message_id===message_id ? {...msg, checked:e.target.checked}:msg);
+    setMessages(data);
   }
 
   useEffect(()=>{
     callAPI();
   }, []);
+
+  useEffect(()=> {
+    let cnt=0;
+    messages.forEach(msg=>msg.checked && cnt++);
+    setChecked(cnt);
+  }, [messages]);
+
+  const onDelete = () => {
+    if(checked===0){
+      alert("삭제할 목록을 선택하세요!");
+      return;
+    }
+
+    if(window.confirm("휴지통으로 이동하실래요?")) {
+
+    let cnt=0;
+    messages.forEach(async(msg)=>{
+      if(msg.checked) {
+        await axios.post(`/erp/receivemessage/update/receive/state/${msg.message_id}`);
+        cnt++;
+      }
+      if(cnt===checked) callAPI();
+    });
+
+  }
+};
+
+const clickRead = () => {
+  
+}
 
   return (
     <div>
@@ -40,8 +76,10 @@ const ERP_ReceiveMessagePage = () => {
          
           <tr>
             <td>
-              <input checked={false} type='checkbox'/>
-              <Button className='ms-2 btn-sm' variant='outline-danger'>삭제</Button>
+              <input onChange={onAllChecked}
+                checked={messages.length> 0 && checked===messages.length} type='checkbox'/>
+              <Button onClick={onDelete}
+                className='ms-2 btn-sm' variant='outline-danger'>삭제</Button>
             </td>
             <td>mid</td>
             <td>읽음</td>
@@ -50,10 +88,13 @@ const ERP_ReceiveMessagePage = () => {
             <td>발신일</td>
           </tr>
         </thead>
+
         <tbody>
           {messages.map((msg)=> (
                     <tr key={msg.message_id}>
-                      <td><input checked={false} type='checkbox'/></td>
+
+                      <td><input onChange={(e)=>onSingleChecked(e, msg.message_id)}
+                        checked={msg.checked} type='checkbox'/></td>
 
                       <td>{msg.message_id}</td>
 
