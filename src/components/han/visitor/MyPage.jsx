@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
-
+import moment from 'moment/moment';
 const MyPage = () => {
     // 기본 폼 관련
     const vid = sessionStorage.getItem("visitor_id");
@@ -16,11 +16,11 @@ const MyPage = () => {
         visitor_address1: '',
         visitor_address2: ''
     });
-
+    
     const { visitor_id, visitor_pass, visitor_name, visitor_birthday,
         visitor_phone, visitor_photo, visitor_email,
         visitor_address1, visitor_address2 } = form;
-
+    const fbirth = moment(visitor_birthday).format('YYYY-MM-DD');
     // API 호출
     const callAPI = async () => {
         const url = `/web/visitor/mypage/${vid}`;
@@ -93,7 +93,7 @@ const MyPage = () => {
                                 <Form.Control
                                     type="text"
                                     name="visitor_birthday"
-                                    value={visitor_birthday}
+                                    value={fbirth}
                                     readOnly
                                 />
                             </Form.Group>
