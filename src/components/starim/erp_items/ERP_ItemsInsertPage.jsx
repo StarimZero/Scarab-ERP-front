@@ -4,17 +4,23 @@ import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap'
 
 const ERP_ItemsInsertPage = () => {
 
-    const [items_id, setItems_id] = useState("");
-    const [items_name, setItems_name] = useState("");
-    const [items_photo, setItems_photo] = useState("");
-    const [items_type, setItems_type] = useState("");
+
+    const [file, setFile] = useState({
+        name:"",
+        byte:""
+    });
+
+    const [form, setForm] = useState({
+        items_id : "",
+        items_name : "",
+        items_photo : "",
+        items_type : ""
+    });
+    const {items_id, items_name, items_photo, items_type} = form;
+
     const refFile = useRef();
 
-    const [image, setImage] = useState({
-        fileName : "",
-        file : null
-    })
-    const {file, fileName} = image;
+
     
 
     const photoStyle ={
@@ -27,13 +33,12 @@ const ERP_ItemsInsertPage = () => {
 
 
     const onChangeFile = (e) => {
-        const newImage = {
-          fileName: URL.createObjectURL(e.target.files[0]),
-          file: e.target.files[0],
-        };
-        setImage(newImage);
-        setItems_photo(fileName); // 선택된 이미지 파일 이름 저장
-      };
+        setFile({
+            name:URL.createObjectURL(e.target.files[0]),
+            byte:e.target.files[0]
+        });
+        setForm({ ...form, items_photo: file.byte });
+    }
     
 
 
@@ -50,11 +55,27 @@ const ERP_ItemsInsertPage = () => {
 
         const data = new FormData();
         data.append("file", file);
-        console.log({items_id, items_name, items_photo, items_type});
-        await axios.post(`/erp/items`, {items_id, items_name, items_photo, items_type})
+        console.log(form);
+        await axios.post(`/erp/items`, form)
         alert("아이템등록완료")
         window.location.href="/erp/items/list"
 
+    }
+
+    const onChangeForm = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value});
+      };
+
+
+    const onClickInsertTogether = async() => {
+        const formData = new FormData();
+        formData.append("byte", file.name);
+        Object.keys(form).forEach(key=>{
+            formData.append(key, form[key]);
+            console.log(key, form[key]);
+        });
+        await axios.post('/erp/items/2', formData);
+        alert("등록완료")
     }
 
 
@@ -70,20 +91,20 @@ const ERP_ItemsInsertPage = () => {
                 <Card.Body>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>물품코드</InputGroup.Text>
-                        <Form.Control value={items_id}   placeholder='coke_1.5L' onChange={(e)=>setItems_id(e.target.value)}/>
+                        <Form.Control value={items_id}  name='items_id' placeholder='coke_1.5L' onChange={onChangeForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>물품이름</InputGroup.Text>
-                        <Form.Control value={items_name} placeholder='물품이름을 입력하세요' onChange={(e)=>setItems_name(e.target.value)}/>
+                        <Form.Control value={items_name} name='items_name' placeholder='물품이름을 입력하세요' onChange={onChangeForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text className='me-5'>물품사진</InputGroup.Text>
-                        <img src={fileName || "http://via.placeholder.com/50x50"} style={photoStyle} width="50%" onClick={()=>refFile.current.click()} onChange={(e)=>setItems_photo(e.target.value)} />
+                        <img src={file.name || items_photo || "http://via.placeholder.com/50x50"} style={photoStyle} width="50%" onClick={()=>refFile.current.click()} onChange={onChangeForm} />
                         <input ref={refFile} type='file' onChange={onChangeFile} style={{display:"none"}}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>물품타입</InputGroup.Text>
-                        <Form.Select value={items_type}  onChange={(e)=>setItems_type(e.target.value)}>
+                        <Form.Select value={items_type}  name='items_type' onChange={onChangeForm}>
                             <option>선택하세요</option>
                             <option value={parseInt(0)}>음료</option>
                             <option value={parseInt(1)}>면</option>
@@ -95,6 +116,7 @@ const ERP_ItemsInsertPage = () => {
                 <Card.Footer>
                     <div>
                         <Button onClick={onClicItemsInsert}>등록</Button>
+                        <Button onClick={onClickInsertTogether}>사진과함께등록</Button>
                     </div>
                 </Card.Footer>
             </Card>
