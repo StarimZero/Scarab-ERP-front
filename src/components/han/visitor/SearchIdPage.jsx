@@ -4,18 +4,28 @@ import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap'
 
 const SearchIdPage = () => {
     const [visitor_email, setVisitor_email] = useState('');
+    const [searchResult, setSearchResult] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const onChangeVisitor_email = (e) => {
         setVisitor_email(e.target.value);
     };
 
-    const onClickSend = () => {
-        if(!visitor_email){
-            alert("이메일을 입력해주세요.");
-            return;
+    const onClickSend = async () => {
+        try {
+            if (!visitor_email) {
+                setErrorMessage("이메일을 입력해주세요.");
+                return;
+            }
+            
+            const response = await axios.post("/web/visitor/searchid", { visitor_email:visitor_email });
+            if (response.status === 200) {
+                alert("아이디가 등록된 이메일로 전송되었습니다.");
+            }
+        } catch (error) {
+                alert("해당 이메일로 가입한 아이디가 없습니다.");
         }
-        axios.post("/web/visitor/searchid", visitor_email);
-    }
+    };
 
 
 
@@ -27,7 +37,7 @@ const SearchIdPage = () => {
                     <Card.Title className="mb-4 text-center">아이디 찾기</Card.Title>
                     <Form>
                         
-                        <Form.Group>
+                        <Form.Group controlId='visitor_email'>
                             <InputGroup>
                                 <Form.Control
                                     type="text"

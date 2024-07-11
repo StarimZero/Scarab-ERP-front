@@ -18,7 +18,7 @@ const AddressModal = ({setForm, form}) => {
     const onComplete =(e) => {
         console.log(e)
         const address=e.buildingName ? `${e.address}(${e.buildingName})` : e.address;
-        setForm({...form, client_address : address});
+        setForm({...form, client_address : address, vendor_address : address});
         handleClose();
     }
 

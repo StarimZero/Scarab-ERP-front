@@ -5,21 +5,17 @@ import { IoIosArrowBack } from "react-icons/io";
 
 const ERP_insertMessagePage = () => {
   const [members, setMembers] = useState([]);
-
+  const [page, setPage]=useState(1);
+  const [size, setSize]=useState(5);
 
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [receiver, setReceiver] = useState('');
 
   const callAPI = async () => {
-    try {
-      const res = await axios.get('/erp/member?page=1&size=100');
+      const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
       console.log(res.data.list);
       setMembers(res.data.list);
-
-    } catch (error) {
-      console.error('Error fetching members:', error);
-    }
 
   };
 

@@ -63,7 +63,7 @@ const ERP_Items_Modal = ({ selectedItemId, setSelectedItemId, setSelectedItemNam
                                         {item.items_id}
                                     </td>
                                     <td>{item.items_name}</td>
-                                    <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"} /></td>
+                                    <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"} width={"50%"}/></td>
                                     <td>
                                         {item.items_type === 0 ? "음료" : item.items_type === 1 ? "면" : item.items_type === 2 ? "스낵" : item.items_type === 3 ? "간편식" : item.items_type}
                                     </td>
