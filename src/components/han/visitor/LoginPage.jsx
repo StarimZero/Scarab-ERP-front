@@ -2,12 +2,15 @@ import React, { useContext, useState } from 'react'
 import { Row, Col, Card, Form, InputGroup, Button, ButtonToolbar } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { RiEyeLine } from "react-icons/ri";
+import { RiEyeOffLine } from "react-icons/ri";
 
 const LoginPage = () => {
     const navi = useNavigate();
     const [loading, setLoading] = useState(false);
     const [visitor_id, setVisitor_id] = useState('');
     const [visitor_pass, setVisitor_pass] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const onChangeVisitor_id = (e) => {
         setVisitor_id(e.target.value);
@@ -15,6 +18,10 @@ const LoginPage = () => {
 
     const onChangeVisitor_pass = (e) => {
         setVisitor_pass(e.target.value);
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
     const onSubmit = async (e) => {
@@ -62,16 +69,20 @@ return (
                                 />
                             </InputGroup>
                         </Form.Group>
+
                         <Form.Group className="mb-3" controlId="formVisitor_pass">
                             <InputGroup>
                             <InputGroup.Text style={{width:'90px'}}>비밀번호</InputGroup.Text>
                                 <Form.Control
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name="visitor_pass"
                                     value={visitor_pass}
                                     onChange={onChangeVisitor_pass}
                                     placeholder="비밀번호를 입력하세요."
                                 />
+                                <InputGroup.Text onClick={toggleShowPassword} style={{cursor:'pointer'}}>
+                                    {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
+                                </InputGroup.Text>
                             </InputGroup>
                         </Form.Group>
                         <div className='text-center'>
