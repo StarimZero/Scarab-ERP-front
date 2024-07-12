@@ -20,7 +20,7 @@ const SearchIdPage = () => {
             
             const response = await axios.post("/web/visitor/searchid", { visitor_email:visitor_email });
             if (response.status === 200) {
-                alert("아이디가 등록된 이메일로 전송되었습니다.");
+                alert("등록된 이메일로 아이디가 전송되었습니다.");
             }
         } catch (error) {
                 alert("해당 이메일로 가입한 아이디가 없습니다.");

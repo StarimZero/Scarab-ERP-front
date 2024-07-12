@@ -26,12 +26,18 @@ const Web_Menu = () => {
           window.location.reload();
         }
     }    
+    const vid = sessionStorage.getItem("visitor_id")
 
     return (
         <div>
-            <div className='my-5'>
+            <div className='my-5'>   
                 <nav className="web-nav-container d-flex align-items-center justify-content-between web-nav-border">
                     <div className="web-menu-items d-flex">
+                    <div className='me-3 ms-3'>
+                        <a href="/erp">
+                            편의용 ERP로 가는문
+                        </a>
+                    </div>
                         <div
                             className='web-menu-item d-inline-block me-3'
                             onMouseEnter={() => handleMouseOver(setShowDropdownCompany)}
@@ -39,9 +45,9 @@ const Web_Menu = () => {
                             <a className="web-nav-link-custom" href="#">회사소개</a>
                             {showDropdownCompany && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="company/overview">회사개요</a>
-                                    <a className="web-dropdown1-item" href="company/histroy">회사연혁</a>
-                                    <a className="web-dropdown1-item" href="company/ceohello">CEO인사말</a>
+                                    <a className="web-dropdown1-item" href="/web/company/view">회사개요</a>
+                                    <a className="web-dropdown1-item" href="/company/histroy">회사연혁</a>
+                                    <a className="web-dropdown1-item" href="/company/ceohello">CEO인사말</a>
                                 </div>
                             )}
                         </div>
@@ -91,7 +97,7 @@ const Web_Menu = () => {
                             <a className="web-nav-link web-nav-link-custom" href="#">제품</a>
                             {showDropdownProduct && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="/product/read">제품소개</a>
+                                    <a className="web-dropdown1-item" href="/web/items/read">제품소개</a>
                                     <a className="web-dropdown1-item" href="/product/research">연구중인제품</a>
                                 </div>
                             )}
@@ -104,8 +110,8 @@ const Web_Menu = () => {
                             <a className="web-nav-link web-nav-link-custom" href="#">인재채용</a>
                             {showDropdownEmploy && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="/employ/procedure">채용절차</a>
-                                    <a className="web-dropdown1-item" href="/employ/announcement">채용공고</a>
+                                    <a className="web-dropdown1-item" href="/web/employ/procedure">채용절차</a>
+                                    <a className="web-dropdown1-item" href="/web/employ/announcement">채용공고</a>
                                 </div>
                             )}
                         </div>
@@ -125,6 +131,7 @@ const Web_Menu = () => {
                         </div>
                     </div>
 
+                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{color:'white'}} >{vid} 님</div>}
                     <div className="web-menu-item web-right-box d-inline-block  me-3" onMouseEnter={() => handleMouseOver(setShowDropdownLog)}
                         onMouseLeave={() => handleMouseLeave(setShowDropdownLog)}>
                         <a className="web-nav-link web-nav-link-custom" href="#"><IoPersonCircleOutline size={32} /></a>
@@ -143,12 +150,13 @@ const Web_Menu = () => {
                     </div>
 
                     <div className='me-3 ms-3'>
-                        <a href="/">
+                        <a href="/web">
                             <img src="/images/menupage/logo.png" alt="Description" className="web-logo-image" />
                         </a>
                     </div>
                 </nav>
             </div>
+            
         </div>
     );
 }

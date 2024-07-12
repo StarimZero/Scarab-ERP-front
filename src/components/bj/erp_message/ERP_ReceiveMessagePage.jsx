@@ -4,20 +4,24 @@ import {Button, Table } from 'react-bootstrap'
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import Pagination from 'react-js-pagination';
 
 const ERP_ReceiveMessagePage = () => {
   const [messages, setMessages] = useState([]);
-
   const [checked, setChecked] = useState(0);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [count, setCount] = useState(0);
 
 
   const uid=sessionStorage.getItem('member_info_id');
 
   const callAPI = async() => {
-    const res=await axios.get(`/erp/receivemessage/list.json/${uid}`);
-    const data= res.data.map(msg=>msg && {...msg, checked:false});
-    //console.log(res.data);
+    const res=await axios.get(`/erp/receivemessage/list/${uid}?page=${page}&size=${size}`);
+    const data= res.data.list.map(msg=>msg && {...msg, checked:false});
+    console.log(data);
     setMessages(data);
+    setCount(res.data.total);
   }
 
   const onAllChecked = (e) => {
@@ -32,7 +36,7 @@ const ERP_ReceiveMessagePage = () => {
 
   useEffect(()=>{
     callAPI();
-  }, []);
+  }, [page]);
 
   useEffect(()=> {
     let cnt=0;
@@ -60,8 +64,13 @@ const ERP_ReceiveMessagePage = () => {
   }
 };
 
-const clickRead = () => {
+const clickRead = async(message_id) => {
   
+  const message = messages.find(msg => msg.message_id === message_id);
+  if (!message.message_readdate) {
+    await axios.post(`/erp/receivemessage/update/readdate/${message_id}`);
+    callAPI();
+  }
 }
 
   return (
@@ -106,7 +115,7 @@ const clickRead = () => {
 
                       <td>
                             <span>
-                                <a href={`/erp/message/receive/${msg.message_id}`}>{msg.message_title}</a>
+                                <a href={`/erp/message/receive/${msg.message_id}`} onClick={()=> clickRead(msg.message_id)}>{msg.message_title}</a>
                             </span>
                       </td>
 
@@ -117,6 +126,16 @@ const clickRead = () => {
         </tbody>
        </Table>
           
+       {count > size &&
+        <Pagination
+            activePage={page}
+            itemsCountPerPage={size}
+            totalItemsCount={count}
+            pageRangeDisplayed={5}
+            prevPageText={"‹"}
+            nextPageText={"›"}
+            onChange={ (e)=>setPage(e) }/>
+        }
 
     </div>
       

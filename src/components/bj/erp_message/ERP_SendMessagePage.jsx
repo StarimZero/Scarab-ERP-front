@@ -4,19 +4,27 @@ import { Button, Table } from 'react-bootstrap';
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import Pagination from 'react-js-pagination';
 
 
 const ERP_SendMessagePage = () => {
   const [checked, setChecked] = useState(0);
   const [messages, setMessages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
+  const [count, setCount] = useState(0);
+  
+
+  
   const uid=sessionStorage.getItem('member_info_id');
 
-  const callAPI = async() => {
-    const res=await axios.get(`/erp/sendmessage/list.json/${uid}`);
-    const data=res.data.map(msg=>msg && {...msg, checked:false});
 
-   // console.log(res.data);
+  const callAPI = async() => {
+    const res=await axios.get(`/erp/sendmessage/list/${uid}?page=${page}&size=${size}`);
+    const data= res.data.list.map(msg=>msg && {...msg, checked:false});
+    console.log(data);
     setMessages(data);
+    setCount(res.data.total);
   }
 
   const onAllChecked = (e) => {
@@ -31,7 +39,7 @@ const ERP_SendMessagePage = () => {
 
   useEffect(()=>{
     callAPI();
-  }, []);
+  }, [page]);
 
   useEffect(()=> {
     let cnt=0;
@@ -77,7 +85,7 @@ const ERP_SendMessagePage = () => {
             </td>
             <td>mid</td>
             <td>읽음</td>
-            <td>보낸사람</td>
+            <td>받은사람</td>
             <td>제목</td>
             <td>발신일</td>
           </tr>
@@ -98,7 +106,7 @@ const ERP_SendMessagePage = () => {
                           {msg.message_readdate ? <IoMdMailOpen  color='deepskyblue'/> : <IoMdMail color='deepskyblue'/>}
                       </td>
 
-                      <td>{msg.message_sender}</td>
+                      <td>{msg.message_receiver}</td>
 
                       <td>
                             <span>
@@ -112,6 +120,17 @@ const ERP_SendMessagePage = () => {
 
         </tbody>
        </Table>
+
+       {count > size &&
+        <Pagination
+            activePage={page}
+            itemsCountPerPage={size}
+            totalItemsCount={count}
+            pageRangeDisplayed={5}
+            prevPageText={"‹"}
+            nextPageText={"›"}
+            onChange={ (e)=>setPage(e) }/>
+        }
           
 
     </div>
