@@ -13,12 +13,6 @@ const Web_HomePage = () => {
             </div>
           </Col>
             </Row>
-            
-            <Row>
-                <Col>
-                    <Web_bottomPage/>
-                </Col>
-          </Row>
        </> 
       )
     }
