@@ -90,7 +90,7 @@ const ERP_Member_MyPage = () => {
                                 </Table>
                                 <div className='text-center my-5'>
                                     <Button className='px-5 me-3' variant='dark' onClick={onUpdateInfo}>기본정보수정</Button>
-                                    <Button className='px-5' variant='secondary' onClick={onUpdateInfo}>로그인정보수정</Button>
+                                    <Button className='px-5' variant='secondary' onClick={onUpdateLoginInfo}>로그인정보수정</Button>
                                 </div>
                             </div>
                         </Row>
