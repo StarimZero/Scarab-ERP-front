@@ -8,6 +8,12 @@ import Modal from 'react-bootstrap/Modal';
 
 const ERP_Sales_ReadPage = ({sales}) => {
 
+    const [list, setList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [size] = useState(150);
+    const [key, setKey] = useState("title");
+    const [word, setWord] = useState("");
+
 
     const [form, setForm] = useState({
         sales_id : sales.sales_id,
@@ -30,16 +36,17 @@ const ERP_Sales_ReadPage = ({sales}) => {
      //거래처불러오기
      const [clientList, setClientList] = useState([]);
      const [warehouseList, setWarehouseList] = useState([]);
+     const [memberList, setMemberList] = useState([]);
      
      const callAPIClient = async () => {
          
-         const res = await axios.get(`/erp/client/list.json`)
+         const res = await axios.get(`/erp/client`)
          //console.log(res.data);
          setClientList(res.data);
  
      }
      
- 
+    //출하창고불러오기
      const callAPIWarehouse = async() => {
          const res = await axios.get("/erp/warehouse");
          setWarehouseList(res.data);
@@ -49,12 +56,18 @@ const ERP_Sales_ReadPage = ({sales}) => {
  
  
      //담당자불러오기
-     //출하창고불러오기
+     const callAPIMember = async () => {
+        const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
+        console.log(res.data.list);
+        setMemberList(res.data.list);
+
+    }
+     
  
      useEffect(()=>{
          callAPIClient();
          callAPIWarehouse();
-         
+         callAPIMember();
      },[])
 
 
@@ -72,10 +85,9 @@ const ERP_Sales_ReadPage = ({sales}) => {
             console.log(form);
             alert("수정완료")
             handleClose();
-
-
-       
     }
+
+
 
 
   return (
@@ -127,7 +139,9 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                     <Col>
                                         <Form.Select value={sales_employee} name='sales_employee' onChange={onChangeForm} >
                                             <option value={0}>담당자를선택하세요</option>
-                                            <option>test</option>
+                                            {memberList && memberList.map(mem=>
+                                            <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                            )}
                                         </Form.Select>
                                     </Col>
                                     <Col lg={2}>

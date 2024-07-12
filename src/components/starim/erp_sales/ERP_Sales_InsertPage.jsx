@@ -5,6 +5,11 @@ import ERP_Items_Modal from '../starim_common/ERP_Items_Modal';
 
 const ERP_Sales_InsertPage = () => {
 
+    const [page] = useState(1);
+    const [size] = useState(5);
+    const [key] = useState("title");
+    const [word] = useState("");
+
     const [selectedItemId, setSelectedItemId] = useState("");
     const [selectedItemName, setSelectedItemName] = useState("");
 
@@ -13,7 +18,7 @@ const ERP_Sales_InsertPage = () => {
     
 
 
-    const [sales_items_id, setSales_items_id] = useState("");
+    const [ setSales_items_id] = useState("");
     const [sales_qnt, setSales_qnt] = useState("");
     const [sales_employee, setSales_employee] = useState("");
     const [sales_location, setSales_location ] = useState("");
@@ -24,19 +29,32 @@ const ERP_Sales_InsertPage = () => {
 
 
 
-    //거래처불러오기
+    
     const [clientList, setClientList] = useState([]);
     const [warehouseList, setWarehouseList] = useState([]);
+    const [memberList, setMemberList] = useState([]);
     
+
+    //거래처불러오기
     const callAPIClient = async () => {
         
-        const res = await axios.get(`/erp/client/list.json`)
+        const res = await axios.get(`/erp/client`)
         //console.log(res.data);
         setClientList(res.data);
 
     }
     
 
+    //담당자불러오기
+    const callAPIMember = async () => {
+        const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
+        console.log(res.data.list);
+        setMemberList(res.data.list);
+
+    }
+
+
+    //출하창고불러오기
     const callAPIWarehouse = async() => {
         const res = await axios.get("/erp/warehouse");
         setWarehouseList(res.data);
@@ -44,12 +62,10 @@ const ERP_Sales_InsertPage = () => {
     }
 
 
-    //담당자불러오기
-    //출하창고불러오기
-
     useEffect(()=>{
         callAPIClient();
         callAPIWarehouse();
+        callAPIMember();
     },[])
 
 
@@ -68,7 +84,7 @@ const ERP_Sales_InsertPage = () => {
             return;
         }
         if(!window.confirm("판매를 등록하시겠습니까?")) return;
-        await axios.post(`/erp/sales`, {sales_items_id : selectedItemId, sales_date, sales_qnt, sales_employee, sales_location, sales_date, sales_warehouse, sales_price} )
+        await axios.post(`/erp/sales`, {sales_items_id : selectedItemId, sales_date, sales_qnt, sales_employee, sales_location, sales_warehouse, sales_price} )
         alert("판매등록완료")
         window.location.href="/erp/sales/list"
 
@@ -114,7 +130,9 @@ const ERP_Sales_InsertPage = () => {
                             <Col>
                                 <Form.Select value={sales_employee} onChange={(e)=>setSales_employee(e.target.value)}>
                                     <option>담당자를선택하세요</option>
-                                    <option >test</option>
+                                    {memberList && memberList.map(mem=>
+                                        <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                    )}
                                 </Form.Select>
                             </Col>
                             <Col lg={2}>
