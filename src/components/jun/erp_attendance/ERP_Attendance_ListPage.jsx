@@ -1,22 +1,28 @@
-import axios from 'axios'
-import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { Accordion, Button, Card, Col, Dropdown, Row, Table } from 'react-bootstrap'
-import { FaUser } from 'react-icons/fa6'
+import axios from 'axios';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { Accordion, Button, Card, Col, Dropdown, Row, Table } from 'react-bootstrap';
+import { FaUser } from 'react-icons/fa6';
 
 const ERP_Attendance_ListPage = () => {
     const member_info_key = sessionStorage.getItem("member_info_key");
+    const member_info_name = sessionStorage.getItem('member_info_name');
     const [currentDate, setCurrentDate] = useState(moment());
     const [attendance, setAttendance] = useState({});
     const [list, setList] = useState([]);
-    const { member_attendance_date, member_attendance_start, member_attendance_end,
-        hours_worked, minutes_worked } = list;
+    const [currentTime, setCurrentTime] = useState(moment());
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentTime(moment());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     const callAttendance = async (date) => {
         const formattedDate = date.format('YYYY-MM-DD');
         const url = `/erp/attendance/member?member_info_key=${member_info_key}&member_attendance_date=${formattedDate}`;
         const res = await axios.get(url);
-        // console.log(res.data);
         setAttendance(res.data);
     }
 
@@ -24,18 +30,15 @@ const ERP_Attendance_ListPage = () => {
         callAttendance(currentDate);
     }, [currentDate]);
 
-
     const callAttendanceList = async () => {
         const url = `/erp/attendance/listMember/${member_info_key}`;
         const res = await axios.get(url);
-        // console.log(res.data.listMember);
         setList(res.data.listMember);
     }
 
     useEffect(() => {
         callAttendanceList();
-    }, [])
-
+    }, []);
 
     // 출근
     const onShift = async () => {
@@ -43,6 +46,7 @@ const ERP_Attendance_ListPage = () => {
             const url = '/erp/attendance';
             await axios.post(url, { member_info_key });
             alert("출근완료");
+            callAttendanceList(); // 출근 후 목록을 다시 불러옴
         } else {
             alert("이미 출근하셨습니다!");
             return;
@@ -54,6 +58,7 @@ const ERP_Attendance_ListPage = () => {
         const url = '/erp/attendance';
         await axios.put(url, { member_info_key });
         alert("퇴근완료");
+        callAttendanceList(); // 퇴근 후 목록을 다시 불러옴
     }
 
     const handlePreviousMonth = () => {
@@ -65,27 +70,121 @@ const ERP_Attendance_ListPage = () => {
     };
 
     const getWeeksInMonth = (date) => {
-        const startOfMonth = date.clone().startOf('month').startOf('week');
-        const endOfMonth = date.clone().endOf('month').endOf('week');
+        const startOfMonth = date.clone().startOf('month');
+        const endOfMonth = date.clone().endOf('month');
         const weeks = [];
-        let currentWeek = startOfMonth.clone();
+        let currentWeek = startOfMonth.clone().startOf('isoWeek');
 
-        while (currentWeek.isBefore(endOfMonth)) {
+        while (currentWeek.isSameOrBefore(endOfMonth, 'day')) {
+            const startOfWeek = currentWeek.clone();
+            const endOfWeek = currentWeek.clone().endOf('isoWeek').isBefore(endOfMonth) ? currentWeek.clone().endOf('isoWeek') : endOfMonth.clone();
+
             weeks.push({
-                start: currentWeek.clone(),
-                end: currentWeek.clone().endOf('week'),
+                start: startOfWeek.clone(),
+                end: endOfWeek.clone(),
+                days: getDaysInWeek(startOfWeek, endOfWeek),
             });
+
             currentWeek.add(1, 'week');
         }
 
         return weeks;
     };
 
+    const getDaysInWeek = (startOfWeek, endOfWeek) => {
+        const days = [];
+        let currentDay = startOfWeek.clone();
+
+        while (currentDay.isSameOrBefore(endOfWeek, 'day')) {
+            days.push(currentDay.clone());
+            currentDay.add(1, 'day');
+        }
+
+        return days;
+    };
+
     const weeksInMonth = getWeeksInMonth(currentDate);
+    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
+    // 이번 주 근무 초과시간 계산
+    const calculateOvertimeThisWeek = (week) => {
+        const weeklyWorkHours = 45;
+        let totalWorkedHours = 0;
+        let totalWorkedMinutes = 0;
+
+        week.days.forEach((day) => {
+            const attendanceToday = list.find(({ member_attendance_date }) => moment(member_attendance_date).isSame(day, 'day'));
+            if (attendanceToday) {
+                const start = moment(attendanceToday.member_attendance_start);
+                const end = moment(attendanceToday.member_attendance_end);
+                const workedHours = end.diff(start, 'hours');
+                const workedMinutes = end.diff(start, 'minutes') % 60;
+
+                totalWorkedHours += workedHours;
+                totalWorkedMinutes += workedMinutes;
+            }
+        });
+
+        const totalWorkedMinutesCombined = totalWorkedHours * 60 + totalWorkedMinutes;
+        const overtimeMinutes = Math.max(totalWorkedMinutesCombined - weeklyWorkHours * 60, 0);
+        const overtimeHours = Math.floor(overtimeMinutes / 60);
+        const overtimeMinutesRemainder = overtimeMinutes % 60;
+
+        return { overtimeHours, overtimeMinutes: overtimeMinutesRemainder };
+    };
+
+    // 이번 주 근무 잔여시간 계산
+    const calculateRemainingTimeThisWeek = (week) => {
+        const weeklyWorkHours = 45;
+        let totalWorkedHours = 0;
+        let totalWorkedMinutes = 0;
+
+        week.days.forEach((day) => {
+            const attendanceToday = list.find(({ member_attendance_date }) => moment(member_attendance_date).isSame(day, 'day'));
+            if (attendanceToday) {
+                totalWorkedHours += attendanceToday.hours_worked;
+                totalWorkedMinutes += attendanceToday.minutes_worked;
+            }
+        });
+
+        const totalWorkedMinutesCombined = totalWorkedHours * 60 + totalWorkedMinutes;
+        const remainingMinutes = Math.max(weeklyWorkHours * 60 - totalWorkedMinutesCombined, 0);
+        const remainingHours = Math.floor(remainingMinutes / 60);
+        const remainingMinutesRemainder = remainingMinutes % 60;
+
+        return { remainingHours, remainingMinutes: remainingMinutesRemainder };
+    };
+
+    // 이번주 누적 근무 시간 계산
+    const calculateAccumulatedTimeThisWeek = (week) => {
+        let totalWorkedHours = 0;
+        let totalWorkedMinutes = 0;
+
+        week.days.forEach((day) => {
+            const attendanceToday = list.find(({ member_attendance_date }) => moment(member_attendance_date).isSame(day, 'day'));
+            if (attendanceToday) {
+                totalWorkedHours += attendanceToday.hours_worked;
+                totalWorkedMinutes += attendanceToday.minutes_worked;
+            }
+        });
+
+        const totalWorkedMinutesCombined = totalWorkedHours * 60 + totalWorkedMinutes;
+        const workedHoursThisWeek = Math.floor(totalWorkedMinutesCombined / 60);
+        const workedMinutesThisWeek = totalWorkedMinutesCombined % 60;
+
+        return { workedHoursThisWeek, workedMinutesThisWeek };
+    };
 
     const getAttendanceForDate = (date) => {
-        return list.find(item => moment(item.member_attendance_date).isSame(date, 'day'));
+        return list.find(({ member_attendance_date }) => moment(member_attendance_date).isSame(date, 'day'));
     };
+
+    const getCurrentWeekData = () => {
+        const today = moment();
+        return weeksInMonth.find(week => today.isBetween(week.start, week.end, null, '[]'));
+    };
+
+    const currentWeekData = getCurrentWeekData();
 
     return (
         <Row>
@@ -94,8 +193,14 @@ const ERP_Attendance_ListPage = () => {
                     <div className='mb-5'>
                         <h2>근태관리</h2>
                     </div>
+                    <div className="text-center mb-3">
+                        <h4>{currentTime.format('YYYY-MM-DD HH:mm:ss')}</h4>
+                    </div>
                     <div className="mb-3">
                         <FaUser size={50} />
+                    </div>
+                    <div className="mb-3">
+                        {member_info_name ? member_info_name + "님" : "-"}
                     </div>
                     <div className="mb-3">
                         <Button variant="primary" size="lg" block onClick={onShift}>출근하기</Button>
@@ -133,26 +238,38 @@ const ERP_Attendance_ListPage = () => {
                         </Col>
                     </Row>
                 </div>
-                <Card className="mb-3">
-                    <Card.Body>
-                        <Row>
-                            <Col md={4}>
-                                <Card.Text>기본근무 (09:00 - 18:00)</Card.Text>
-                            </Col>
-                            <Col md={8} className="text-right">
-                                <Card.Text>이번주 초과: 0h 0m 0s</Card.Text>
-                                <Card.Text>이번주 잔여: 40h 0m 0s</Card.Text>
-                                <Card.Text>이번달 누적: 0h 0m 0s</Card.Text>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
+                {currentWeekData && (
+                    <Card className="mb-3">
+                        <Card.Body>
+                            <Row>
+                                <Col md={4}>
+                                    <Card.Text>기본근무 (09:00 - 18:00)</Card.Text>
+                                </Col>
+                                <Col md={8} className="text-right">
+                                    <Card.Text>이번주 초과: {calculateOvertimeThisWeek(currentWeekData).overtimeHours}h {calculateOvertimeThisWeek(currentWeekData).overtimeMinutes}m</Card.Text>
+                                    <Card.Text>이번주 잔여: {calculateRemainingTimeThisWeek(currentWeekData).remainingHours}h {calculateRemainingTimeThisWeek(currentWeekData).remainingMinutes}m</Card.Text>
+                                    <Card.Text>이번주 누적: {calculateAccumulatedTimeThisWeek(currentWeekData).workedHoursThisWeek}h {calculateAccumulatedTimeThisWeek(currentWeekData).workedMinutesThisWeek}m</Card.Text>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                    </Card>
+                )}
 
-                <Accordion defaultActiveKey="0">
+                <Accordion defaultActiveKey={currentWeekData ? weeksInMonth.findIndex(week => moment().isBetween(week.start, week.end, null, '[]')).toString() : '0'}>
                     {weeksInMonth.map((week, index) => (
                         <Accordion.Item eventKey={index.toString()} key={index}>
                             <Accordion.Header>
-                                {week.start.format('MM월 DD일')} - {week.end.format('MM월 DD일')}
+                                <div>
+                                    <span>{`${index + 1}주차 (${week.start.format('MM월 DD일')} - ${week.end.format('MM월 DD일')})`}</span>
+                                </div>
+                                <div className="ms-auto text-end">
+                                    <span>
+                                        누적: {calculateAccumulatedTimeThisWeek(week).workedHoursThisWeek}시간 {calculateAccumulatedTimeThisWeek(week).workedMinutesThisWeek}분
+                                    </span>
+                                    <span className="ms-3">
+                                        초과: {calculateOvertimeThisWeek(week).overtimeHours}시간 {calculateOvertimeThisWeek(week).overtimeMinutes}분
+                                    </span>
+                                </div>
                             </Accordion.Header>
                             <Accordion.Body>
                                 <Table striped bordered hover>
@@ -162,22 +279,23 @@ const ERP_Attendance_ListPage = () => {
                                             <th>업무시작</th>
                                             <th>업무종료</th>
                                             <th>총 근무시간</th>
-                                            <th>근무시간 상세</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Array(7).fill(0).map((_, dayIndex) => {
-                                            const currentDay = week.start.clone().add(dayIndex, 'days');
-                                            const attendance = getAttendanceForDate(currentDay);
-                                            const startTime = attendance ? moment(attendance.member_attendance_start).format('HH:mm') : '-';
-                                            const endTime = attendance ? moment(attendance.member_attendance_end).format('HH:mm') : '-';
+                                        {week.days.map((day, dayIndex) => {
+                                            const { member_attendance_start, member_attendance_end, hours_worked, minutes_worked } = getAttendanceForDate(day) || {};
+
+                                            const startTime = member_attendance_start ? moment(member_attendance_start).format('HH:mm') : '-';
+                                            const endTime = member_attendance_end ? moment(member_attendance_end).format('HH:mm') : '-';
+                                            const totalWorked = hours_worked ? `${hours_worked}h ${minutes_worked}m` : '-';
+                                            const dayOfWeek = daysOfWeek[day.day()];
+
                                             return (
-                                                <tr key={dayIndex}>
-                                                    <td>{currentDay.format('YYYY-MM-DD')}</td>
+                                                <tr key={dayIndex} className={day.isSame(moment(), 'day') ? 'table-active' : ''}>
+                                                    <td>{day.format('MM.DD')} ({dayOfWeek})</td>
                                                     <td>{startTime}</td>
                                                     <td>{endTime}</td>
-                                                    <td>{attendance ? `${attendance.hours_worked}h ${attendance.minutes_worked}m` : '-'}</td>
-                                                    <td>{attendance ? '상세 내용' : '-'}</td>
+                                                    <td>{totalWorked}</td>
                                                 </tr>
                                             );
                                         })}
@@ -192,4 +310,4 @@ const ERP_Attendance_ListPage = () => {
     )
 }
 
-export default ERP_Attendance_ListPage
+export default ERP_Attendance_ListPage;
