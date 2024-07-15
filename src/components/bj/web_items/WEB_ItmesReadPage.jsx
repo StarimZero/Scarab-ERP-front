@@ -36,7 +36,7 @@ const WEB_ItmesReadPage = () => {
         <Row>
             {items.map((item, index) => (
                 <Col xs={12} md={6} lg={6} className='mb-4' key={item.items_id}>
-                    <Card className="item-card">
+                    <Card>
                         <Row >
                             <Col xs={4}>
                                 <Card.Img  src={images[index % images.length]} />

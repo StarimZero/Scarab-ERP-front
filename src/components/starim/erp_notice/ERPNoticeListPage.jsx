@@ -14,18 +14,25 @@ const ERPNoticeListPage = () => {
     const [key, setKey] = useState("title");
     const [word, setWord] = useState("");
     const [count, setCount] = useState("0");
+    const [listNotice, setListNotice] = useState([]);
 
 
     const callAPI = async () => {
-        const res = await axios.get(`/erp/notice/list.json?key=${key}&word=${word}&page=${page}&size=${size}`)
-        console.log(res.data);
+        const res = await axios.get(`/erp/notice?key=${key}&word=${word}&page=${page}&size=${size}`)
         setList(res.data.documents);
         setCount(res.data.total);
     }
 
+    const callAPINotice = async () => {
+        const res = await axios.get(`/erp/notice/list.json`)
+        console.log(res);
+        setListNotice(res.data);
+    }
+
     useEffect(()=>{
         callAPI();
-    },[page]);
+        callAPINotice();
+    },[page, key]);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -76,7 +83,7 @@ const ERPNoticeListPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {list && list.filter((notice) => notice.notice_type === 1).map((notice) => (
+                    {listNotice && listNotice.filter((notice) => notice.notice_type === 1).map(notice => 
                         <tr key={notice.notice_id}>
                             <td className='text-center'>{notice.notice_type === 1 ? '공지' : notice.notice_type}</td>
                             <td >
@@ -90,10 +97,10 @@ const ERPNoticeListPage = () => {
                             <td ><div>{moment(notice.notice_regdate).format('yy년MM월DD일 HH시mm분ss초')}</div></td>
                             <td  className='text-center'>{notice.notice_viewcnt}</td>
                         </tr>
-                        ))}
+                        )}
                     </tbody>
                     <tbody>
-                        {list && list.map(notice=>
+                        {list && list.filter((notice) => notice.notice_type === 0).map(notice =>
                                 <tr key={notice.notice_id}>
                                     <td className='text-center'>{notice.notice_id}</td>
                                     <td >

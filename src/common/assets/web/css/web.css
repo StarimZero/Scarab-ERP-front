@@ -1,5 +1,5 @@
 
-/* Web_common에서 사용 */
+/* Web_menuPage 사용 */
 .web-dropdown1-menu {
     width: 125px; /* 드롭다운 메뉴의 너비를 조정 */
     padding: 3px; /* 여백을 줄임 */
@@ -56,7 +56,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    z-index: 2; /* 배경 이미지보다 높게 설정 */
+    z-index: 3; /* 배경 이미지보다 높게 설정 */
   
   }
 
@@ -84,19 +84,76 @@
 
 /* Web_HomePage에서 사용 */
 .web-background-image-container {
-  background-image: url('/public/images/menupage/nd.png');
   background-size: cover; /* 이미지가 요소를 덮도록 설정 */
   background-position: center; /* 이미지가 중앙에 위치하도록 설정 */
-  height: 90%; /* 높이 */
+  height: 80%; /* 높이 */
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1; /* 메뉴보다 낮게 설정 */
+  z-index: 2; /* 메뉴보다 낮게 설정 */
 
+  
 }
+
+  .web-home {
+    display: block; 
+  }
+
+  .web-body-page {
+    padding: 10rem;
+   
+  }
+
+
+
+
+
+
+
+
+
+
+/*  Web_bottomPage */
+.web-bottom-page {
+  position: relative;
+  bottom: 0px;
+}
+
+
+.web-bottom-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+
+
+.company-logo {
+  width: 100px;
+}
+
+
+
+
+ul li a {
+  color: #000000;
+  text-decoration: none;
+}
+
+
+
+.back-to-top {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-to-top a {
   
-  
+  color: #f00;
+  text-decoration: none;
+  font-size: 16px;
+}
   
 
 
@@ -118,13 +175,9 @@
     margin-top: 200px;  
   }
   
-  /* Web_bottomPage에서 사용 */
-.web-home {
-    display: block; 
-    z-index: 0;
-    position: relative;
- 
-}
+
+
+
 
 
 
@@ -193,45 +246,7 @@
 
 
 
-/*  Web_bottomPage */
-.web-bottom-page {
 
-  padding: 20px 0;
-}
-
-.web-bottom-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-
-
-
-.company-logo {
-  width: 100px;
-}
-
-
-
-
-ul li a {
-  color: #000000;
-  text-decoration: none;
-}
-
-
-
-.back-to-top {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.back-to-top a {
-  
-  color: #f00;
-  text-decoration: none;
-  font-size: 16px;
-}
 
 
 /* 채용 css*/
@@ -273,4 +288,15 @@ ul li a {
 
 
 
+/* 회사 연혁 */
+.compnay-history-img {
+  border-radius: 50px; 
+  width: 40%; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.com-history-header {
+  color: #76ca73;
+}
 
