@@ -29,6 +29,7 @@ const Web_Menu = () => {
     const vid = sessionStorage.getItem("visitor_id")
 
     return (
+
         <div>
             <div className='my-5'>   
                 <nav className="web-nav-container d-flex align-items-center justify-content-between web-nav-border">
@@ -46,8 +47,8 @@ const Web_Menu = () => {
                             {showDropdownCompany && (
                                 <div className="web-dropdown1-menu">
                                     <a className="web-dropdown1-item" href="/web/company/view">회사개요</a>
-                                    <a className="web-dropdown1-item" href="/company/histroy">회사연혁</a>
-                                    <a className="web-dropdown1-item" href="/company/ceohello">CEO인사말</a>
+                                    <a className="web-dropdown1-item" href="/web/company/history">회사연혁</a>
+                                    <a className="web-dropdown1-item" href="/web/company/ceo">CEO인사말</a>
                                 </div>
                             )}
                         </div>
@@ -59,7 +60,7 @@ const Web_Menu = () => {
                             <a className="web-nav-link web-nav-link-custom" href="#">사업장소개</a>
                             {showDropdownWorkplace && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="/workplace/domestic">국내</a>
+                                    <a className="web-dropdown1-item" href="/web/workplace/domestic">국내</a>
                                     <a className="web-dropdown1-item" href="/workplace/overseas">해외</a>
                                 </div>
                             )}
@@ -72,7 +73,7 @@ const Web_Menu = () => {
                             <a className="web-nav-link web-nav-link-custom" href="#">뉴스</a>
                             {showDropdownNews && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="/news/domestic">국내</a>
+                                    <a className="web-dropdown1-item" href="/web/news/domestic">국내</a>
                                     <a className="web-dropdown1-item" href="/news/overseas">해외</a>
                                 </div>
                             )}
@@ -158,6 +159,7 @@ const Web_Menu = () => {
             </div>
             
         </div>
+     
     );
 }
 

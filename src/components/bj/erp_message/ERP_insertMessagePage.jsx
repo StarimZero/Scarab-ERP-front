@@ -6,7 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 const ERP_insertMessagePage = () => {
   const [members, setMembers] = useState([]);
   const [page, setPage]=useState(1);
-  const [size, setSize]=useState(5);
+  const [size, setSize]=useState(10);
 
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');

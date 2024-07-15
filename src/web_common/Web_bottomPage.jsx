@@ -7,7 +7,7 @@ const Web_bottomPage = () => {
   
   return (
     <>
-      <hr />
+    <hr />
       <div className='web-bottom-page'>
 
         <div className='web-bottom-container'>
@@ -19,8 +19,8 @@ const Web_bottomPage = () => {
               <h5>회사소개</h5>
               <ul>
                 <li><a href='/web/company/view'>회사개요</a></li>
-                <li><a href='#'>회사연혁</a></li>
-                <li><a href='#'>CEO인사말</a></li>
+                <li><a href='/web/company/history'>회사연혁</a></li>
+                <li><a href='/web/company/ceo'>CEO인사말</a></li>
               </ul>
             </Col>
             <Col>

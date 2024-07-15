@@ -1,33 +1,36 @@
-.slick-arrow.slick-prev,
-.slick-arrow.slick-next {
- background: #E2E2E2; 
- width: 30px; 
- height: 30px; 
- display: flex; 
- align-items: center; 
- justify-content: center; 
- z-index: 1; 
- border-radius: 50%; 
- opacity: 50%; margin: 0px 30px;
-}
+
+@import '@fortawesome/fontawesome-free/css/all.min.css'; 
+
 .slick-prev::before,
 .slick-next::before {
- display: none;
-}
-.slick-dots {
- bottom: 5px;
-}
-.slick-dots li button::before{
- color: rgb(5, 5, 5); opacity: 100%;
- margin: 35px 6px;
-}
-.slick-dots li.slick-active button::before{
- color: rgb(6, 112, 218);
- margin: 35px 6px;
+  display: none;
 }
 
-.items-custom-image {
-  height: 300px;
-  
-  
+.slick-dots {
+  bottom: 5px;
+  margin-bottom: 2rem;
 }
+
+.slick-dots li {
+  margin: 0 6px; /* 도트 간격 */
+}
+
+.slick-dots li button {
+  width: 20px; /* 도트 크기 */
+  height: 20px; /* 도트 크기 */
+  border: none; /* 기본 테두리 제거 */
+  background: transparent; /* 배경을 투명하게 */
+  color: rgb(250, 247, 247); /* 아이콘 색상 */
+}
+
+.slick-dots li button::before {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f111'; /* FontAwesome 아이콘 코드 (원형) */
+  font-weight: 800;
+  font-size: 20px; /* 아이콘 크기 */
+}
+
+.slick-dots li.slick-active button::before {
+  color: rgb(255, 255, 255); /* 활성화된 도트 색상 */
+}
+
