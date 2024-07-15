@@ -5,7 +5,7 @@ import { Form, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const ERP_Items_Modal = ({ selectedItemId, setSelectedItemId, setSelectedItemName }) => {
+const ERP_Items_Modal = ({ items, setItems, item_index}) => {
 
     const [show, setShow] = useState(false);
 
@@ -28,18 +28,36 @@ const ERP_Items_Modal = ({ selectedItemId, setSelectedItemId, setSelectedItemNam
     },[])
 
 
+    // const onItemSelected = (item, index) => {
+    //     // setSelectedItemId(item.items_id);  // Update parent component's state
+    //     // setSelectedItemName(item.items_name);
+    //     // handleClose();  // Close the modal
+    //     console.log('..........', item.items_id);
+    //     const data=items.map((item1,idx)=> idx === index ? {
+    //         ...item1, 
+    //         items_id:item.items_id,
+    //         items_name:item.items_name
+    //     }: item)
+    //     setItems(data);
+    //     handleClose()
+    //   };
+
     const onItemSelected = (item) => {
-        setSelectedItemId(item.items_id);  // Update parent component's state
-        setSelectedItemName(item.items_name);
-        handleClose();  // Close the modal
-      };
+        const data = items.map((item1, idx)=> idx === item_index ? {...item1, sales_items_id:item.items_id, items_name:item.items_name} : item1);
 
+        items.forEach((item1, idx)=> {
+            //console.log(item.items_id);
+            console.log(item.sales_items_id, item_index);
+        })
 
+        setItems(data);
+        handleClose();
+    }
 
 
   return (
     <>
-        <Form.Control onClick={handleShow} readOnly value={selectedItemId} />
+        <Form.Control onClick={handleShow} readOnly value={items[item_index].sales_items_id}  />
 
 
         <Modal show={show} onHide={handleClose}>
@@ -57,10 +75,10 @@ const ERP_Items_Modal = ({ selectedItemId, setSelectedItemId, setSelectedItemNam
                             </tr>
                         </thead>
                         <tbody>
-                            {list && list.map(item=>
+                            {list && list.map((item, index)=>
                                 <tr  key={item.items_id} onClick={() => onItemSelected(item)}>
                                     <td  style={{ cursor: "pointer" }}>
-                                        {item.items_id}
+                                       {item.items_id}
                                     </td>
                                     <td>{item.items_name}</td>
                                     <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"} width={"50%"}/></td>
