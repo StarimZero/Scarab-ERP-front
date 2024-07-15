@@ -50,10 +50,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
      const callAPIWarehouse = async() => {
          const res = await axios.get("/erp/warehouse");
          setWarehouseList(res.data);
-         
- 
      }
- 
  
      //담당자불러오기
      const callAPIMember = async () => {
@@ -144,19 +141,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                             )}
                                         </Form.Select>
                                     </Col>
-                                    <Col lg={2}>
-                                        <div>출하창고 : </div>
-                                    </Col>
-                                    <Col>
-                                        <Form.Select value={parseInt(sales_warehouse)} name='sales_warehouse' onChange={onChangeForm}>
-                                            <option value={0}>출하창고를선택하세요</option>
-                                            {warehouseList && warehouseList.map(ware=>
-                                                <option key={ware.warehouse_id} value={ware.warehouse_id} >
-                                                    {ware.warehouse_id}
-                                                </option>
-                                            )}
-                                        </Form.Select>
-                                    </Col>
+                                    
                                 </Row>
                             </Card.Header>
                             <Card.Body>
@@ -170,6 +155,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                                     <td>단가</td>
                                                     <td>부가세</td>
                                                     <td>총금액</td>
+                                                    <td>출하창고</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -179,6 +165,16 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                                     <td><Form.Control value={sales_price} name='sales_price' onChange={onChangeForm}/></td>
                                                     <td><Form.Control value={Math.ceil(`${sales_price}` * 0.1) + "원"} /></td>
                                                     <td><Form.Control value={Math.ceil(`${sales_price}` * 1.1 * `${sales_qnt}`) + "원"} /></td>
+                                                    <td>
+                                                        <Form.Select value={parseInt(sales_warehouse)} name='sales_warehouse' onChange={onChangeForm}>
+                                                            <option value={0}>출하창고를선택하세요</option>
+                                                            {warehouseList && warehouseList.map(ware=>
+                                                                <option key={ware.warehouse_id} value={ware.warehouse_id} >
+                                                                    {ware.warehouse_id}
+                                                                </option>
+                                                            )}
+                                                        </Form.Select>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </Table>
