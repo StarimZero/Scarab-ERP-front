@@ -11,7 +11,7 @@ const ERP_Client_ListPage = () => {
     
     const callAPI = async () => {
         
-        const res = await axios.get(`/erp/client/list.json`)
+        const res = await axios.get(`/erp/client`)
         //console.log(res.data);
         setList(res.data);
 

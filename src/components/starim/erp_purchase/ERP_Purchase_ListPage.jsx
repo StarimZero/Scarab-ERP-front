@@ -9,7 +9,7 @@ const ERP_Purchase_ListPage = () => {
     const [list, setList] = useState([]);
 
     const callAPI = async() => {
-        const res = await axios.get("/erp/purchase/list.json");
+        const res = await axios.get("/erp/purchase");
         //console.log(res.data);
         setList(res.data);
 
@@ -24,11 +24,10 @@ const ERP_Purchase_ListPage = () => {
         const purchase_id = purchase.purchase_id;
         try {
             await axios.delete(`/erp/purchase/${purchase_id}`);
-            callAPI(); // 성공적인 삭제 후 목록 새로 고침
+            callAPI();
             alert("구매목록을 삭제하였습니다.");
-          } catch (error) {
-            console.error("Error deleting item:", error);
-            alert("삭제에 실패하였습니다."); // 사용자에게 오류 알림
+          } catch {
+            alert("구매품목이 존재합니다."); 
           }
     };
 
@@ -48,7 +47,6 @@ const ERP_Purchase_ListPage = () => {
                         <td>코드</td>
                         <td>이름</td>
                         <td>판매일</td>
-                        <td>판매물건</td>
                         <td>삭제</td>
                     </tr>
                 </thead>
@@ -58,7 +56,6 @@ const ERP_Purchase_ListPage = () => {
                             <td><div style={{cursor: "pointer"}}><ERP_Purchase_ReadPage purchase={purchase}/></div></td>
                             <td>{purchase.purchase_employee}</td>
                             <td>{moment(purchase.purchase_date).format('yy년MM월DD일')}</td>
-                            <td>{purchase.purchase_items_id}</td>
                             <td><Button onClick={()=>onClickPurchaseDelete(purchase)}>삭제</Button></td>
                         </tr>
                     )}
