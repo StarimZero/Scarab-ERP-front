@@ -41,6 +41,9 @@ const Web_HomePage = () => {
       </Row>
 
 
+
+
+
     <div className='web-body-page'>
       <h2 className='mb-2 text-center'>쇠똥라면 이벤트</h2>
       <img src='/images/menupage/r1.png' alt='쇠똥라면 이벤트 이미지' />
@@ -51,6 +54,8 @@ const Web_HomePage = () => {
         </Button>
       </div>
     </div>
+
+
 
     <div className='text-center'>
       <h2 className='mb-2 text-center'>쇠똥구리</h2>

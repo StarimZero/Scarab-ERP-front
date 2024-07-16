@@ -300,3 +300,100 @@ ul li a {
   color: #76ca73;
 }
 
+/* 뉴스 css*/
+.news-card {
+  height: 100%;
+  display: flex;
+}
+
+.news-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+
+
+.news-card-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  display: -moz-box; 
+  display: -ms-box; 
+  display: -o-box; 
+  display: box; 
+  -webkit-line-clamp: 3;  /*텍스트 3줄이상 못하게 하는거*/
+  -moz-line-clamp: 3;
+  -ms-line-clamp: 3; 
+  -o-line-clamp: 3; 
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical; 
+  -ms-box-orient: vertical; 
+  -o-box-orient: vertical; 
+  box-orient: vertical; 
+  margin-bottom: 1rem;
+}
+
+.news-card-text {
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -moz-box; 
+  display: -ms-box; 
+  display: -o-box; 
+  display: box; 
+  -webkit-line-clamp: 3; 
+  -moz-line-clamp: 3; 
+  -ms-line-clamp: 3; 
+  -o-line-clamp: 3; 
+  line-clamp: 3; 
+  -webkit-box-orient: vertical; 
+  -moz-box-orient: vertical; 
+  -ms-box-orient: vertical; 
+  -o-box-orient: vertical; 
+  box-orient: vertical; 
+}
+
+.news-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.news-link:hover {
+  text-decoration: none;
+}
+
+/* 제품 */
+.compnay-items-img {
+  width: 100%; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.blue-circle {
+  width: 30px;
+  height: 30px;
+  background-color: #62eedb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+
+/* 사업장소개  */
+
+.place-gsa-img {
+  width: 50%; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.map-center-plz {
+  display: flex;
+  justify-content: center;
+}

@@ -31,9 +31,11 @@ const WEB_EmpolyProcedure = () => {
             </Card.Body>
           </Card>
         </Col>
+
         <Col md={1} className='arrow-container'>
           <span className='arrow'>&rarr;</span>
         </Col>
+
         <Col lg={3}>
           <Card >
             <Card.Body>
@@ -48,9 +50,11 @@ const WEB_EmpolyProcedure = () => {
             </Card.Body>
           </Card>
         </Col>
+
         <Col md={1} className='arrow-container'>
           <span className='arrow'>&rarr;</span>
         </Col>
+        
         <Col lg={3}>
           <Card>
             <Card.Body>
