@@ -32,7 +32,11 @@ const ERP_Member_UpdateInfoPage = () => {
     const onChangeFile = (e) => {
         setFile({
             fileBytes: e.target.files[0],
-            fileName: URL.createObjectURL(e.target.files[0])
+            fileName: URL.createObjectURL(e.target.files[0]),
+        });
+        setForm({
+            ...form,
+            member_info_photo: e.target.files[0].name  // fileName을 form에 추가
         });
     }
 
@@ -66,8 +70,13 @@ const ERP_Member_UpdateInfoPage = () => {
         const errors = validateForm();
         if (Object.keys(errors).length === 0) {
             // 사진 업로드
-            
-            await axios.put('/erp/member/info', { form });
+            const formData = new FormData();
+            formData.append("byte", fileBytes);
+            Object.keys(form).forEach(key => {
+                formData.append(key, form[key]);
+                console.log(key, form[key]);
+            });
+            await axios.post(`/erp/member/info/${member_info_key}`, formData);
             window.location.href = '/erp/member/mypage';
         } else {
             setFormErrors(errors);

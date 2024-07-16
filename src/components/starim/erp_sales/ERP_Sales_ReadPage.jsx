@@ -8,6 +8,12 @@ import Modal from 'react-bootstrap/Modal';
 
 const ERP_Sales_ReadPage = ({sales}) => {
 
+    const [list, setList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [size] = useState(150);
+    const [key, setKey] = useState("title");
+    const [word, setWord] = useState("");
+
 
     const [form, setForm] = useState({
         sales_id : sales.sales_id,
@@ -30,31 +36,35 @@ const ERP_Sales_ReadPage = ({sales}) => {
      //거래처불러오기
      const [clientList, setClientList] = useState([]);
      const [warehouseList, setWarehouseList] = useState([]);
+     const [memberList, setMemberList] = useState([]);
      
      const callAPIClient = async () => {
          
-         const res = await axios.get(`/erp/client/list.json`)
+         const res = await axios.get(`/erp/client`)
          //console.log(res.data);
          setClientList(res.data);
  
      }
      
- 
+    //출하창고불러오기
      const callAPIWarehouse = async() => {
          const res = await axios.get("/erp/warehouse");
          setWarehouseList(res.data);
-         
- 
      }
  
- 
      //담당자불러오기
-     //출하창고불러오기
+     const callAPIMember = async () => {
+        const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
+        console.log(res.data.list);
+        setMemberList(res.data.list);
+
+    }
+     
  
      useEffect(()=>{
          callAPIClient();
          callAPIWarehouse();
-         
+         callAPIMember();
      },[])
 
 
@@ -72,10 +82,9 @@ const ERP_Sales_ReadPage = ({sales}) => {
             console.log(form);
             alert("수정완료")
             handleClose();
-
-
-       
     }
+
+
 
 
   return (
@@ -127,22 +136,12 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                     <Col>
                                         <Form.Select value={sales_employee} name='sales_employee' onChange={onChangeForm} >
                                             <option value={0}>담당자를선택하세요</option>
-                                            <option>test</option>
-                                        </Form.Select>
-                                    </Col>
-                                    <Col lg={2}>
-                                        <div>출하창고 : </div>
-                                    </Col>
-                                    <Col>
-                                        <Form.Select value={parseInt(sales_warehouse)} name='sales_warehouse' onChange={onChangeForm}>
-                                            <option value={0}>출하창고를선택하세요</option>
-                                            {warehouseList && warehouseList.map(ware=>
-                                                <option key={ware.warehouse_id} value={ware.warehouse_id} >
-                                                    {ware.warehouse_id}
-                                                </option>
+                                            {memberList && memberList.map(mem=>
+                                            <option key={mem.member_info_id}>{mem.member_info_id}</option>
                                             )}
                                         </Form.Select>
                                     </Col>
+                                    
                                 </Row>
                             </Card.Header>
                             <Card.Body>
@@ -156,6 +155,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                                     <td>단가</td>
                                                     <td>부가세</td>
                                                     <td>총금액</td>
+                                                    <td>출하창고</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -165,6 +165,16 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                                     <td><Form.Control value={sales_price} name='sales_price' onChange={onChangeForm}/></td>
                                                     <td><Form.Control value={Math.ceil(`${sales_price}` * 0.1) + "원"} /></td>
                                                     <td><Form.Control value={Math.ceil(`${sales_price}` * 1.1 * `${sales_qnt}`) + "원"} /></td>
+                                                    <td>
+                                                        <Form.Select value={parseInt(sales_warehouse)} name='sales_warehouse' onChange={onChangeForm}>
+                                                            <option value={0}>출하창고를선택하세요</option>
+                                                            {warehouseList && warehouseList.map(ware=>
+                                                                <option key={ware.warehouse_id} value={ware.warehouse_id} >
+                                                                    {ware.warehouse_id}
+                                                                </option>
+                                                            )}
+                                                        </Form.Select>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </Table>

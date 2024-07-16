@@ -43,10 +43,21 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
             const formData = new FormData();
             formData.append("byte", file.byte);
             await axios.post(`/erp/items/update/image/${item.items_id}`, formData);
+            console.log(formData)
             alert("이미지 변경 완료")
         }else{
             alert("사진을 변경해주세요")
         }
+    }
+
+    const onClickUpdate1 = async() => {
+        const formData = new FormData();
+        formData.append("byte", file.byte);
+        Object.keys(form).forEach(key=>{
+            formData.append(key, form[key]);
+            console.log(key, form[key]);
+        });
+        await axios.post('/erp/items/update1', formData);
     }
 
     const onClickItemUpdate = async () => {
@@ -121,6 +132,7 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
                             <Card.Footer>
                                 <div>
                                     <Button onClick={onClickItemUpdate}>수정하기</Button>
+                                    <Button onClick={onClickUpdate1}>수정하기1</Button>
                                 </div>
                             </Card.Footer>
                         </Card>

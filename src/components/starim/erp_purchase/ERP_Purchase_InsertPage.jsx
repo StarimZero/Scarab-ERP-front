@@ -6,6 +6,13 @@ import ERP_Items_Modal from '../starim_common/ERP_Items_Modal';
 const ERP_Purchase_InsertPage = () => {
 
 
+    const [list, setList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [size] = useState(5);
+    const [key, setKey] = useState("title");
+    const [word, setWord] = useState("");
+
+
     const [selectedItemId, setSelectedItemId] = useState("");
     const [selectedItemName, setSelectedItemName] = useState("");
 
@@ -21,6 +28,7 @@ const ERP_Purchase_InsertPage = () => {
     const [purchase_date, setPurchase_date ] = useState(today);
     const [purchase_warehouse, setPurchase_warehouse ] = useState("");
     const [purchase_price, setPurchase_price ] = useState("");
+    const [memberList, setMemberList] = useState([]);
 
 
 
@@ -31,13 +39,13 @@ const ERP_Purchase_InsertPage = () => {
     
     const callAPIVendor = async () => {
         
-        const res = await axios.get(`/erp/vendor/list.json`)
+        const res = await axios.get(`/erp/vendor`)
         //console.log(res.data);
         setVendorList(res.data);
 
     }
     
-
+    //출하창고불러오기
     const callAPIWarehouse = async() => {
         const res = await axios.get("/erp/warehouse");
         setWarehouseList(res.data);
@@ -46,11 +54,18 @@ const ERP_Purchase_InsertPage = () => {
 
 
     //담당자불러오기
-    //출하창고불러오기
+    const callAPIMember = async () => {
+        const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
+        console.log(res.data.list);
+        setMemberList(res.data.list);
+
+    }
+    
 
     useEffect(()=>{
         callAPIVendor();
         callAPIWarehouse();
+        callAPIMember();
     },[])
 
 
@@ -107,7 +122,9 @@ const ERP_Purchase_InsertPage = () => {
                             <Col>
                                 <Form.Select value={purchase_employee} onChange={(e)=>setPurchase_employee(e.target.value)}>
                                     <option>담당자를선택하세요</option>
-                                    <option >test</option>
+                                    {memberList && memberList.map(mem=>
+                                        <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                    )}
                                 </Form.Select>
                             </Col>
                             <Col lg={2}>

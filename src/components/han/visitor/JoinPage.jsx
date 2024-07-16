@@ -116,7 +116,7 @@ const JoinPage = () => {
             setErrors(formErrors);
             return;
         }
-        if (!window.confirm("가입할거임?")) return;
+        if (!window.confirm("가입하시겠습니까?")) return;
         try {
             console.log(form)
             await axios.post('/web/visitor/insert', form);

@@ -7,6 +7,12 @@ import Modal from 'react-bootstrap/Modal';
 
 const ERP_Purchase_ReadPage = ({purchase}) => {
 
+    const [list, setList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [size] = useState(5);
+    const [key, setKey] = useState("title");
+    const [word, setWord] = useState("");
+
 
     const [form, setForm] = useState({
         purchase_id : purchase.purchase_id,
@@ -29,31 +35,41 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
      //거래처불러오기
      const [vendorList, setVendorList] = useState([]);
      const [warehouseList, setWarehouseList] = useState([]);
+     const [memberList, setMemberList] = useState([]);
      
      const callAPIVendor = async () => {
          
-         const res = await axios.get(`/erp/vendor/list.json`)
+         const res = await axios.get(`/erp/vendor`)
          //console.log(res.data);
          setVendorList(res.data);
  
      }
      
- 
+     //출하창고불러오기
      const callAPIWarehouse = async() => {
          const res = await axios.get("/erp/warehouse");
          setWarehouseList(res.data);
-         
+         callAPIMember();
  
      }
  
  
      //담당자불러오기
-     //출하창고불러오기
+     const callAPIMember = async () => {
+        const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
+        console.log(res.data.list);
+        setMemberList(res.data.list);
+
+    }
  
+
+
+
+
      useEffect(()=>{
          callAPIVendor();
          callAPIWarehouse();
-         
+         callAPIMember();
      },[])
 
 
@@ -124,7 +140,9 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                 <Col>
                                     <Form.Select value={purchase_employee} name='purchase_employee' onChange={onChangeForm} >
                                         <option value={0}>담당자를선택하세요</option>
-                                        <option>test</option>
+                                        {memberList && memberList.map(mem=>
+                                        <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                        )}
                                     </Form.Select>
                                 </Col>
                                 <Col lg={2}>
