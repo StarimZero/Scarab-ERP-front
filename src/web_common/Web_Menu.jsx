@@ -60,8 +60,7 @@ const Web_Menu = () => {
                             <a className="web-nav-link web-nav-link-custom" href="#">사업장소개</a>
                             {showDropdownWorkplace && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="/web/workplace/domestic">국내</a>
-                                    <a className="web-dropdown1-item" href="/workplace/overseas">해외</a>
+                                    <a className="web-dropdown1-item" href="/web/workspace/world">해외/국내 지사</a>
                                 </div>
                             )}
                         </div>
@@ -74,7 +73,7 @@ const Web_Menu = () => {
                             {showDropdownNews && (
                                 <div className="web-dropdown1-menu">
                                     <a className="web-dropdown1-item" href="/web/news/domestic">국내</a>
-                                    <a className="web-dropdown1-item" href="/news/overseas">해외</a>
+                                    <a className="web-dropdown1-item" href="/web/news/overseas">해외</a>
                                 </div>
                             )}
                         </div>
@@ -99,7 +98,7 @@ const Web_Menu = () => {
                             {showDropdownProduct && (
                                 <div className="web-dropdown1-menu">
                                     <a className="web-dropdown1-item" href="/web/items/read">제품소개</a>
-                                    <a className="web-dropdown1-item" href="/product/research">연구중인제품</a>
+                                    <a className="web-dropdown1-item" href="/web/items/research">연구중인제품</a>
                                 </div>
                             )}
                         </div>

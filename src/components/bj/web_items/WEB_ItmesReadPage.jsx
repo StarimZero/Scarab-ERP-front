@@ -14,7 +14,7 @@ const WEB_ItmesReadPage = () => {
         '/images/items/coke_1.5L.jpg',
         '/images/items/coke_355ml.jpg',
         '/images/items/coke_500ml.jpg',
-        '/images/items/coke_355ml.jpg',
+        '/images/items/cokezero_355ml.jpg',
     ]);
 
 

@@ -27,7 +27,7 @@ const Web_bottomPage = () => {
               <h5>제품소개</h5>
               <ul>
                 <li><a href="/web/items/read">제품소개</a></li>
-                <li><a href='#'>연구중인제품</a></li>
+                <li><a href="/web/items/research">연구중인제품</a></li>
                 <li><a href='#'>공모전</a></li>
               </ul>
             </Col>

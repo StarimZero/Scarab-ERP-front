@@ -8,16 +8,23 @@ const ERP_Sales_ListPage = () => {
 
 
     const [list, setList] = useState([]);
+    const [listInfo, setListInfo] = useState([]);
 
     const callAPI = async() => {
-        const res = await axios.get("/erp/sales/list.json");
-        //console.log(res.data);
+        const res = await axios.get("/erp/sales");
+        console.log(res.data);
         setList(res.data);
+    }
 
+    const callAPIInfo = async() => {
+        const res = await axios.get("/erp/sales/info");
+        console.log(res.data);
+        setListInfo(res.data);
     }
 
     useEffect(()=>{
         callAPI();
+        callAPIInfo();
     },[])
 
     const onClickItemDelete = async (sales) => {
@@ -47,19 +54,17 @@ const ERP_Sales_ListPage = () => {
                 <thead>
                     <tr>
                         <td>코드</td>
-                        <td>이름</td>
+                        <td>사원</td>
                         <td>판매일</td>
-                        <td>판매물건</td>
                         <td>삭제</td>
                     </tr>
                 </thead>
                 <tbody>
                     {list && list.map(sales=>
                         <tr>
-                            <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales}/></div></td>
+                            <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales} /></div></td>
                             <td>{sales.sales_employee}</td>
                             <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
-                            <td>{sales.sales_items_id}</td>
                             <td><Button onClick={()=>onClickItemDelete(sales)}>삭제</Button></td>
                         </tr>
                     )}
