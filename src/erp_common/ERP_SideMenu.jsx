@@ -124,6 +124,14 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">창고 리스트</span>
                             </a>
                         </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/inventory/" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">재고 리스트</span>
+                            </a>
+                        </li>
 
                         
                         <li className="nav-small-cap">

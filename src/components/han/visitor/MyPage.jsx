@@ -5,6 +5,7 @@ import moment from 'moment/moment';
 const MyPage = () => {
     // 기본 폼 관련
     const vid = sessionStorage.getItem("visitor_id");
+    const [photoUrl, setPhotoUrl] = useState('');
     const [form, setForm] = useState({
         visitor_id: vid,
         visitor_pass: '',
@@ -16,7 +17,7 @@ const MyPage = () => {
         visitor_address1: '',
         visitor_address2: ''
     });
-    
+   
     const { visitor_id, visitor_pass, visitor_name, visitor_birthday,
         visitor_phone, visitor_photo, visitor_email,
         visitor_address1, visitor_address2 } = form;
@@ -26,10 +27,14 @@ const MyPage = () => {
         const url = `/web/visitor/mypage/${vid}`;
         const res = await axios.get(url);
         setForm(res.data);
+        
     };
 
     useEffect(() => {
         callAPI();
+        
+        
+
     }, []);
 
 
@@ -44,7 +49,7 @@ const MyPage = () => {
         if(!window.confirm("회원탈퇴를 진행하시겠습니까?")) return;
         const visitor_id = sessionStorage.getItem("visitor_id");
         try{
-        axios.delete(`/web/visitor/delete/${visitor_id}`)
+        axios.put(`/web/visitor/delete/${visitor_id}`)
         sessionStorage.clear();
         alert("회원탈퇴 완료. 홈으로 이동합니다.")
         window.location.href = '/web';
@@ -125,12 +130,14 @@ const MyPage = () => {
                             </Form.Group>
                             <Form.Group controlId="visitor_photo" className='mb-4'>
                                 <Form.Label>프로필사진</Form.Label>
+                                
                                 <div>
-                                    {visitor_photo ? (
-                                        <img src={visitor_photo} alt="프로필사진" style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }} />
-                                    ) : (
-                                        <h6>프로필 사진이 없습니다.</h6>
-                                    )}
+                                {visitor_photo ? 
+                                        (<img src={`${process.env.PUBLIC_URL}/images/visitor/${visitor_id}.jpg`} 
+                                        alt="프로필사진" style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }} />)
+                                        :
+                                        (<h6>프로필 사진이 없습니다.</h6>)
+                                    }
                                 </div>
                             </Form.Group>
                             <div className='text-center'>

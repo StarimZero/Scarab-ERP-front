@@ -89,11 +89,11 @@ const UpdatePage = () => {
 
         
             const formData = { ...form, visitor_id: vid }; // visitor_id를 formData에 추가
-            //setLoading(true)
-            // 텍스트 정보 업데이트
-            //await axios.post('/web/visitor/update', formData);
-            //setLoading(false)
-            // 이미지 업데이트
+            setLoading(true)
+            //텍스트 정보 업데이트
+            await axios.post('/web/visitor/update', formData);
+            setLoading(false)
+            //이미지 업데이트
             if (selectedFile) {
                 try {
                     const photoData = new FormData();
@@ -108,9 +108,8 @@ const UpdatePage = () => {
                     setLoading(true);
                     await axios.post('/web/visitor/updatePhoto', photoData);
                     setLoading(false);
-        
                     alert("저장완료! 마이페이지로 이동합니다.");
-                    // window.location.href = '/web/visitor/mypage';
+                    window.location.href = '/web/visitor/mypage';
                 } catch (error) {
                     console.error("정보수정중 오류", error);
                 }
@@ -220,8 +219,9 @@ const UpdatePage = () => {
                                     placeholder='상세주소를 입력하세요.'
                                 />
                             </Form.Group>
+                            
                             <Form.Group controlId="visitor_photo" className='mb-4'>
-                                <Form.Label>프로필 사진 업로드</Form.Label>
+                                <Form.Label>프로필 사진 변경</Form.Label>
                                 <Form.Control
                                     type="file"
                                     accept="image/*"
