@@ -19,7 +19,15 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
     const {items_name, items_photo, items_type} = form;
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        setForm({
+            items_id : item.items_id,
+            items_name : item.items_name,
+            items_photo : item.items_photo,
+            items_type : item.items_type
+        });
+    }
 
 
 
@@ -49,17 +57,7 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
             alert("사진을 변경해주세요")
         }
     }
-
-    const onClickUpdate1 = async() => {
-        const formData = new FormData();
-        formData.append("byte", file.byte);
-        Object.keys(form).forEach(key=>{
-            formData.append(key, form[key]);
-            console.log(key, form[key]);
-        });
-        await axios.post('/erp/items/update1', formData);
-    }
-
+    
     const onClickItemUpdate = async () => {
         if(items_name==="" || items_type===""){
             alert("모든정보를 입력하세요")
@@ -78,6 +76,8 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
             byte:e.target.files[0]
         });
     }
+    
+   
 
   return (
 
@@ -106,7 +106,7 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
                             <Card.Body>
                                 <InputGroup className='mb-2'>
                                     <InputGroup.Text>물품코드</InputGroup.Text>
-                                    <Form.Control value={item.items_id} name='items_id' readOnly placeholder='coke_1.5L' />
+                                    <Form.Control value={item.items_id} name='items_id' readonly placeholder='coke_1.5L' />
                                 </InputGroup>
                                 <InputGroup className='mb-2'>
                                     <InputGroup.Text>물품이름</InputGroup.Text>
@@ -132,7 +132,6 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
                             <Card.Footer>
                                 <div>
                                     <Button onClick={onClickItemUpdate}>수정하기</Button>
-                                    <Button onClick={onClickUpdate1}>수정하기1</Button>
                                 </div>
                             </Card.Footer>
                         </Card>

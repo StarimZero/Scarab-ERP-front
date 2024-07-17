@@ -12,6 +12,7 @@ const ERP_Sales_InsertPage = () => {
     const [word] = useState("");
 
 
+
     const [master, setMaster] = useState({
         sales_employee : "",
         sales_location : "",

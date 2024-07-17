@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Card, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
 import AddressModal from '../../../common/AddressModal';
+import ERPClientMemberModal from '../starim_common/ERPClientMemberModal';
 
 const ERP_Client_InsertPage = () => {
+
+
 
     const [form, setForm] = useState({
         client_name : "",
@@ -18,11 +21,13 @@ const ERP_Client_InsertPage = () => {
 
     const {client_name, client_person, client_employee, client_phone, client_address, client_credit_limit, client_fax, client_email} = form;
 
+
+
     const onChagneForm = (e) => {
         setForm({...form, [e.target.name]:e.target.value})
     }
 
-    
+
 
 
     const onClicItemsInsert =  async () => {
@@ -31,7 +36,7 @@ const ERP_Client_InsertPage = () => {
             return;
         }
         if(!window.confirm("거래처를를 등록하시겠습니까?")) return;
-        console.log();
+        console.log(form);
         await axios.post(`/erp/client`, form)
         alert("거래처등록완료")
         window.location.href="/erp/client/list"
@@ -52,7 +57,7 @@ const ERP_Client_InsertPage = () => {
                 <Card.Body>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>거래처명</InputGroup.Text>
-                        <Form.Control value={client_name} name='client_name'  placeholder='거래처명' onChange={onChagneForm}/ >
+                        <Form.Control value={client_name} name='client_name'  placeholder='거래처명' onChange={onChagneForm} />
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>거래처담당자</InputGroup.Text>
@@ -60,7 +65,7 @@ const ERP_Client_InsertPage = () => {
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>담당직원</InputGroup.Text>
-                        <Form.Control value={client_employee} name='client_employee' placeholder='담당엽업사원'onChange={onChagneForm}/>
+                        <ERPClientMemberModal form={form} setForm={setForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>전화번호</InputGroup.Text>

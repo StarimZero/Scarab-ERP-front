@@ -11,7 +11,7 @@ const ERPNoticeListPage = () => {
     const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
     const [size] = useState(5);
-    const [key, setKey] = useState("title");
+    const [key, setKey] = useState("notice_title");
     const [word, setWord] = useState("");
     const [count, setCount] = useState("0");
     const [listNotice, setListNotice] = useState([]);
@@ -37,7 +37,6 @@ const ERPNoticeListPage = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         callAPI();
-        
     }
 
 
