@@ -14,6 +14,8 @@ import MemberRouter from './jun/MemberRouter';
 import PurchaseRouter from './starim/PurchaseRouter';
 import VendorRouter from './starim/VendorRouter';
 import NoticeRouter from './starim/NoticeRouter';
+import InventoryRouter from './han/InventoryRouter';
+import EmployBBSRouter from './bj/EmployBBSRouter';
 
 
 
@@ -39,6 +41,8 @@ const ERP_RouterPage = () => {
                         <Route path='/purchase/*' element={<PurchaseRouter/>}/>
                         <Route path='/vendor/*' element={<VendorRouter/>}/>
                         <Route path='/notice/*' element={<NoticeRouter/>}/>
+                        <Route path='/inventory/*' element={<InventoryRouter/>}/>
+                        <Route path='/employ/*' element={<EmployBBSRouter/>}/>
                     </Routes>
                 </div>
             </div>

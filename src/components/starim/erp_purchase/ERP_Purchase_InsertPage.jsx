@@ -1,42 +1,38 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Row, Table } from 'react-bootstrap';
-import ERP_Items_Modal from '../starim_common/ERP_Items_Modal';
+import ERPItemsModalPurcahse from '../starim_common/ERPItemsModalPurcahse';
 
 const ERP_Purchase_InsertPage = () => {
 
-
-    const [list, setList] = useState([]);
-    const [page, setPage] = useState(1);
+    const todayDate = new Date().toISOString().split('T')[0];
+    const [page] = useState(1);
     const [size] = useState(5);
-    const [key, setKey] = useState("title");
-    const [word, setWord] = useState("");
+    const [key] = useState("title");
+    const [word] = useState("");
 
 
-    const [selectedItemId, setSelectedItemId] = useState("");
-    const [selectedItemName, setSelectedItemName] = useState("");
+    const [master, setMaster] = useState({
+        purchase_employee : "",
+        purchase_location : "",
+        purchase_date : todayDate
+    });
 
+    const [items, setItems] = useState([{
+        purchase_items_id:'',
+        purchase_qnt : "",
+        purchase_warehouse : "",
+        purchase_price : ""
+    }]);
 
-    const today = new Date().toISOString().slice(0, 10);
+ 
+
     
-
-
-    const [purchase_items_id, setPurchase_items_id] = useState("");
-    const [purchase_qnt, setPurchase_qnt] = useState("");
-    const [purchase_employee, setPurchase_employee] = useState("");
-    const [purchase_location, setPurchase_location ] = useState("");
-    const [purchase_date, setPurchase_date ] = useState(today);
-    const [purchase_warehouse, setPurchase_warehouse ] = useState("");
-    const [purchase_price, setPurchase_price ] = useState("");
-    const [memberList, setMemberList] = useState([]);
-
-
-
-
-    //거래처불러오기
-    const [vendorList, setVendorList] = useState([]);
+    const [VendorList, setVendorList] = useState([]);
     const [warehouseList, setWarehouseList] = useState([]);
+    const [memberList, setMemberList] = useState([]);
     
+    //거래처불러오기
     const callAPIVendor = async () => {
         
         const res = await axios.get(`/erp/vendor`)
@@ -44,14 +40,6 @@ const ERP_Purchase_InsertPage = () => {
         setVendorList(res.data);
 
     }
-    
-    //출하창고불러오기
-    const callAPIWarehouse = async() => {
-        const res = await axios.get("/erp/warehouse");
-        setWarehouseList(res.data);
-
-    }
-
 
     //담당자불러오기
     const callAPIMember = async () => {
@@ -60,7 +48,13 @@ const ERP_Purchase_InsertPage = () => {
         setMemberList(res.data.list);
 
     }
-    
+
+    //출하창고불러오기
+    const callAPIWarehouse = async() => {
+        const res = await axios.get("/erp/warehouse");
+        setWarehouseList(res.data);
+
+    }
 
     useEffect(()=>{
         callAPIVendor();
@@ -69,29 +63,47 @@ const ERP_Purchase_InsertPage = () => {
     },[])
 
 
-    const onItemSelect = (selectedItem) => {  // Callback function for selected item
-        setPurchase_items_id(selectedItem.items_id);  // Update sales_items_id
-        // Optionally update sales_name if needed
-      };
-
-      const onClicPurchaseInsert =  async () => {
-        if(purchase_warehouse===""){
-            alert("모든정보를 입력하세요")
-            return;
-        }
-        if(!window.confirm("구매를 등록하시겠습니까?")) return;
-        await axios.post(`/erp/purchase`, {purchase_items_id : selectedItemId, purchase_date, purchase_qnt, purchase_employee, purchase_location, purchase_date, purchase_warehouse, purchase_price} )
-        alert("구매등록완료")
-        window.location.href="/erp/purchase/list"
-
-
+    const onClickAdd = () => {
+        const item={
+            purchase_items_id:'',
+            purchase_qnt : "",
+            purchase_warehouse : "",
+            purchase_price : ""
+        };
+        setItems(items.concat(item))
     }
-    console.log(selectedItemId)
+    const onClickDelete = (index) => {
+        setItems(items.filter(( idx) => idx !== index));
+        console.log(index);
+    };
+
+    const onChangeItem = (e, index) => {
+        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:e.target.value} : item);
+        setItems(data);
+    }
+
+    const onChageMaster = (e) => {
+        const data = {...master, [e.target.name] : e.target.value};
+        setMaster(data);
+    }
+
+    const onClickSaleInsert = async () => {
+        const res = await axios.post(`/erp/purchase`, {...master, purchase_location : parseInt(master.purchase_location, 10)})
+        const purchase_id = res.data;
+        console.log(purchase_id);
+        purchase_id && await Promise.all(items.map(item => axios.post(`/erp/purchase/info`, { ...item, purchase_id,  
+            purchase_qnt: parseInt(item.purchase_qnt, 10),
+            purchase_price: parseInt(item.purchase_price, 10),
+            purchase_warehouse: parseInt(item.purchase_warehouse, 10) })));
+        alert("등록완료")
+        window.location.href="/erp/purchase/list"
+      };
 
   return (
     <>
         <Row className='justify-content-center'>
             <Col lg={7}>
+                <h1>구매작성</h1>
                 <Card>
                     <Card.Header>
                         <Row>
@@ -99,15 +111,15 @@ const ERP_Purchase_InsertPage = () => {
                                 <div>일자:</div>
                             </Col>
                             <Col >
-                                <Form.Control type='date' value={purchase_date} onChange={(e)=>setPurchase_date(e.target.value)}/>
+                                <Form.Control type='date' value={master.purchase_date} name='purchase_date' onChange={onChageMaster} />
                             </Col>
                             <Col lg={2}>
                                 거래처 : 
                             </Col>
                             <Col>
-                                <Form.Select value={purchase_location} onChange={(e)=>setPurchase_location(e.target.value)}>
+                                <Form.Select value={master.purchase_location} name='purchase_location' onChange={onChageMaster}  >
                                     <option>거래처를선택하세요</option>
-                                    {vendorList && vendorList.map(ven=>
+                                    {VendorList && VendorList.map(ven=>
                                         <option key={ven.vendor_id} >
                                             {ven.vendor_id}
                                         </option>
@@ -120,23 +132,10 @@ const ERP_Purchase_InsertPage = () => {
                                 <div>담당자:</div>
                             </Col>
                             <Col>
-                                <Form.Select value={purchase_employee} onChange={(e)=>setPurchase_employee(e.target.value)}>
-                                    <option>담당자를선택하세요</option>
+                                <Form.Select value={master.purchase_employee} name='purchase_employee' onChange={onChageMaster}>
+                                    <option >담당자를선택하세요</option>
                                     {memberList && memberList.map(mem=>
                                         <option key={mem.member_info_id}>{mem.member_info_id}</option>
-                                    )}
-                                </Form.Select>
-                            </Col>
-                            <Col lg={2}>
-                                <div>입고창고 : </div>
-                            </Col>
-                            <Col>
-                                <Form.Select value={purchase_warehouse} onChange={(e)=>setPurchase_warehouse(e.target.value)}>
-                                    <option>입고지점을선택하세요</option>
-                                    {warehouseList && warehouseList.map(ware=>
-                                        <option key={ware.warehouse_id} >
-                                            {ware.warehouse_id}
-                                        </option>
                                     )}
                                 </Form.Select>
                             </Col>
@@ -145,6 +144,8 @@ const ERP_Purchase_InsertPage = () => {
                     <Card.Body>
                         <Row>
                             <Col>
+                                <div className='text-end'><Button className='mt-3' size='sm' onClick={onClickAdd}>+</Button></div>
+                                
                                 <Table>
                                     <thead>
                                         <tr>
@@ -154,27 +155,41 @@ const ERP_Purchase_InsertPage = () => {
                                             <td>단가</td>
                                             <td>부가세</td>
                                             <td>총금액</td>
+                                            <td>입고창고</td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <ERP_Items_Modal selectedItemId={selectedItemId} setSelectedItemId={setSelectedItemId} setSelectedItemName={setSelectedItemName}/>
-                                            </td>
-                                            <td><Form.Control value={selectedItemName} onChange={(e) => setSelectedItemName(e.target.value)} /> </td>
-                                            <td><Form.Control value={purchase_qnt} onChange={(e)=>setPurchase_qnt(e.target.value)} /></td>
-                                            <td><Form.Control value={purchase_price} onChange={(e)=>setPurchase_price(e.target.value)} /></td>
-                                            <td><Form.Control value={Math.ceil(`${purchase_price}` * 0.1) + "원"} /></td>
-                                            <td><Form.Control value={Math.ceil(`${purchase_price}` * 1.1 * `${purchase_qnt}`) + "원"} /></td>
-                                        </tr>
+                                        {items && items.map((item, index)=>
+                                            <tr>
+                                                <td><ERPItemsModalPurcahse items={items} setItems={setItems} item_index={index} /></td>
+                                                <td><Form.Control value={item.items_name}/> </td>
+                                                <td><Form.Control value={item.purchase_qnt}  name="purchase_qnt" onChange={(e)=>onChangeItem(e, index)}/>
+                                                </td>
+                                                <td><Form.Control value={item.purchase_price} name="purchase_price" onChange={(e)=>onChangeItem(e, index)}/>
+                                                </td>
+                                                <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 0.1) + "원"}/></td>
+                                                <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 1.1 * `${item.purchase_qnt}`) + "원"}/></td>
+                                                <td>
+                                                    <Form.Select value={item.purchase_warehouse}  name="purchase_warehouse" onChange={(e)=>onChangeItem(e, index)}>
+                                                        <option>입고지점</option>
+                                                        {warehouseList && warehouseList.map(ware=>
+                                                            <option key={ware.warehouse_id} value={parseInt(ware.warehouse_id, 10)} >
+                                                                {ware.warehouse_id}
+                                                            </option>
+                                                        )}
+                                                    </Form.Select>
+                                                </td>
+                                                <td><div className='text-end'><Button size='sm' onClick={()=>onClickDelete(item, index)}>ㅡ</Button></div></td>
+                                            </tr>
+                                        )}
                                     </tbody>
+                                    
                                 </Table>
                             </Col>
                         </Row>
                     </Card.Body>
                     <Card.Footer>
-                        <Button className='me-3' onClick={onClicPurchaseInsert}>저장하기</Button>
-                        <Button>다시작성</Button>
+                        <Button className='me-3' onClick={onClickSaleInsert}>구매저장</Button>
                     </Card.Footer>
                 </Card>
             </Col>

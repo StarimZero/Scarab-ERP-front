@@ -111,7 +111,7 @@ const Web_Menu = () => {
                             {showDropdownEmploy && (
                                 <div className="web-dropdown1-menu">
                                     <a className="web-dropdown1-item" href="/web/employ/procedure">채용절차</a>
-                                    <a className="web-dropdown1-item" href="/web/employ/announcement">채용공고</a>
+                                    <a className="web-dropdown1-item" href="/web/employ/bbs">채용공고</a>
                                 </div>
                             )}
                         </div>

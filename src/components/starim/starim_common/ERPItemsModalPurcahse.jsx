@@ -5,7 +5,7 @@ import { Form, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const ERP_Items_Modal = ({ items, setItems, item_index}) => {
+const ERPItemsModalPurcahsejsx = ({ items, setItems, item_index}) => {
 
     const [show, setShow] = useState(false);
 
@@ -28,11 +28,11 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
     },[])
 
     const onItemSelected = (item) => {
-        const data = items.map((item1, idx)=> idx === item_index ? {...item1, sales_items_id:item.items_id, items_name:item.items_name} : item1);
+        const data = items.map((item1, idx)=> idx === item_index ? {...item1, purchase_items_id:item.items_id, items_name:item.items_name} : item1);
 
         items.forEach((item1, idx)=> {
             //console.log(item.items_id);
-            console.log(item.sales_items_id, item_index);
+            console.log(item.purchase_items_id, item_index);
         })
 
         setItems(data);
@@ -42,7 +42,7 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
 
   return (
     <>
-        <Form.Control onClick={handleShow} readOnly value={items[item_index].sales_items_id}  />
+        <Form.Control onClick={handleShow} readOnly value={items[item_index].purchase_items_id}  />
 
 
         <Modal show={show} onHide={handleClose}>
@@ -85,4 +85,4 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
   )
 }
 
-export default ERP_Items_Modal
+export default ERPItemsModalPurcahsejsx

@@ -10,7 +10,7 @@ const ERP_Vendor_ListPage = () => {
     
     const callAPI = async () => {
         
-        const res = await axios.get(`/erp/vendor/list.json`)
+        const res = await axios.get(`/erp/vendor`)
         //console.log(res.data);
         setList(res.data);
 

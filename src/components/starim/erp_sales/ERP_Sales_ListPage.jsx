@@ -20,7 +20,7 @@ const ERP_Sales_ListPage = () => {
         const res = await axios.get("/erp/sales/info");
         console.log(res.data);
         setListInfo(res.data);
-    }
+    } 
 
     useEffect(()=>{
         callAPI();
@@ -32,11 +32,10 @@ const ERP_Sales_ListPage = () => {
         const sales_id = sales.sales_id;
         try {
             await axios.delete(`/erp/sales/${sales_id}`);
-            callAPI(); // 성공적인 삭제 후 목록 새로 고침
+            callAPI(); 
             alert("물품을 삭제하였습니다.");
-          } catch (error) {
-            console.error("Error deleting item:", error);
-            alert("삭제에 실패하였습니다."); // 사용자에게 오류 알림
+          } catch {
+            alert("판매물품이 존재합니다.."); 
           }
     };
 
@@ -53,8 +52,8 @@ const ERP_Sales_ListPage = () => {
             <Table>
                 <thead>
                     <tr>
-                        <td>코드</td>
-                        <td>사원</td>
+                        <td>판매코드</td>
+                        <td>판매사원</td>
                         <td>판매일</td>
                         <td>삭제</td>
                     </tr>

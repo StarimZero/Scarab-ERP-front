@@ -124,6 +124,14 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">창고 리스트</span>
                             </a>
                         </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/inventory/" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">재고 리스트</span>
+                            </a>
+                        </li>
 
                         
                         <li className="nav-small-cap">
@@ -182,11 +190,11 @@ const ERP_SideMenu = () => {
                             <span className="hide-menu">EXTRA</span>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/employ" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-mood-happy"></i>
                                 </span>
-                                <span className="hide-menu">Icons</span>
+                                <span className="hide-menu">채용공고관리</span>
                             </a>
                         </li>
                         <li className="sidebar-item">

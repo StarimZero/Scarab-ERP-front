@@ -5,31 +5,33 @@ import ERP_Items_Modal from '../starim_common/ERP_Items_Modal';
 
 const ERP_Sales_InsertPage = () => {
 
-    const today = new Date().toISOString().slice(0, 10);
-    
+    const todayDate = new Date().toISOString().split('T')[0];
     const [page] = useState(1);
     const [size] = useState(5);
     const [key] = useState("title");
     const [word] = useState("");
 
-    const [items, setItems] = useState([{
-        sales_items_id:'',
-        sales_qnt : 0,
-        sales_warehouse : "",
-        sales_price : 0,
+
+    const [master, setMaster] = useState({
         sales_employee : "",
         sales_location : "",
-        sales_date : ""
+        sales_date : todayDate
+    });
+
+    const [items, setItems] = useState([{
+        sales_items_id:'',
+        sales_qnt : "",
+        sales_warehouse : "",
+        sales_price : ""
     }]);
 
-
+ 
 
     
     const [clientList, setClientList] = useState([]);
     const [warehouseList, setWarehouseList] = useState([]);
     const [memberList, setMemberList] = useState([]);
     
-
     //거래처불러오기
     const callAPIClient = async () => {
         
@@ -38,7 +40,6 @@ const ERP_Sales_InsertPage = () => {
         setClientList(res.data);
 
     }
-    
 
     //담당자불러오기
     const callAPIMember = async () => {
@@ -48,14 +49,12 @@ const ERP_Sales_InsertPage = () => {
 
     }
 
-
     //출하창고불러오기
     const callAPIWarehouse = async() => {
         const res = await axios.get("/erp/warehouse");
         setWarehouseList(res.data);
 
     }
-
 
     useEffect(()=>{
         callAPIClient();
@@ -64,134 +63,60 @@ const ERP_Sales_InsertPage = () => {
     },[])
 
 
-    
-    
-    const onClickSave =  async () => {
-        if(items.sales_employee===""){
-            alert("모든정보를 입력하세요")
-            return;
-        }
-        if(!window.confirm("판매를 등록하시겠습니까?")) return;
-
-        await axios.post(`/erp/sales`, items)
-        alert("판매등록완료")
-        window.location.href="/erp/sales/list"
-    }
-
-
-
-
     const onClickAdd = () => {
         const item={
             sales_items_id:'',
-            sales_qnt : 0,
+            sales_qnt : "",
             sales_warehouse : "",
-            sales_price : 0,
-            sales_employee : "",
-            sales_location : "",
-            sales_date : "",
+            sales_price : "",
         };
         setItems(items.concat(item))
     }
-    const onClickDelete = (item, index) => {
-        setItems(items.filter((items, idx) => idx !== index));
+    const onClickDelete = (index) => {
+        setItems(items.filter(( idx) => idx !== index));
         console.log(index);
     };
-    
-      
-    const [selectedEmployee, setSelectedEmployee] = useState('');
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedLocation, setSelectedLocation] = useState('');
 
-    const handleEmployeeChange = (event) => {
-      setSelectedEmployee(event.target.value);
-      // items 배열의 모든 항목의 sales_employee 값을 selectedEmployee로 업데이트
-      const newItems = items.map(item => ({
-        ...item,
-        sales_employee: event.target.value,
-      }));
-      setItems(newItems);
-    };
+    const onChangeItem = (e, index) => {
+        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:e.target.value} : item);
+        setItems(data);
+    }
 
-    const handleDateChange = (event) => {
-        setSelectedDate(event.target.value);
-              // items 배열의 모든 항목의 sales_employee 값을 selectedEmployee로 업데이트
-      const newItems = items.map(item => ({
-        ...item,
-        sales_date: event.target.value,
-      }));
-      setItems(newItems);
-      };
-
-      const handleLocationChange = (event) => {
-        setSelectedLocation(event.target.value);
-      // items 배열의 모든 항목의 sales_employee 값을 selectedEmployee로 업데이트
-      const newItems = items.map(item => ({
-        ...item,
-        sales_location: event.target.value,
-      }));
-      setItems(newItems);
-      };
-
-      const handleInputChange = (event, index, field) => {
-        const newItems = [...items];
-        let newValue = event.target.value;
-    
-        // 숫자 형태의 필드인 경우 정수로 변환
-        if (field === 'sales_qnt' || field === 'sales_price') {
-            newValue = parseInt(newValue, 10);
-    
-            // 입력 값이 숫자가 아닌 경우 처리 (예: 알림 표시, 기본값 설정 등)
-            if (isNaN(newValue)) {
-                alert('숫자만 입력해주세요.');
-                return;
-            }
-        }
-    
-        newItems[index][field] = newValue;
-        setItems(newItems);
-    };
+    const onChageMaster = (e) => {
+        const data = {...master, [e.target.name] : e.target.value};
+        setMaster(data);
+    }
 
     const onClickSaleInsert = async () => {
-        if (!window.confirm("판매를 등록하시겠습니까?")) return;
-      
-        // items 배열의 각 항목에 대한 axios.post 요청을 Promise 객체로 만들기
-        const promises = items.map(item => {
-            console.log(item);
-          return axios.post('/erp/sales', item);
-        });
-      
-        // 모든 요청을 병렬적으로 실행하고 결과를 기다리기
-        try {
-          const responses = await Promise.all(promises);
-          console.log('모든 판매 등록 완료:', responses);
-          window.location.href = '/erp/sales/list';
-        } catch (error) {
-          console.error('판매 등록 중 오류 발생:', error);
-        }
+        const res = await axios.post(`/erp/sales`, master)
+        const sales_id = res.data;
+        console.log(sales_id);
+        sales_id && await Promise.all(items.map(item => axios.post(`/erp/sales/info`, { ...item, sales_id })));
+        alert("등록완료")
+        window.location.href="/erp/sales/list"
       };
-
-
 
 
   return (
     <>
         <Row className='justify-content-center'>
             <Col lg={7}>
+                <h1>판매작성</h1>
                 <Card>
                     <Card.Header>
+                        
                         <Row>
                             <Col lg={2}>
                                 <div>일자:</div>
                             </Col>
                             <Col >
-                                <Form.Control type='date' value={selectedDate} onChange={handleDateChange} />
+                                <Form.Control type='date' value={master.sales_date} name='sales_date' onChange={onChageMaster} />
                             </Col>
                             <Col lg={2}>
                                 거래처 : 
                             </Col>
                             <Col>
-                                <Form.Select value={selectedLocation} onChange={handleLocationChange}  >
+                                <Form.Select value={master.sales_location} name='sales_location' onChange={onChageMaster}  >
                                     <option>거래처를선택하세요</option>
                                     {clientList && clientList.map(cli=>
                                         <option key={cli.client_id} >
@@ -206,7 +131,7 @@ const ERP_Sales_InsertPage = () => {
                                 <div>담당자:</div>
                             </Col>
                             <Col>
-                                <Form.Select value={selectedEmployee} onChange={handleEmployeeChange}>
+                                <Form.Select value={master.sales_employee} name='sales_employee' onChange={onChageMaster}>
                                     <option >담당자를선택하세요</option>
                                     {memberList && memberList.map(mem=>
                                         <option key={mem.member_info_id}>{mem.member_info_id}</option>
@@ -218,7 +143,7 @@ const ERP_Sales_InsertPage = () => {
                     <Card.Body>
                         <Row>
                             <Col>
-                                <div className='text-end'><Button className='mt-3' onClick={onClickAdd}>추가</Button></div>
+                                <div className='text-end'><Button className='mt-3' onClick={onClickAdd} size='sm'>+</Button></div>
                                 
                                 <Table>
                                     <thead>
@@ -230,6 +155,7 @@ const ERP_Sales_InsertPage = () => {
                                             <td>부가세</td>
                                             <td>총금액</td>
                                             <td>출하창고</td>
+                                            <td>삭제</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -237,23 +163,23 @@ const ERP_Sales_InsertPage = () => {
                                             <tr>
                                                 <td><ERP_Items_Modal items={items} setItems={setItems} item_index={index} /></td>
                                                 <td><Form.Control value={item.items_name}/> </td>
-                                                <td><Form.Control value={item.sales_qnt} onChange={(e) => handleInputChange(e, index, 'sales_qnt')} />
+                                                <td><Form.Control value={item.sales_qnt}  name="sales_qnt" onChange={(e)=>onChangeItem(e, index)}/>
                                                 </td>
-                                                <td><Form.Control value={item.sales_price} onChange={(e) => handleInputChange(e, index, 'sales_price')} />
+                                                <td><Form.Control value={item.sales_price} name="sales_price" onChange={(e)=>onChangeItem(e, index)}/>
                                                 </td>
                                                 <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1) + "원"}/></td>
                                                 <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`) + "원"}/></td>
                                                 <td>
-                                                    <Form.Select value={item.sales_warehouse}  onChange={(e) => handleInputChange(e, index, 'sales_warehouse')}>
+                                                    <Form.Select value={item.sales_warehouse}  name="sales_warehouse" onChange={(e)=>onChangeItem(e, index)}>
                                                         <option>출하지점</option>
                                                         {warehouseList && warehouseList.map(ware=>
-                                                            <option key={ware.warehouse_id} >
+                                                            <option key={ware.warehouse_id} value={parseInt(ware.warehouse_id, 10)} >
                                                                 {ware.warehouse_id}
                                                             </option>
                                                         )}
                                                     </Form.Select>
                                                 </td>
-                                                <td><div className='text-end'><Button className='mt-3' onClick={()=>onClickDelete(item, index)}>삭제</Button></div></td>
+                                                <td><div className='text-end'><Button size='sm' onClick={()=>onClickDelete(item, index)}>ㅡ</Button></div></td>
                                             </tr>
                                         )}
                                     </tbody>
@@ -263,7 +189,7 @@ const ERP_Sales_InsertPage = () => {
                         </Row>
                     </Card.Body>
                     <Card.Footer>
-                        <Button className='me-3' onClick={onClickSaleInsert}>테이블저장하기</Button>
+                        <Button className='me-3' onClick={onClickSaleInsert}>판매저장</Button>
                     </Card.Footer>
                 </Card>
             </Col>

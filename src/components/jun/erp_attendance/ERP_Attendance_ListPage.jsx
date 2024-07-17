@@ -246,9 +246,24 @@ const ERP_Attendance_ListPage = () => {
                                     <Card.Text>기본근무 (09:00 - 18:00)</Card.Text>
                                 </Col>
                                 <Col md={8} className="text-right">
-                                    <Card.Text>이번주 초과: {calculateOvertimeThisWeek(currentWeekData).overtimeHours}h {calculateOvertimeThisWeek(currentWeekData).overtimeMinutes}m</Card.Text>
-                                    <Card.Text>이번주 잔여: {calculateRemainingTimeThisWeek(currentWeekData).remainingHours}h {calculateRemainingTimeThisWeek(currentWeekData).remainingMinutes}m</Card.Text>
-                                    <Card.Text>이번주 누적: {calculateAccumulatedTimeThisWeek(currentWeekData).workedHoursThisWeek}h {calculateAccumulatedTimeThisWeek(currentWeekData).workedMinutesThisWeek}m</Card.Text>
+                                    <Card.Text>
+                                        이번주 초과 :
+                                        {calculateOvertimeThisWeek(currentWeekData).overtimeMinutes ?
+                                            ` ${calculateOvertimeThisWeek(currentWeekData).overtimeHours}h ${calculateOvertimeThisWeek(currentWeekData).overtimeMinutes}m`
+                                            : " 0h 0m"}
+                                    </Card.Text>
+                                    <Card.Text>
+                                        이번주 잔여 :
+                                        {calculateRemainingTimeThisWeek(currentWeekData).remainingMinutes ?
+                                            ` ${calculateRemainingTimeThisWeek(currentWeekData).remainingHours}h ${calculateRemainingTimeThisWeek(currentWeekData).remainingMinutes}m`
+                                            : " 0h 0m"}
+                                    </Card.Text>
+                                    <Card.Text>
+                                        이번주 누적 :
+                                        {calculateAccumulatedTimeThisWeek(currentWeekData).workedMinutesThisWeek ?
+                                            ` ${calculateAccumulatedTimeThisWeek(currentWeekData).workedHoursThisWeek}h ${calculateAccumulatedTimeThisWeek(currentWeekData).workedMinutesThisWeek}m`
+                                            : " 0h 0m"}
+                                    </Card.Text>
                                 </Col>
                             </Row>
                         </Card.Body>
@@ -264,10 +279,14 @@ const ERP_Attendance_ListPage = () => {
                                 </div>
                                 <div className="ms-auto text-end">
                                     <span>
-                                        누적: {calculateAccumulatedTimeThisWeek(week).workedHoursThisWeek}시간 {calculateAccumulatedTimeThisWeek(week).workedMinutesThisWeek}분
+                                        누적 : {calculateAccumulatedTimeThisWeek(week).workedMinutesThisWeek ?
+                                            `${calculateAccumulatedTimeThisWeek(week).workedHoursThisWeek}시간 ${calculateAccumulatedTimeThisWeek(week).workedMinutesThisWeek}분`
+                                            : "0시간 0분"}
                                     </span>
                                     <span className="ms-3">
-                                        초과: {calculateOvertimeThisWeek(week).overtimeHours}시간 {calculateOvertimeThisWeek(week).overtimeMinutes}분
+                                        초과 : {calculateOvertimeThisWeek(week).overtimeMinutes ?
+                                            `${calculateOvertimeThisWeek(week).overtimeHours}시간 ${calculateOvertimeThisWeek(week).overtimeMinutes}분`
+                                            : "0시간 0분"}
                                     </span>
                                 </div>
                             </Accordion.Header>
@@ -287,7 +306,7 @@ const ERP_Attendance_ListPage = () => {
 
                                             const startTime = member_attendance_start ? moment(member_attendance_start).format('HH:mm') : '-';
                                             const endTime = member_attendance_end ? moment(member_attendance_end).format('HH:mm') : '-';
-                                            const totalWorked = hours_worked ? `${hours_worked}h ${minutes_worked}m` : '-';
+                                            const totalWorked = minutes_worked ? `${hours_worked}h ${minutes_worked}m` : '-';
                                             const dayOfWeek = daysOfWeek[day.day()];
 
                                             return (

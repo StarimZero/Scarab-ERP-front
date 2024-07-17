@@ -35,14 +35,19 @@ const LoginPage = () => {
             const res = await axios.post('/web/visitor/login', { visitor_id, visitor_pass });
             if (res.data === 1) {
                 alert("로그인성공");
+                console.log(res.data);
                 sessionStorage.setItem('visitor_id', visitor_id);
                 window.location.href = '/web';
             } else if (res.data === 2) {
                 alert("비밀번호가 틀렸습니다.")
-            } else { alert("존재하지 않는 ID입니다.") }
+            } else if (res.data=== 3) {
+                alert("탈퇴한 회원입니다.")
+            }
+             else { alert("존재하지 않는 ID입니다.") }
         } catch (error) {
             console.error("로그인중 오류 : ", error)
         }
+        
         setLoading(false);
     }
 
