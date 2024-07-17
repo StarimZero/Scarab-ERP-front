@@ -2,6 +2,9 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ERP_HomePage from '../erp_common/ERP_HomePage'
 import '../common/assets/erp/css/styles.min.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import '../common/assets/erp/css/Slick.css'
 import ERP_SideMenu from '../erp_common/ERP_SideMenu';
 import ERP_TopMenu from '../erp_common/ERP_TopMenu';
 import SalesRouter from './starim/SalesRouter';
@@ -15,6 +18,8 @@ import PurchaseRouter from './starim/PurchaseRouter';
 import VendorRouter from './starim/VendorRouter';
 import NoticeRouter from './starim/NoticeRouter';
 import InventoryRouter from './han/InventoryRouter';
+import AccountRouter from './jun/AccountRouter';
+import TransactionRouter from './jun/TransactionRouter';
 
 
 
@@ -32,6 +37,8 @@ const ERP_RouterPage = () => {
                         <Route path='' element={<ERP_HomePage />} />
                         <Route path='member/*' element={<MemberRouter />} />
                         <Route path='attendance/*' element={<AttendanceRouter />} />
+                        <Route path='account/*' element={<AccountRouter />} />
+                        <Route path='transaction/*' element={<TransactionRouter />} />
                         <Route path='/sales/*' element={<SalesRouter/>}/>
                         <Route path='/items/*' element={<ItemsRouter/>}/>
                         <Route path='/client/*' element={<ClientRouter/>}/>
