@@ -154,6 +154,35 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">고객 리스트</span>
                             </a>
                         </li>
+
+                        <li className="nav-small-cap">
+                            <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span className="hide-menu">회계</span>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/account/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-article"></i>
+                                </span>
+                                <span className="hide-menu">자금현황</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/transaction/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-cards"></i>
+                                </span>
+                                <span className="hide-menu">대금지불</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="#" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-file-description"></i>
+                                </span>
+                                <span className="hide-menu">급여관리</span>
+                            </a>
+                        </li>
                         
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
