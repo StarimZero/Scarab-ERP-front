@@ -1,22 +1,48 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap'
+import Pagination from 'react-js-pagination';
+import '../../starim/starim_common/paging.css';
 
 const InventoryPage = () => {
 
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(5);
+    const [count, setCount] = useState(0);
+    const [list, setList] = useState([]);
+    
+    const callAPI = async() => {
+        const res2 = await axios.get('/erp/inventory/listAllTotal');
+        //console.log(res2.data);
+        setCount(res2.data);
+        const res = await axios.get(`/erp/inventory/listAll?page=${page}&size=${size}`);
+        //console.log(res.data);
+        setList(res.data);
+        
+    }
+    useEffect(()=>{
+        callAPI();
+    },[page,size])
 
-
+    const onClickMove = () => {
+        window.location.href='/erp/inventory/tradelist'
+    }
+    const onClickMove2 = () => {
+        window.location.href='/erp/inventory/warehouselist'
+    }
 
   return (
     <Row className='justify-content-center'>
         <h1>재고리스트</h1>
-        <div className='mb-2'><Button>전체거래내역</Button></div>
+        <h3 className="mb-2" onClick={()=>callAPI()} style={{cursor:'pointer'}}>전체물품목록</h3>
         <div>
-            <Button className='me-2'>전체</Button>
-            <Button className='me-2'>창고1</Button>
-            <Button className='me-2'>창고2</Button>
-            <Button className='me-2'>창고3</Button>
+            <Button className='mb-2' onClick={onClickMove}>전체거래내역</Button>
+        </div>
+        <div>
+            <Button className='me-2' onClick={onClickMove2}>창고별물품목록</Button>
         </div>
         <Col lg={10}>
+            총 상품개수 : {count}
             <Table>
                 <thead className='text-center'>
                     <tr>
@@ -28,9 +54,38 @@ const InventoryPage = () => {
                     </tr>
                 </thead>
                 <tbody className='align-middle text-center'>
-
+                    {list && list.map(inventory=>
+                        <tr key={inventory.items_id}>
+                            <td>{inventory.items_id}</td>
+                            <td>{inventory.items_name}</td>
+                            <td>
+                                {inventory.items_photo ? 
+                                        (<img src={`${process.env.PUBLIC_URL}/images/items/${inventory.items_id}.jpg`} 
+                                        alt="물품사진" style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }} />)
+                                        :
+                                        (<h6>물품 사진이 없습니다.</h6>)
+                                    }
+                            </td>
+                            <td>
+                                {inventory.items_type === 0 ? "음료" : inventory.items_type === 1 ? "면" : inventory.items_type === 2 ? "스낵" : inventory.items_type === 3 ? "간편식" : inventory.items_type}
+                            </td>
+                            <td>
+                                <Button>보기</Button>
+                            </td>
+                        </tr>
+                        )}
                 </tbody>
             </Table>
+            {count > size &&
+        <Pagination
+            activePage={page}
+            itemsCountPerPage={size}
+            totalItemsCount={count}
+            pageRangeDisplayed={5}
+            prevPageText={"‹"}
+            nextPageText={"›"}
+            onChange={ (e)=>setPage(e) }/>
+      }
         </Col>
     </Row>
   )

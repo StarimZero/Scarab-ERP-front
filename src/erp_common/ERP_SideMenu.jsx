@@ -125,7 +125,7 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="/erp/inventory/" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/inventory/itemlist" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-article"></i>
                                 </span>
