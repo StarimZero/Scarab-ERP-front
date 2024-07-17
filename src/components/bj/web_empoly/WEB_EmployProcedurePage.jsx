@@ -6,7 +6,7 @@ import { RiUserVoiceLine } from "react-icons/ri";
 import { LuCheckCircle } from "react-icons/lu";
 import { TbPointFilled } from "react-icons/tb";
 
-const WEB_EmpolyProcedure = () => {
+const WEB_EmployProcedurePage = () => {
   return (
     <div>
         <h3 className='text-center mb-4'>채용절차</h3>
@@ -107,4 +107,4 @@ const WEB_EmpolyProcedure = () => {
   );
 }
 
-export default WEB_EmpolyProcedure;
+export default WEB_EmployProcedurePage

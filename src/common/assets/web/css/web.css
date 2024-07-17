@@ -252,6 +252,8 @@ ul li a {
 /* 채용 css*/
 
 
+
+
 .procedure-step {
   display: flex;
   flex-direction: column;
@@ -285,8 +287,24 @@ ul li a {
   color: #000000;
 }
 
+.web-employ-page {
+  padding: 15rem;
+ 
+}
 
+.alink-underline {
+  color: black;
+  text-decoration: none
+}
 
+.alink-underline:hover {
+  text-decoration: underline;
+}
+
+.web-thead-br {
+  border-bottom: 2px solid rgb(124, 118, 118);
+  border-top: 2px solid rgb(238, 94, 94);
+}
 
 /* 회사 연혁 */
 .compnay-history-img {
