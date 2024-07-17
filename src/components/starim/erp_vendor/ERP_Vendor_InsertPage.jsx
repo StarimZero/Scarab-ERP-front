@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Card, Col, InputGroup, Row, Form } from 'react-bootstrap';
 import AddressModal from '../../../common/AddressModal';
+import ERPVendorMemberModal from '../starim_common/ERPVendorMemberModal';
 
 const ERP_Vendor_InsertPage = () => {
 
@@ -48,7 +49,7 @@ const ERP_Vendor_InsertPage = () => {
         <Col lg={3}>
             <Card>
                 <Card.Header>
-                    <h1>고객사등록</h1>
+                    <h1>구매처등록</h1>
                 </Card.Header>
                 <Card.Body>
                     <InputGroup className='mb-2'>
@@ -61,7 +62,7 @@ const ERP_Vendor_InsertPage = () => {
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>담당직원</InputGroup.Text>
-                        <Form.Control value={vendor_employee} name='vendor_employee' placeholder='담당엽업사원'onChange={onChagneForm}/>
+                        <ERPVendorMemberModal form={form} setForm={setForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>전화번호</InputGroup.Text>

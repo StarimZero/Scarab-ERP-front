@@ -9,6 +9,8 @@ import Modal from 'react-bootstrap/Modal';
 const ERP_Sales_ReadPage = ({sales}) => {
 
     
+ 
+    
 
     const [page, setPage] = useState(1);
     const [size] = useState(150);
@@ -32,7 +34,6 @@ const ERP_Sales_ReadPage = ({sales}) => {
     }]);
 
     const {sales_employee, sales_location,  sales_date,  sales_id } = master;
-    const {sales_items_id, sales_qnt, sales_warehouse, sales_price, sales_info_id } = items;
 
     const [show, setShow] = useState(false);
 
@@ -106,12 +107,16 @@ const ERP_Sales_ReadPage = ({sales}) => {
     }
 
 
+
     const onChangeItem = (e, index) => {
         const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:e.target.value} : item);
         setItems(data);
     }
 
 
+    const utcDate = new Date(sales_date);
+    const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * -60000);
+    const formattedDate = localDate.toISOString().substring(0, 10);
 
   return (
     <>
@@ -139,7 +144,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                         <div>일자:</div>
                                     </Col>
                                     <Col >
-                                        <Form.Control type='date' value={new Date(sales_date).toISOString().substring(0, 10)} name='sales_date' onChange={onChangeMaster}/>
+                                        <Form.Control type='date' value={formattedDate} name='sales_date' onChange={onChangeMaster}/>
                                     </Col>
                                     <Col lg={2}>
                                         거래처 : 

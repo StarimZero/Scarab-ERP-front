@@ -46,7 +46,6 @@ const ERP_Purchase_InsertPage = () => {
         const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
         console.log(res.data.list);
         setMemberList(res.data.list);
-
     }
 
     //출하창고불러오기

@@ -37,7 +37,6 @@ const ERP_ItemsInsertPage = () => {
             name:URL.createObjectURL(e.target.files[0]),
             byte:e.target.files[0]
         });
-        setForm({ ...form, items_photo: file.byte });
     }
     
 
@@ -52,10 +51,6 @@ const ERP_ItemsInsertPage = () => {
             return;
         }
         if(!window.confirm("물품를 등록하시겠습니까?")) return;
-
-        const data = new FormData();
-        data.append("file", file);
-        console.log(form);
         await axios.post(`/erp/items`, form)
         alert("아이템등록완료")
         window.location.href="/erp/items/list"
@@ -68,16 +63,23 @@ const ERP_ItemsInsertPage = () => {
 
 
     const onClickInsertTogether = async() => {
+        if(items_id==="" || items_name==="" || items_type==="" || file.byte===""){
+            alert("모든정보를 입력하세요")
+            return;
+        }
+        if(!window.confirm("물품를 등록하시겠습니까?")) return;
+        const res = await axios.post(`/erp/items`, form)
+        console.log(res.data);
+        const newItems_id = res.data;
         const formData = new FormData();
-        formData.append("byte", file.name);
-        Object.keys(form).forEach(key=>{
-            formData.append(key, form[key]);
-            console.log(key, form[key]);
-        });
-        await axios.post('/erp/items/2', formData);
-        alert("등록완료")
+        formData.append("byte", file.byte);
+        await axios.post(`/erp/items/update/image/${newItems_id}`, formData);
+        alert("아이템등록완료")
+        window.location.href="/erp/items/list"
+
     }
 
+    console.log(file);
 
 
 
@@ -115,8 +117,7 @@ const ERP_ItemsInsertPage = () => {
                 </Card.Body>
                 <Card.Footer>
                     <div>
-                        <Button onClick={onClicItemsInsert}>등록</Button>
-                        <Button onClick={onClickInsertTogether}>사진과함께등록</Button>
+                        <Button onClick={onClickInsertTogether}>등록</Button>
                     </div>
                 </Card.Footer>
             </Card>

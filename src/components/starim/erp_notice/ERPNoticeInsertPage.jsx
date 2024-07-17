@@ -11,7 +11,7 @@ const ERPNoticeInsertPage = () => {
         notice_contents :  ""
     });
     
-    const {notice_writer :  notice_title, notice_contents} = form;
+    const {notice_title, notice_contents} = form;
 
 
 
