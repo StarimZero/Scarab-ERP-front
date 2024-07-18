@@ -45,11 +45,11 @@ const ERP_ItemsListPage = () => {
         const items_id = item.items_id;
         try {
             await axios.delete(`/erp/items/${items_id}`);
-            callAPI(); // 성공적인 삭제 후 목록 새로 고침
+            callAPI(); 
             alert("물품을 삭제하였습니다.");
           } catch (error) {
             console.error("Error deleting item:", error);
-            alert("삭제에 실패하였습니다."); // 사용자에게 오류 알림
+            alert("삭제에 실패하였습니다."); 
           }
     };
 
