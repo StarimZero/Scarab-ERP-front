@@ -1,19 +1,27 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Row, Table } from 'react-bootstrap'
+import { Button, Col, Form, FormControl, InputGroup, Row, Table } from 'react-bootstrap'
 import ERP_Sales_ReadPage from './ERP_Sales_ReadPage';
 import moment from 'moment';
+import Pagination from "react-js-pagination";
+import '../starim_common/paging.css';
 
 const ERP_Sales_ListPage = () => {
 
 
+    const [page, setPage] = useState(1);
+    const [size] = useState(5);
+    const [key, setKey] = useState("sales_id");
+    const [word, setWord] = useState("");
+    const [count, setCount] = useState("0");
     const [list, setList] = useState([]);
     const [listInfo, setListInfo] = useState([]);
 
     const callAPI = async() => {
-        const res = await axios.get("/erp/sales");
+        const res = await axios.get(`/erp/sales?key=${key}&word=${word}&page=${page}&size=${size}`);
         console.log(res.data);
-        setList(res.data);
+        setList(res.data.documents);
+        setCount(res.data.total);
     }
 
     const callAPIInfo = async() => {
@@ -44,10 +52,39 @@ const ERP_Sales_ListPage = () => {
         window.location.href="/erp/sales/insert";
     }
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        callAPI();
+        setPage(1);
+    }
+    
+
   return (
+    <>
     <Row className='justify-content-center'>
     <h1>판매리스트</h1>
     <div><Button onClick={onClickSaleInsert}>판매입력하기</Button></div>
+        <Row className='justify-content-center'>
+            <Col lg={3}>
+                <form onSubmit={onSubmit}>
+                    <InputGroup>
+                        <Form.Select value={key} onChange={(e)=>setKey(e.target.value)}>
+                            <option value="sales_id">코드</option>
+                            <option value="sales_employee">아이디</option>
+                            <option value="member_info_name">이름</option>
+                            <option value="sales_date">날짜</option>
+                        </Form.Select>
+                        <FormControl placeholder='검색어를 입력하세요' value={word} onChange={(e)=>setWord(e.target.value)}/>
+                        <Button type="submit" size="sm" variant='outline-primary'>검색</Button>
+                    </InputGroup>
+                </form>
+            </Col>
+            <Col lg={2}>
+                <div className='align-middle mt-2'>
+                    <span className='me-3'>검색수 : {count}</span>
+                </div>
+            </Col>
+        </Row>
         <Col lg={5}>
             <Table>
                 <thead>
@@ -62,7 +99,7 @@ const ERP_Sales_ListPage = () => {
                     {list && list.map(sales=>
                         <tr>
                             <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales} /></div></td>
-                            <td>{sales.sales_employee}</td>
+                            <td>{sales.sales_employee}({sales.member_info_name})</td>
                             <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
                             <td><Button onClick={()=>onClickItemDelete(sales)}>삭제</Button></td>
                         </tr>
@@ -71,6 +108,17 @@ const ERP_Sales_ListPage = () => {
             </Table>
         </Col>
     </Row>
+    {count > size && 
+        <Pagination
+        activePage={page}
+        itemsCountPerPage={size}
+        totalItemsCount={count}
+        pageRangeDisplayed={5}
+        prevPageText={"‹"}
+        nextPageText={"›"}
+        onChange={(e)=>setPage(e)}/>
+    } 
+    </>
   )
 }
 

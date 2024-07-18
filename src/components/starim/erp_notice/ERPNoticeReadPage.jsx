@@ -47,7 +47,7 @@ const ERPNoticeReadPage = () => {
 
   return (
     <Row className='justify-content-center'>
-        <Col lg={4}>
+        <Col lg={5}>
             <Card>
                 <CardHeader className='text-center'>
                     <Row>

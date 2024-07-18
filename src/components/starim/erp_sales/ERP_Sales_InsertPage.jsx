@@ -7,7 +7,7 @@ const ERP_Sales_InsertPage = () => {
 
     const todayDate = new Date().toISOString().split('T')[0];
     const [page] = useState(1);
-    const [size] = useState(5);
+    const [size] = useState(35);
     const [key] = useState("title");
     const [word] = useState("");
 
@@ -120,8 +120,8 @@ const ERP_Sales_InsertPage = () => {
                                 <Form.Select value={master.sales_location} name='sales_location' onChange={onChageMaster}  >
                                     <option>거래처를선택하세요</option>
                                     {clientList && clientList.map(cli=>
-                                        <option key={cli.client_id} >
-                                            {cli.client_id}
+                                        <option key={cli.client_id} value={cli.client_id}>
+                                            {cli.client_id}({cli.client_name})
                                         </option>
                                     )}
                                 </Form.Select>
@@ -134,8 +134,8 @@ const ERP_Sales_InsertPage = () => {
                             <Col>
                                 <Form.Select value={master.sales_employee} name='sales_employee' onChange={onChageMaster}>
                                     <option >담당자를선택하세요</option>
-                                    {memberList && memberList.map(mem=>
-                                        <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                    {memberList && memberList.map(mem=> mem.dept_name.includes("영업") &&
+                                        <option key={mem.member_info_id} value={mem.member_info_id}>{mem.member_info_id}({mem.member_info_name})</option>
                                     )}
                                 </Form.Select>
                             </Col>
@@ -175,7 +175,7 @@ const ERP_Sales_InsertPage = () => {
                                                         <option>출하지점</option>
                                                         {warehouseList && warehouseList.map(ware=>
                                                             <option key={ware.warehouse_id} value={parseInt(ware.warehouse_id, 10)} >
-                                                                {ware.warehouse_id}
+                                                                {ware.warehouse_id}({ware.warehouse_name})
                                                             </option>
                                                         )}
                                                     </Form.Select>
