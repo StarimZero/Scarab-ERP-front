@@ -119,6 +119,13 @@ const ERP_ItemsInsertPage = () => {
                     <div>
                         <Button onClick={onClickInsertTogether}>등록</Button>
                     </div>
+                    <div>
+                        <h5>작성요령</h5>
+                        <p>물품코드 : 영어이름_규격</p>
+                        <p>물품이름 : 한글이름_규격</p>
+                        <p>예시 - baehondong_4 // 배홍동_4개입</p>
+                    </div>
+                    
                 </Card.Footer>
             </Card>
         </Col>

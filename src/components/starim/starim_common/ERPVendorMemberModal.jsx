@@ -12,7 +12,7 @@ const ERPVendorMemberModal = ({form, setForm}) => {
     const handleShow = () => setShow(true);
 
     const [page] = useState(1);
-    const [size] = useState(10);
+    const [size] = useState(25);
     const [key] = useState("");
     const [word] = useState("");
     const [memberList, setMemberList] = useState([]);
@@ -57,7 +57,7 @@ const ERPVendorMemberModal = ({form, setForm}) => {
                                 </tr>
                             </TableHead>
                             <TableBody>
-                                {memberList && memberList.map(mem=>
+                                {memberList && memberList.map(mem=>  mem.dept_name.includes("경영") &&
                                 <tr key={mem.member_info_id} onClick={() => onMemberSelected(mem)}>
                                     <td>{mem.member_info_key}</td>
                                     <td>{mem.member_info_id}</td>
