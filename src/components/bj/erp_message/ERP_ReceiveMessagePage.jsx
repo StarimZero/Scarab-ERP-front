@@ -78,7 +78,6 @@ const clickRead = async(message_id) => {
 }
 
 
-
   return (
     <div>
       <a href='/erp/message'>

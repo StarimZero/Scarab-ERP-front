@@ -142,8 +142,8 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                         <Form.Select value={purchase_location} name='purchase_location' onChange={onChangeMaster}>
                                             <option value={0}>거래처를선택하세요</option>
                                             {vendorList && vendorList.map(ven=>
-                                                <option key={ven.vendor_id} >
-                                                    {ven.vendor_id}
+                                                <option key={ven.vendor_id} value={ven.vendor_id} >
+                                                    {ven.vendor_id}({ven.vendor_name})
                                                 </option>
                                             )}
                                         </Form.Select>
@@ -157,7 +157,7 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                         <Form.Select value={purchase_employee} name='purchase_employee' onChange={onChangeMaster} >
                                             <option value={0}>담당자를선택하세요</option>
                                             {memberList && memberList.map(mem=>
-                                            <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                            <option key={mem.member_info_id} value={mem.member_info_id}>{mem.member_info_id}({mem.member_info_name})</option>
                                             )}
                                         </Form.Select>
                                     </Col>
@@ -192,7 +192,7 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                                             <option value={0}>입고창고를선택하세요</option>
                                                             {warehouseList && warehouseList.map(ware=>
                                                                 <option key={ware.warehouse_id} value={ware.warehouse_id} >
-                                                                    {ware.warehouse_id}
+                                                                    {ware.warehouse_id}({ware.warehouse_name})
                                                                 </option>
                                                             )}
                                                         </Form.Select>
