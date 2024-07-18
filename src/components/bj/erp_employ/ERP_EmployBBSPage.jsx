@@ -1,6 +1,8 @@
 import axios from 'axios'
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import { Button, Table } from 'react-bootstrap';
+import { Button, InputGroup, Table, Form, Row, Col } from 'react-bootstrap';
+
 
 const ERP_EmployBBSPage = () => {
     const [count, setCount] = useState(0);
@@ -16,12 +18,14 @@ const ERP_EmployBBSPage = () => {
         const res = await axios.get(`/employ/bbs/list.json?key=${key}&word=${word}&page=${page}&size=${size}`);
         console.log(res.data);
         setList(res.data.list);
+        setCount(res.data.total);
     }
 
     const callAPIlist = async() => {
         const res = await axios.get(`/employ/bbs/listtable`)
         console.log(res.data);
         setListtable(res.data);
+      
 
     }
     useEffect(()=>{
@@ -29,7 +33,10 @@ const ERP_EmployBBSPage = () => {
         callAPIlist();
     }, []);
 
-
+    const onSubmit = (e) => {
+        e.preventDefault();
+        callAPI();
+      }
 
 
 
@@ -37,9 +44,26 @@ const ERP_EmployBBSPage = () => {
     <div>
         {sessionStorage.getItem('member_info_id') && 
         <div className='text-end'>
+            <Row>
+                <Col  xs={8} md={5} lg={4}>
+                <form onSubmit={onSubmit}>
+                <InputGroup>
+                    <Form.Select className='me-2' value={key} onChange={(e)=>setKey(e.target.value)}>
+                        <option value="employ_bbs_title">제목</option>
+                        <option value="employ_bbs_contents">내용</option>
+                    </Form.Select>
+                    <Form.Control placeholder='검색어'  value={word} onChange={(e)=>setWord(e.target.value)}/>
+                    <Button type='submit'>검색</Button>
+                </InputGroup>
+            </form>
+                </Col>
+            </Row>
+            
+
             <a href='/erp/employ/insert'>
                 <Button variant='outline-primary btn-sm'>글쓰기</Button>
             </a>
+           
         </div>
        }
  
@@ -63,7 +87,7 @@ const ERP_EmployBBSPage = () => {
                              </a>   
                          </td> 
                      <td>{bbs.employ_bbs_admin}</td>
-                     <td>{bbs.employ_bbs_regdate}</td>
+                     <td>{moment(bbs.employ_bbs_regdate).format('yy년MM월DD일 HH시mm분')}</td>
                      <td>{bbs.employ_bbs_viewcnt}</td>
                  </tr>
                 )}
@@ -78,7 +102,7 @@ const ERP_EmployBBSPage = () => {
                                 </a>   
                             </td> 
                         <td>{bbs.employ_bbs_admin}</td>
-                        <td>{bbs.employ_bbs_regdate}</td>
+                        <td>{moment(bbs.employ_bbs_regdate).format('yy년MM월DD일 HH시mm분')}</td>
                         <td>{bbs.employ_bbs_viewcnt}</td>
                     </tr>
                 )}

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
+import moment from 'moment';
 
 const ERP_EmployBBSReadPage = () => {
     const { employ_bbs_id } = useParams();
@@ -58,7 +59,7 @@ const ERP_EmployBBSReadPage = () => {
                 <Col>
                     <div className='ms-5'>
                         <strong>{list.employ_bbs_title}</strong>
-                        <div style={{ fontSize: '11px' }}>등록일: {list.employ_bbs_regdate}</div>
+                        <div style={{ fontSize: '11px' }}>등록일: {moment(list.employ_bbs_regdate).format('yy년MM월DD일 HH시mm분')}</div>
                         <div style={{ fontSize: '11px' }}>조회수: {list.employ_bbs_viewcnt}</div>
                     </div>
 

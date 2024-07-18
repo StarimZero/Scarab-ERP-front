@@ -1,8 +1,7 @@
 import axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap';
-import { IoMdMail } from "react-icons/io";
-import { IoMdMailOpen } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import Pagination from 'react-js-pagination';
 
@@ -22,7 +21,7 @@ const ERP_SendMessagePage = () => {
   const callAPI = async() => {
     const res=await axios.get(`/erp/sendmessage/list/${uid}?page=${page}&size=${size}`);
     const data= res.data.list.map(msg=>msg && {...msg, checked:false});
-    console.log(data);
+    console.log(res.data);
     setMessages(data);
     setCount(res.data.total);
   }
@@ -84,7 +83,6 @@ const ERP_SendMessagePage = () => {
               <Button onClick={onDelete} className='ms-2 btn-sm' variant='outline-danger'>삭제</Button>
             </td>
             <td>mid</td>
-            <td>읽음</td>
             <td>받은사람</td>
             <td>제목</td>
             <td>발신일</td>
@@ -102,10 +100,6 @@ const ERP_SendMessagePage = () => {
 
                       <td>{msg.message_id}</td>
 
-                      <td>
-                          {msg.message_readdate ? <IoMdMailOpen  color='deepskyblue'/> : <IoMdMail color='deepskyblue'/>}
-                      </td>
-
                       <td>{msg.message_receiver}</td>
 
                       <td>
@@ -114,7 +108,7 @@ const ERP_SendMessagePage = () => {
                             </span>
                       </td>
                       
-                      <td>{msg.message_senddate}</td>
+                      <td>{moment(msg.message_senddate).format('yy년MM월DD일 HH시mm분')}</td>
                     </tr>
           ))}
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import {Button, Col, InputGroup, Row, Table, Form } from 'react-bootstrap'
-import { Key } from 'react-feather';
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
@@ -23,7 +23,7 @@ const ERP_ReceiveMessagePage = () => {
   const callAPI = async() => {
     const res=await axios.get(`/erp/receivemessage/list/${uid}?key=${key}&word=${word}&page=${page}&size=${size}`);
     const data= res.data.list.map(msg=>msg && {...msg, checked:false});
-    console.log(data);
+    console.log(res.data);
     setMessages(data);
     setCount(res.data.total);
   }
@@ -77,35 +77,14 @@ const clickRead = async(message_id) => {
   }
 }
 
-const onSubmit = (e) => {
-  e.preventDefault();
-  callAPI();
-}
+
 
   return (
     <div>
       <a href='/erp/message'>
       <IoIosArrowBack /> 메신저
       </a>
-      
-      <Row className="mb-3">
-        <Col xs={8} md={5} lg={4}>
           <div>받은메일함</div>
-        </Col>
-        <Col xs={4} md={7} lg={8} className="d-flex justify-content-end">
-          <form className="d-flex" onSubmit={onSubmit}>
-            <InputGroup>
-              <Form.Select className='me-2' value={Key} onChange={(e)=>setKey(e.target.value)} style={{ maxWidth: '150px' }}>
-                <option value="message_title">제목</option>
-                <option value="message_content">내용</option>
-                <option value="message_receiver">작성자이름</option>
-              </Form.Select>
-              <Form.Control value={word} onChange={(e)=>setWord(e.target.value)} placeholder='검색어' />
-              <Button type='submit'>검색</Button>
-            </InputGroup>
-          </form>
-        </Col>
-      </Row>
        <hr/>
        <Table >
         <thead>
@@ -146,7 +125,7 @@ const onSubmit = (e) => {
                             </span>
                       </td>
 
-                      <td>{msg.message_senddate}</td>
+                      <td>{moment(msg.message_senddate).format('yy년MM월DD일 HH시mm분')}</td>
                     </tr>
           ))}
 
