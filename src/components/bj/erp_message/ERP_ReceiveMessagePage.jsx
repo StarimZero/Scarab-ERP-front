@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import {Button, Table } from 'react-bootstrap'
+import {Button, Col, InputGroup, Row, Table, Form } from 'react-bootstrap'
+import { Key } from 'react-feather';
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import Pagination from 'react-js-pagination';
+
 
 const ERP_ReceiveMessagePage = () => {
   const [messages, setMessages] = useState([]);
@@ -12,12 +14,14 @@ const ERP_ReceiveMessagePage = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
   const [count, setCount] = useState(0);
+  const [key, setKey] = useState('member_info_receiver');
+  const [word, setWord] = useState('');
 
 
   const uid=sessionStorage.getItem('member_info_id');
 
   const callAPI = async() => {
-    const res=await axios.get(`/erp/receivemessage/list/${uid}?page=${page}&size=${size}`);
+    const res=await axios.get(`/erp/receivemessage/list/${uid}?key=${key}&word=${word}&page=${page}&size=${size}`);
     const data= res.data.list.map(msg=>msg && {...msg, checked:false});
     console.log(data);
     setMessages(data);
@@ -73,12 +77,35 @@ const clickRead = async(message_id) => {
   }
 }
 
+const onSubmit = (e) => {
+  e.preventDefault();
+  callAPI();
+}
+
   return (
     <div>
       <a href='/erp/message'>
       <IoIosArrowBack /> 메신저
       </a>
-        <div>받은메일함</div>
+      
+      <Row className="mb-3">
+        <Col xs={8} md={5} lg={4}>
+          <div>받은메일함</div>
+        </Col>
+        <Col xs={4} md={7} lg={8} className="d-flex justify-content-end">
+          <form className="d-flex" onSubmit={onSubmit}>
+            <InputGroup>
+              <Form.Select className='me-2' value={Key} onChange={(e)=>setKey(e.target.value)} style={{ maxWidth: '150px' }}>
+                <option value="message_title">제목</option>
+                <option value="message_content">내용</option>
+                <option value="message_receiver">작성자이름</option>
+              </Form.Select>
+              <Form.Control value={word} onChange={(e)=>setWord(e.target.value)} placeholder='검색어' />
+              <Button type='submit'>검색</Button>
+            </InputGroup>
+          </form>
+        </Col>
+      </Row>
        <hr/>
        <Table >
         <thead>

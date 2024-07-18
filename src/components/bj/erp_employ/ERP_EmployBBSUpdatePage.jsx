@@ -32,7 +32,7 @@ const ERP_EmployBBSUpdatePage = () => {
     const onSubmit = async(e) => {
         e.preventDefault();
         if(!window.confirm('변경한 내용을 수정하실래요?')) return;
-        await axios.post('/employ/bbs/update', list);
+        await axios.put('/employ/bbs/update', list);
         window.location.href=`/erp/employ/read/${employ_bbs_id}`;
     }
 

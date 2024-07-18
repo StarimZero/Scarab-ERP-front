@@ -23,7 +23,7 @@ const ERP_EmployBBSReadPage = () => {
 
     const onDelete = async()=> {
         if(!window.confirm(`${list.employ_bbs_id}번 채용공고를 삭제하실래요?`)) return;
-        await axios.post(`/employ/bbs/delete/${list.employ_bbs_id}`);
+        await axios.delete(`/employ/bbs/${list.employ_bbs_id}`);
         alert("삭제완료");
         window.location.href='/erp/employ';
     }
