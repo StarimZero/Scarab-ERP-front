@@ -1,25 +1,29 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
+import { Button, Col, Form, FormControl, InputGroup, Row, Table } from 'react-bootstrap'
 import Pagination from 'react-js-pagination';
 import '../../starim/starim_common/paging.css';
+import { useAsyncError } from 'react-router-dom';
 
 const InventoryPage = () => {
 
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(5);
+    const [total, setTotal] = useState(0);
     const [count, setCount] = useState(0);
     const [key, setKey] = useState("");
-    const [word, setWord] = useState("");
+    const [word, setWord] = useState('');
     const [list, setList] = useState([]);
-    
+    const [isSearch, setIsSearch] = useState(false);
+
+
     const callAPI = async() => {
-        const res2 = await axios.get('/erp/inventory/listAllTotal');
-        //console.log(res2.data);
-        setCount(res2.data);
-        const res = await axios.get(`/erp/inventory/listAll?page=${page}&size=${size}`);
+
+        const res = await axios.get(`/erp/inventory/listAll?key=${key}&word=${word}&page=${page}&size=${size}`);
         //console.log(res.data);
-        setList(res.data);
+        setCount(res.data.count);
+        setList(res.data.documents);
+        setIsSearch(key === "" && word === "");
         
     }
     useEffect(()=>{
@@ -39,6 +43,7 @@ const InventoryPage = () => {
         setPage(1);
     }
 
+
   return (
     <>
     <Row className='justify-content-center'>
@@ -48,18 +53,25 @@ const InventoryPage = () => {
             <Button className='mb-2' onClick={onClickMove}>전체거래내역</Button>
         </div>
         <div>
-            <Button className='me-2' onClick={onClickMove2}>창고별물품목록</Button>
+            <Button className='me-2 mb-2' onClick={onClickMove2}>창고별물품목록</Button>
         </div>
-        총 상품개수 : {count}
-        <form>
-            <InputGroup>
-                <Form.select value={key} onChange={(e)=>setKey(e.target.value)}>
-                    <option value="">코드</option>
-                    <option value="">이름</option>
-                    <option value="">타입</option>
-                </Form.select>
-            </InputGroup>
-        </form>
+        <div className='mb-2'>
+            <Col lg={3}>
+                <form onSubmit={onSubmit} className='mb-2'>
+                    <InputGroup>
+                        <Form.Select value={key} onChange={(e)=>setKey(e.target.value)} style={{width:'30%'}}>
+                            <option value="items_id">코드</option>
+                            <option value="items_name">이름</option>
+                            <option value="items_type">타입</option>
+                        </Form.Select>
+                        <FormControl placeholder='검색어를 입력하세요' value={word}
+                            onChange={(e)=>setWord(e.target.value)} style={{width:'55%'}}/>
+                        <Button type="submit" style={{width:'15%'}}>검색</Button>
+                    </InputGroup>
+                </form>
+            </Col>
+            {isSearch ? ("전체거래내역 : " + count + " 건") : ("검색결과 : " + count + " 건")}
+        </div>
     </Row>
     <Row className='justify-content-center'>
         <Col lg={10}>
@@ -117,3 +129,4 @@ const InventoryPage = () => {
 }
 
 export default InventoryPage
+
