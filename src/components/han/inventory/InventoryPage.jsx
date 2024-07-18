@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Row, Table } from 'react-bootstrap'
+import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
 import Pagination from 'react-js-pagination';
 import '../../starim/starim_common/paging.css';
 
@@ -9,6 +9,8 @@ const InventoryPage = () => {
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(5);
     const [count, setCount] = useState(0);
+    const [key, setKey] = useState("");
+    const [word, setWord] = useState("");
     const [list, setList] = useState([]);
     
     const callAPI = async() => {
@@ -31,7 +33,14 @@ const InventoryPage = () => {
         window.location.href='/erp/inventory/warehouselist'
     }
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        callAPI();
+        setPage(1);
+    }
+
   return (
+    <>
     <Row className='justify-content-center'>
         <h1>재고리스트</h1>
         <h3 className="mb-2" onClick={()=>callAPI()} style={{cursor:'pointer'}}>전체물품목록</h3>
@@ -41,8 +50,19 @@ const InventoryPage = () => {
         <div>
             <Button className='me-2' onClick={onClickMove2}>창고별물품목록</Button>
         </div>
+        총 상품개수 : {count}
+        <form>
+            <InputGroup>
+                <Form.select value={key} onChange={(e)=>setKey(e.target.value)}>
+                    <option value="">코드</option>
+                    <option value="">이름</option>
+                    <option value="">타입</option>
+                </Form.select>
+            </InputGroup>
+        </form>
+    </Row>
+    <Row className='justify-content-center'>
         <Col lg={10}>
-            총 상품개수 : {count}
             <Table>
                 <thead className='text-center'>
                     <tr>
@@ -50,6 +70,7 @@ const InventoryPage = () => {
                         <td>이름</td>
                         <td>사진</td>
                         <td>타입</td>
+                        <td>재고확인</td>
                         <td>최근거래내역</td>
                     </tr>
                 </thead>
@@ -72,6 +93,9 @@ const InventoryPage = () => {
                             <td>
                                 <Button>보기</Button>
                             </td>
+                            <td>
+                                <Button>보기</Button>
+                            </td>
                         </tr>
                         )}
                 </tbody>
@@ -88,6 +112,7 @@ const InventoryPage = () => {
       }
         </Col>
     </Row>
+    </>
   )
 }
 
