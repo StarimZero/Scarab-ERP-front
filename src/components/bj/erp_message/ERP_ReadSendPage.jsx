@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IoIosArrowBack } from "react-icons/io";
 import { Card } from 'react-bootstrap';
+import moment from 'moment';
 
 const ERP_ReadSendPage = () => {
     const {message_id} = useParams();
@@ -36,7 +37,7 @@ const ERP_ReadSendPage = () => {
             받은사람: {list.message_receiver}
         </div>
         <div className='mt-2' style={{fontSize:'10px'}}>
-            {list.message_senddate}
+        {moment(list.message_senddate).format('yy년MM월DD일 HH시mm분')}
         </div>
    
         <hr/>

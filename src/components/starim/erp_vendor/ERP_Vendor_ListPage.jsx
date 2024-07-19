@@ -11,7 +11,7 @@ const ERP_Vendor_ListPage = () => {
     const callAPI = async () => {
         
         const res = await axios.get(`/erp/vendor`)
-        //console.log(res.data);
+        console.log(res.data);
         setList(res.data);
 
     }
@@ -62,7 +62,7 @@ const ERP_Vendor_ListPage = () => {
                         <tr>
                             <td><div style={{cursor: "pointer"}}><ERP_Vendor_ReadPage vendor={vendor}/></div></td>
                             <td>{vendor.vendor_name}</td>
-                            <td>{vendor.vendor_employee}</td>
+                            <td>{vendor.vendor_employee}({vendor.member_info_name})</td>
                             <td>{vendor.vendor_phone}</td>
                             <td><Button onClick={()=>onClickVendorDelete(vendor)}>삭제</Button></td>
                         </tr>

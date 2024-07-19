@@ -22,8 +22,8 @@ const ERP_ItemsListPage = () => {
 
     const [list, setList] = useState([]);
 
-    const callAPI = async() => {
-        const res = await axios.get(`/erp/items?key=${key}&word=${word}&page=${page}&size=${size}`);
+    const callAPI = async(searchWord) => {
+        const res = await axios.get(`/erp/items?key=${key}&word=${searchWord}&page=${page}&size=${size}`);
         console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
@@ -32,7 +32,7 @@ const ERP_ItemsListPage = () => {
     }
 
     useEffect(()=>{
-        callAPI();
+        callAPI("");
     },[page])
 
 
@@ -55,9 +55,30 @@ const ERP_ItemsListPage = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        callAPI();
-        setPage(1);
+
+    let searchWord = word;
+    if (key === "items_type") {
+        switch (word) {
+            case "음료":
+                searchWord = "0";
+                break;
+            case "면":
+                searchWord = "1";
+                break;
+            case "스낵":
+                searchWord = "2";
+                break;
+            case "간편식":
+                searchWord = "3";
+                break;
+            default:
+                break;
+        }
     }
+    callAPI(searchWord);
+    setPage(1);
+    }
+    
 
 
 

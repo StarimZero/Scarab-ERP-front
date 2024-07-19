@@ -17,23 +17,26 @@ const MyPage = () => {
         visitor_address1: '',
         visitor_address2: ''
     });
-   
+
     const { visitor_id, visitor_pass, visitor_name, visitor_birthday,
         visitor_phone, visitor_photo, visitor_email,
         visitor_address1, visitor_address2 } = form;
     const fbirth = moment(visitor_birthday).format('YYYY-MM-DD');
     // API 호출
     const callAPI = async () => {
-        const url = `/web/visitor/mypage/${vid}`;
-        const res = await axios.get(url);
-        setForm(res.data);
-        
+        try {
+            const url = `/web/visitor/mypage/${vid}`;
+            const res = await axios.get(url);
+            setForm(res.data);
+        } catch (error) {
+            console.log("마이페이지 로딩 중 오류", error);
+        }
     };
 
     useEffect(() => {
         callAPI();
-        
-        
+
+
 
     }, []);
 
@@ -46,14 +49,14 @@ const MyPage = () => {
 
     //회원탈퇴
     const onClickDelete = () => {
-        if(!window.confirm("회원탈퇴를 진행하시겠습니까?")) return;
+        if (!window.confirm("회원탈퇴를 진행하시겠습니까?")) return;
         const visitor_id = sessionStorage.getItem("visitor_id");
-        try{
-        axios.put(`/web/visitor/delete/${visitor_id}`)
-        sessionStorage.clear();
-        alert("회원탈퇴 완료. 홈으로 이동합니다.")
-        window.location.href = '/web';
-        }catch(error){
+        try {
+            axios.put(`/web/visitor/delete/${visitor_id}`)
+            sessionStorage.clear();
+            alert("회원탈퇴 완료. 홈으로 이동합니다.")
+            window.location.href = '/web';
+        } catch (error) {
             alert("회원탈퇴 중 오류, 다시 시도해주세요.")
         }
 
@@ -130,11 +133,11 @@ const MyPage = () => {
                             </Form.Group>
                             <Form.Group controlId="visitor_photo" className='mb-4'>
                                 <Form.Label>프로필사진</Form.Label>
-                                
+
                                 <div>
-                                {visitor_photo ? 
-                                        (<img src={`${process.env.PUBLIC_URL}/images/visitor/${visitor_id}.jpg`} 
-                                        alt="프로필사진" style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }} />)
+                                    {visitor_photo ?
+                                        (<img src={`${process.env.PUBLIC_URL}/images/visitor/${visitor_id}.jpg`}
+                                            alt="프로필사진" style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }} />)
                                         :
                                         (<h6>프로필 사진이 없습니다.</h6>)
                                     }

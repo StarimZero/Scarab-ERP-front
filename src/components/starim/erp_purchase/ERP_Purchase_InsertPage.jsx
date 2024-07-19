@@ -7,7 +7,7 @@ const ERP_Purchase_InsertPage = () => {
 
     const todayDate = new Date().toISOString().split('T')[0];
     const [page] = useState(1);
-    const [size] = useState(5);
+    const [size] = useState(15);
     const [key] = useState("title");
     const [word] = useState("");
 
@@ -119,8 +119,8 @@ const ERP_Purchase_InsertPage = () => {
                                 <Form.Select value={master.purchase_location} name='purchase_location' onChange={onChageMaster}  >
                                     <option>거래처를선택하세요</option>
                                     {VendorList && VendorList.map(ven=>
-                                        <option key={ven.vendor_id} >
-                                            {ven.vendor_id}
+                                        <option key={ven.vendor_id} value={ven.vendor_id} >
+                                            {ven.vendor_id}({ven.vendor_name})
                                         </option>
                                     )}
                                 </Form.Select>
@@ -133,8 +133,8 @@ const ERP_Purchase_InsertPage = () => {
                             <Col>
                                 <Form.Select value={master.purchase_employee} name='purchase_employee' onChange={onChageMaster}>
                                     <option >담당자를선택하세요</option>
-                                    {memberList && memberList.map(mem=>
-                                        <option key={mem.member_info_id}>{mem.member_info_id}</option>
+                                    {memberList && memberList.map(mem=> mem.dept_name.includes("경영") &&
+                                        <option key={mem.member_info_id} value={mem.member_info_id}>{mem.member_info_id}({mem.member_info_name})</option>
                                     )}
                                 </Form.Select>
                             </Col>
@@ -173,7 +173,7 @@ const ERP_Purchase_InsertPage = () => {
                                                         <option>입고지점</option>
                                                         {warehouseList && warehouseList.map(ware=>
                                                             <option key={ware.warehouse_id} value={parseInt(ware.warehouse_id, 10)} >
-                                                                {ware.warehouse_id}
+                                                                {ware.warehouse_id}({ware.warehouse_name})
                                                             </option>
                                                         )}
                                                     </Form.Select>
