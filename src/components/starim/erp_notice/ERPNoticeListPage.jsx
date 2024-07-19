@@ -6,6 +6,7 @@ import {  Link } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
 
+
 const ERPNoticeListPage = () => {
 
     const [list, setList] = useState([]);
@@ -32,6 +33,7 @@ const ERPNoticeListPage = () => {
     useEffect(()=>{
         callAPI();
         callAPINotice();
+        
     },[page, key]);
 
     const onSubmit = (e) => {
@@ -43,6 +45,7 @@ const ERPNoticeListPage = () => {
 
   return (
     <>
+    
     <h1 className='text-center '>공지사항</h1>
         <Row className='justify-content-center'>
                 <Col className='mb-2' lg={5} >
