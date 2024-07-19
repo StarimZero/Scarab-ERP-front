@@ -73,11 +73,11 @@ const ERP_Account_ListPage = () => {
                 <h2>자금현황</h2>
             </div>
             {accountNumber &&
-                <Row>
+                <Row className='account'>
                     <Slider {...settings}>
                         {accounts.map((account, index) =>
                             <Col key={account.account_number}>
-                                <Card className='account me-2 text-center align-items-center'>
+                                <Card className='account-component me-2 text-center align-items-center'>
                                     <Card.Body>
                                         <img src="#" width='90%' />
                                         <div className='ellipsis'>통장 이름 : {account.account_name}</div>
