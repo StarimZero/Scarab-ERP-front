@@ -85,7 +85,7 @@ const Web_Menu = () => {
                             <a className="web-nav-link web-nav-link-custom" href="#">인물소개</a>
                             {showDropdownPerson && (
                                 <div className="web-dropdown1-menu">
-                                    <a className="web-dropdown1-item" href="/person/organization">회사 조직도</a>
+                                    <a className="web-dropdown1-item" href="/web/person/organization">회사 조직도</a>
                                 </div>
                             )}
                         </div>

@@ -1,150 +1,61 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import '../../../common/assets/web/css/Slick.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Card, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-
-
-const categories = ['전체', '면', '스낵', '음료', '간편식', '해외브랜드'];
-const products = [
-    {
-        name: '농심가락 라면소스',
-        imgSrc: 'link-to-image1.jpg',
-    },
-    {
-        name: '먹태청양마요 만능소스',
-        imgSrc: 'link-to-image2.jpg',
-    },
-    {
-        name: '배홍동 만능소스',
-        imgSrc: 'link-to-image3.jpg',
-    },
-    {
-        name: '사천짜파게티 만능소스',
-        imgSrc: 'link-to-image4.jpg',
-    }
-];
 
 const WEB_ItmesReadPage = () => {
-    const [items, setItems] = useState([]);
-   
-    const [images, setImages] = useState([
-        '/images/items/coke_1.5L.jpg',
-        '/images/items/coke_355ml.jpg',
-        '/images/items/coke_500ml.jpg',
-        '/images/items/cokezero_355ml.jpg',
-    ]);
+    const [onButton, setOnButton] = useState('음료');
+    const navigate = useNavigate();
 
-    const CallAPI = async () => {
-        const res = await axios.get('/erp/items/list.json');
-        console.log(res.data);
-        setItems(res.data);
-    }
-
-    useEffect(() => {
-        CallAPI();
-    }, []);
+    const onClickButton = (category, path) => {
+        setOnButton(category);
+        navigate(path);
+    };
 
     return (
-        <div>
-            <Tabs
-                className='item-list-tab justify-content-center'
-                style={{ display: 'flex', justifyContent: 'center' }}>
-                    
-                <Tab eventKey="home" title="음료">
-                    <Container className='mt-5'>
-                        <Row>
-                            {items && items.filter((item) => item.items_type === 0).map((item, index) => (
-                                <Col xs={12} md={6} lg={4} className='mb-4' key={item.items_id}>
-                                    <Card>
-                                        <Row>
-                                            <Col xs={4}>
-                                                <Card.Img src={images[index % images.length]} />
-                                            </Col>
-                                            <Col xs={8} className="d-flex align-items-center">
-                                                <div className="w-100">
-                                                    <Card.Body>
-                                                        <Card.Title>{item.items_name}</Card.Title>
-                                                        <hr />
-                                                        <Card.Text>
-                                                            가격: {}
-                                                            <br />
-                                                            출시일자: {}
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    </Container>
-                </Tab>
-                <Tab eventKey="profile" title="면">
-                    <Container className='mt-5'>
-                        <Row>
-                            {items && items.filter((item) => item.items_type === 1).map((item, index) => (
-                                <Col xs={12} md={6} lg={4} className='mb-4' key={item.items_id}>
-                                    <Card>
-                                        <Row>
-                                            <Col xs={4}>
-                                                <Card.Img src={images[index % images.length]} />
-                                            </Col>
-                                            <Col xs={8} className="d-flex align-items-center">
-                                                <div className="w-100">
-                                                    <Card.Body>
-                                                        <Card.Title>{item.items_name}</Card.Title>
-                                                        <hr />
-                                                        <Card.Text>
-                                                            가격: {}
-                                                            <br />
-                                                            출시일자: {}
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    </Container>
-                </Tab>
-                <Tab eventKey="eatfood" title="스낵">
-                    <Container className='mt-5'>
-                        <Row>
-                            {items && items.filter((item) => item.items_type === 2).map((item, index) => (
-                                <Col xs={12} md={6} lg={4} className='mb-4' key={item.items_id}>
-                                    <Card>
-                                        <Row>
-                                            <Col xs={4}>
-                                                <Card.Img src={images[index % images.length]} />
-                                            </Col>
-                                            <Col xs={8} className="d-flex align-items-center">
-                                                <div className="w-100">
-                                                    <Card.Body>
-                                                        <Card.Title>{item.items_name}</Card.Title>
-                                                        <hr />
-                                                        <Card.Text>
-                                                            가격: {}
-                                                            <br />
-                                                            출시일자: {}
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Row>
-                    </Container>
-                </Tab>
-            </Tabs>
-        </div>
+        <div >
+                <div className='text-center itmes-header-image'>
+                        <img src='/images/menupage/f1.png'/>
+                </div>
+                <h3 className='text-center mb-4'>
+                    제품소개
+                </h3>
+       
+        <Container>
+            <Row className="justify-content-center">
+                <Card>
+                    <Card.Body>
+                        <Col lg={12} className="d-flex justify-content-center flex-wrap">
+                            <Button onClick={() => onClickButton('음료', '/web/items/read')}
+                                variant={onButton === '음료' ? 'danger' : 'outline-secondary'} className="mb-2 mx-4 button-size-big">
+                                음료
+                            </Button>
+
+
+                            <Button onClick={() => onClickButton('면', '/web/items/noodle')}
+                                variant={onButton === '면' ? 'danger' : 'outline-secondary'} className="mb-2 mx-4 button-size-big">
+                                면
+                            </Button>
+
+
+                            <Button onClick={() => onClickButton('스낵', '/web/items/snack')}
+                                variant={onButton === '스낵' ? 'danger' : 'outline-secondary'} className="mb-2 mx-4 button-size-big">
+                                스낵
+                            </Button>
+
+
+                            <Button onClick={() => onClickButton('간편식', '/web/items/efood')}
+                                variant={onButton === '간편식' ? 'danger' : 'outline-secondary'}  className="mb-2 mx-4 button-size-big" >
+                                간편식
+                            </Button>
+
+                        </Col>
+                    </Card.Body>
+                </Card>
+            </Row>
+        </Container>
+
+    </div>   
     );
 }
 

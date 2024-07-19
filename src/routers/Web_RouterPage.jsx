@@ -11,6 +11,7 @@ import Web_bottomPage from '../web_common/Web_bottomPage';
 import EmployRouter from './bj/EmployRouter';
 import NewsRouter from './bj/NewsRouter';
 import WorkspaceRouter from './bj/WorkspaceRouter';
+import PersonRouter from './bj/PersonRouter';
 
 const Web_RouterPage = () => {
   return (
@@ -26,6 +27,7 @@ const Web_RouterPage = () => {
         <Route path='/employ/*' element={<EmployRouter/>}/>
         <Route path='/news/*' element={<NewsRouter/>}/>
         <Route path='/workspace/*' element={<WorkspaceRouter/>}/>
+        <Route path='/person/*' element={<PersonRouter/>}/>
       </Routes>
       <Web_bottomPage/>
  

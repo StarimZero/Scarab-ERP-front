@@ -47,7 +47,7 @@ const ERP_insertMessagePage = () => {
     }
   };
 
-  const handleReceiverSelect = (id, name) => {
+  const onClickModal = (id, name) => {
     setReceiver(id);
     setReceiverName(name);
   };
@@ -75,7 +75,7 @@ const ERP_insertMessagePage = () => {
            
           </Col>
           <Col lg={3} md={4}>
-          <ERP_ModalInsertListPage onSelect={handleReceiverSelect} />
+          <ERP_ModalInsertListPage onSelect={onClickModal} />
           </Col>
         </Form.Group>
 
@@ -86,8 +86,7 @@ const ERP_insertMessagePage = () => {
             className="mb-2"
             rows={1}
             style={{ width: '90%' }}
-            placeholder="제목"
-          />
+            placeholder="제목"/>
 
           <Form.Control
             value={content}
@@ -95,8 +94,8 @@ const ERP_insertMessagePage = () => {
             as="textarea"
             rows={10}
             style={{ width: '90%' }}
-            placeholder="내용"
-          />
+            placeholder="내용"/>
+            
         </Form.Group>
       </Form>
     </div>

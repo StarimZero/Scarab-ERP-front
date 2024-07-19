@@ -26,7 +26,7 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
     callAPI();
   }, [page]);
 
-  const handleSelect = (id, name) => {
+  const onClickmember = (id, name) => {
     onSelect(id, name);
     handleClose();
   };
@@ -41,8 +41,8 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
         show={show}
         onHide={handleClose}
         backdrop="static"
-        keyboard={false}
-      >
+        keyboard={false}>
+          
         <Modal.Header closeButton>
           <Modal.Title>받는 사람 선택</Modal.Title>
         </Modal.Header>
@@ -54,25 +54,28 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
                 <th>이름</th>
               </tr>
             </thead>
+
+
             <tbody>
               {members && members.map(re => (
-                <tr key={re.member_info_id} onClick={() => handleSelect(re.member_info_id, re.member_info_name)}>
+                <tr key={re.member_info_id} onClick={() => onClickmember(re.member_info_id, re.member_info_name)}>
                   <td style={{ cursor: "pointer" }}>
                     {re.dept_name}
                   </td>
-                  <td>
+                  <td style={{ cursor: "pointer" }}>
                     {re.member_info_name} ({re.member_info_id})
                   </td>
                 </tr>
               ))}
             </tbody>
+
+
           </Table>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
+   
+
+
+
         {count > size && 
       <Pagination
           activePage={page}
