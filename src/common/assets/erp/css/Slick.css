@@ -1,5 +1,5 @@
-.slick-arrow.slick-prev,
-.slick-arrow.slick-next {
+.account .slick-arrow.slick-prev,
+.account .slick-arrow.slick-next {
     background: #E2E2E2;
     width: 50px;
     height: 50px;
@@ -12,25 +12,25 @@
     margin: 0px 30px;
 }
 
-.slick-prev::before,
-.slick-next::before {
+.account .slick-prev::before,
+.account .slick-next::before {
     display: none;
 }
 
-.slick-dots {
+.account .slick-dots {
     top: 130px;
 }
 
-.slick-dots li button::before {
+.account .slick-dots li button::before {
     color: gray;
     opacity: 100%;
 }
 
-.slick-dots li.slick-active button::before {
+.account .slick-dots li.slick-active button::before {
     color: skyblue;
 }
 
-.account {
+.account .account-component {
     width: 80%;
     margin-left: 10%;
 }

@@ -95,7 +95,6 @@ const ERP_insertMessagePage = () => {
             rows={10}
             style={{ width: '90%' }}
             placeholder="내용"/>
-            
         </Form.Group>
       </Form>
     </div>

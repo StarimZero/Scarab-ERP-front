@@ -1,7 +1,7 @@
+
 import React, { useState } from 'react';
 import { Card, Col, Container, Row, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
 
 const WEB_ItmesReadPage = () => {
     const [onButton, setOnButton] = useState('음료');
@@ -36,7 +36,6 @@ const WEB_ItmesReadPage = () => {
                                 variant={onButton === '면' ? 'danger' : 'outline-secondary'} className="mb-2 mx-4 button-size-big">
                                 면
                             </Button>
-
 
                             <Button onClick={() => onClickButton('스낵', '/web/items/snack')}
                                 variant={onButton === '스낵' ? 'danger' : 'outline-secondary'} className="mb-2 mx-4 button-size-big">

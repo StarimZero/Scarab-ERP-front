@@ -12,7 +12,7 @@ const ERP_Client_ListPage = () => {
     const callAPI = async () => {
         
         const res = await axios.get(`/erp/client`)
-        //console.log(res.data);
+        console.log(res.data);
         setList(res.data);
 
     }
@@ -63,7 +63,7 @@ const ERP_Client_ListPage = () => {
                         <tr>
                             <td><div style={{cursor: "pointer"}}><ERP_Client_ReadPage client={client}/></div></td>
                             <td>{client.client_name}</td>
-                            <td>{client.client_employee}</td>
+                            <td>{client.client_employee}({client.member_info_name})</td>
                             <td>{client.client_phone}</td>
                             <td><Button onClick={()=>onClickClientDelete(client)}>삭제</Button></td>
                         </tr>

@@ -5,40 +5,40 @@ import Modal from 'react-bootstrap/Modal';
 import DaumPostcodeEmbed from 'react-daum-postcode'
 
 
-const AddressModal = ({setForm, form}) => {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-  
+const AddressModal = ({ setForm, form }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
-    const onComplete = (e) => {
-      try {
-          // console.log(e);
-          const realaddress = e.buildingName ? `${e.address} (${e.buildingName})` : e.address;
-          setForm({ ...form, visitor_address1: realaddress });
-          handleClose();
-          // console.log(realaddress);
-      } catch (error) {
-          console.error("Error in onComplete function:", error);
-      }
+
+  const onComplete = (e) => {
+    try {
+      // console.log(e);
+      const realaddress = e.buildingName ? `${e.address} (${e.buildingName})` : e.address;
+      setForm({ ...form, visitor_address1: realaddress });
+      handleClose();
+      // console.log(realaddress);
+    } catch (error) {
+      console.error("Error in onComplete function:", error);
+    }
   }
-  
-  
 
 
 
-  return  (
+
+
+  return (
 
     <>
       <Button variant="primary" onClick={handleShow}> 주소검색 </Button>
 
-      <Modal show={show} onHide={handleClose} animation={false} style={{top:"10%"}}>
+      <Modal show={show} onHide={handleClose} animation={false} style={{ top: "10%" }}>
         <Modal.Header closeButton>
           <Modal.Title>주소찾기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <DaumPostcodeEmbed onComplete={onComplete}/>
+          <DaumPostcodeEmbed onComplete={onComplete} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>닫기</Button>

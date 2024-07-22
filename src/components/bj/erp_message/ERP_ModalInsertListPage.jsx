@@ -25,7 +25,6 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
   useEffect(() => {
     callAPI();
   }, [page]);
-
   const onClickmember = (id, name) => {
     onSelect(id, name);
     handleClose();
@@ -42,7 +41,6 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}>
-          
         <Modal.Header closeButton>
           <Modal.Title>받는 사람 선택</Modal.Title>
         </Modal.Header>
@@ -68,14 +66,8 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
                 </tr>
               ))}
             </tbody>
-
-
           </Table>
         </Modal.Body>
-   
-
-
-
         {count > size && 
       <Pagination
           activePage={page}
