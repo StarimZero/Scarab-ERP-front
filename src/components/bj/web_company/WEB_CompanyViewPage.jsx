@@ -14,8 +14,8 @@ const WEB_CompanyViewPage = () => {
       <Row className="company-banner align-items-center">
         <Col>
           <div className="blue-content">
-            <h3>쇠똥구리</h3>
-            <p>똥을 한땀 한땀 처굴려서 만든 음식.............................................맛있어요</p>
+            <h3>선향F&B</h3>
+            <p>고객의 식생활을 향상시키는 글로벌 식품 기업</p>
           </div>
         </Col>
       </Row>
@@ -29,13 +29,13 @@ const WEB_CompanyViewPage = () => {
               <strong>설립년도:</strong> 1999년
             </li>
             <li>
-              <strong>대표자:</strong> 윤석열
+              <strong>대표자:</strong> 김레드
             </li>
             <li>
-              <strong>전체 직원수:</strong> 쇠똥구리 베트남 3,500명, 인도 3,000명
+              <strong>전체 직원수:</strong> 선향 한국 1,500명 베트남 3,500명, 인도 3,000명
             </li>
             <li>
-              <strong>연매출:</strong> 23년 기준 2400만원
+              <strong>연매출:</strong> 	23년 기준 1조 2,628억원
             </li>
           </ul>
         </Col>
@@ -51,7 +51,7 @@ const WEB_CompanyViewPage = () => {
           <Col xs={12} md={6}>
             <div>
               <h2>최고의 신선도</h2>
-              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 쇠똥구리는 오늘도 꾸준히 월급루팡합니다.</p>
+              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 선향은 오늘도 열심히 일합니다.</p>
 
             </div>
           </Col>
@@ -66,8 +66,8 @@ const WEB_CompanyViewPage = () => {
         <Row className="align-items-center">
           <Col xs={12} md={6}>
           <div className='ms-5'>
-              <h2>최고의 신선도</h2>
-              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 쇠똥구리는 오늘도 꾸준히 월급루팡합니다.</p>
+              <h2>보다 높은 품질의 제품</h2>
+              <p>자동화된 생산라인과 첨단설비, 위생적인 환경을 구축하여 최고의 품질로 제공합니다.</p>
 
             </div>
           </Col>

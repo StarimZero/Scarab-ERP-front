@@ -2,28 +2,29 @@ import axios from 'axios'
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { Button, InputGroup, Table, Form, Row, Col } from 'react-bootstrap';
-
+import Pagination from "react-js-pagination";
 
 const ERP_EmployBBSPage = () => {
     const [count, setCount] = useState(0);
     const [list, setList] = useState([]);
     const [listtable, setListtable] = useState([]);
     const [page, setPage]=useState(1);
-    const [size, setSize]=useState(5);
-    const [key, setKey] = useState('employ_bbs_admin');
+    const [size, setSize]=useState(6);
+    const [key, setKey] = useState('employ_bbs_title');
     const [word, setWord] = useState('');
     
 
     const callAPI = async() => {
         const res = await axios.get(`/employ/bbs/list.json?key=${key}&word=${word}&page=${page}&size=${size}`);
-        console.log(res.data);
+       // console.log(res.data);
         setList(res.data.list);
+        console.log(res.data.list);
         setCount(res.data.total);
     }
 
     const callAPIlist = async() => {
         const res = await axios.get(`/employ/bbs/listtable`)
-        console.log(res.data);
+       // console.log(res.data);
         setListtable(res.data);
       
 
@@ -31,7 +32,7 @@ const ERP_EmployBBSPage = () => {
     useEffect(()=>{
         callAPI();
         callAPIlist();
-    }, []);
+    }, [page, key]);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -47,15 +48,18 @@ const ERP_EmployBBSPage = () => {
             <Row>
                 <Col  xs={8} md={5} lg={4}>
                 <form onSubmit={onSubmit}>
-                <InputGroup>
-                    <Form.Select className='me-2' value={key} onChange={(e)=>setKey(e.target.value)}>
-                        <option value="employ_bbs_title">제목</option>
-                        <option value="employ_bbs_contents">내용</option>
-                    </Form.Select>
-                    <Form.Control placeholder='검색어'  value={word} onChange={(e)=>setWord(e.target.value)}/>
-                    <Button type='submit'>검색</Button>
-                </InputGroup>
-            </form>
+                    <InputGroup>
+                        <Form.Select className='me-2' value={key} onChange={(e)=>setKey(e.target.value)}>
+                            <option value="employ_bbs_title">제목</option>
+                            <option value="employ_bbs_contents">내용</option>
+                        </Form.Select>
+                        <Form.Control placeholder='검색어'  value={word} onChange={(e)=>setWord(e.target.value)}/>
+                        <Button type='submit'>검색</Button>
+                        
+                        <div className='ms-4'>검색수 : {count}</div>
+                   
+                    </InputGroup>
+                </form>
                 </Col>
             </Row>
             
@@ -108,6 +112,16 @@ const ERP_EmployBBSPage = () => {
                 )}
             </tbody>
         </Table>
+        {count > size && 
+        <Pagination
+        activePage={page}
+        itemsCountPerPage={size}
+        totalItemsCount={count}
+        pageRangeDisplayed={5}
+        prevPageText={"‹"}
+        nextPageText={"›"}
+        onChange={(e)=>setPage(e)}/>
+        }
     </div>
   )
 }
