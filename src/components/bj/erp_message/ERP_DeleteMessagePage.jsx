@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
-import { IoIosArrowBack } from "react-icons/io";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Pagination from 'react-js-pagination';
@@ -28,10 +27,12 @@ const ERP_DeleteMessagePage = () => {
         const data = res.data.deleteList.map(msg => msg && { ...msg, checked: false });
         const data1 = res1.data.deleteList.map(msg => msg && { ...msg, checked: false });
         setMessage(data);
-        setCount(res.data.total);
+        setCount(res.data.dtotal);
+       //console.log(res.data);
 
         setSmessage(data1);
-        setScount(res1.data.total);
+        setScount(res1.data.dtotal);
+       // console.log(res1.data);
     }
 
     const onAllChecked = (e) => {
@@ -80,7 +81,7 @@ const ERP_DeleteMessagePage = () => {
             let cnt = 0;
             message.forEach(async (msg) => {
                 if (msg.checked) {
-                    await axios.post(`/erp/receivemessage/reset/state/${msg.message_id}`);
+                    await axios.put(`/erp/receivemessage/reset/state/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
@@ -98,7 +99,7 @@ const ERP_DeleteMessagePage = () => {
             let cnt = 0;
             smessage.forEach(async (msg) => {
                 if (msg.checked) {
-                    await axios.post(`/erp/sendmessage/reset/state/${msg.message_id}`);
+                    await axios.put(`/erp/sendmessage/reset/state/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
@@ -116,7 +117,7 @@ const ERP_DeleteMessagePage = () => {
             let cnt = 0;
             message.forEach(async (msg) => {
                 if (msg.checked) {
-                    await axios.post(`/erp/receivemessage/delete/${msg.message_id}`);
+                    await axios.delete(`/erp/receivemessage/delete/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
@@ -134,7 +135,7 @@ const ERP_DeleteMessagePage = () => {
             let cnt = 0;
             smessage.forEach(async (msg) => {
                 if (msg.checked) {
-                    await axios.post(`/erp/sendmessage/delete/${msg.message_id}`);
+                    await axios.delete(`/erp/sendmessage/delete/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
@@ -144,9 +145,6 @@ const ERP_DeleteMessagePage = () => {
 
     return (
         <div>
-            <a href='/erp/message'>
-                <IoIosArrowBack /> 메신저
-            </a>
             <div className='mt-2'>휴지통</div>
             <hr />
             <Tabs

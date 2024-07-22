@@ -17,7 +17,7 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
 
   const callAPI = async () => {
       const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
-      console.log(res.data.list);
+     // console.log(res.data.list);
       setMembers(res.data.list);
       setCount(res.data.total);
   };

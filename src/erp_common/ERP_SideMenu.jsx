@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { TbMessageShare } from "react-icons/tb";
+import { TbMessageCheck } from "react-icons/tb";
+import { BsSend } from "react-icons/bs";
+import { VscTrash } from "react-icons/vsc";
+import { TbMessage } from "react-icons/tb";
 
 const ERP_SideMenu = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const onClickSide = (e) => {
+        e.preventDefault();
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <aside className="left-sidebar">
 
@@ -36,6 +48,30 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
 
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/message" aria-expanded="false" onClick={onClickSide}>
+                                <span>
+                                <TbMessage size={22}/>
+                                </span>
+                                <span className="hide-menu">메신저</span>
+                            </a>
+                            {isMenuOpen && (
+                                <ul className="submenu">
+                                    <li className="submenu-item mb-1">
+                                        <a className="submenu-link" href="/erp/message/receive"><TbMessageCheck /> 받은 메신저</a>
+                                    </li>
+                                    <li className="submenu-item  mb-1">
+                                        <a className="submenu-link" href="/erp/message/send"><TbMessageShare /> 보낸 메신저</a>
+                                    </li>
+                                    <li className="submenu-item  mb-1">
+                                        <a className="submenu-link" href="/erp/message/insert"><BsSend /> 메신저 보내기</a>
+                                    </li>
+                                    <li className="submenu-item  ">
+                                        <a className="submenu-link" href="/erp/message/delete"><VscTrash /> 휴지통</a>
+                                    </li>
+                                </ul>
+                            )}
+                        </li>
 
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -132,7 +168,7 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
 
-                        
+
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span className="hide-menu">영업 | 판매</span>
@@ -182,7 +218,7 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">급여관리</span>
                             </a>
                         </li>
-                        
+
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span className="hide-menu">AUTH</span>
@@ -203,14 +239,6 @@ const ERP_SideMenu = () => {
                                     <i className="ti ti-user-plus"></i>
                                 </span>
                                 <span className="hide-menu">Register</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="/erp/message" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-user-plus"></i>
-                                </span>
-                                <span className="hide-menu">메신저</span>
                             </a>
                         </li>
                         <li className="nav-small-cap">

@@ -2,7 +2,6 @@ import axios from 'axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { Button, Table } from 'react-bootstrap';
-import { IoIosArrowBack } from "react-icons/io";
 import Pagination from 'react-js-pagination';
 
 
@@ -10,7 +9,7 @@ const ERP_SendMessagePage = () => {
   const [checked, setChecked] = useState(0);
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(5);
+  const [size, setSize] = useState(4);
   const [count, setCount] = useState(0);
   
 
@@ -21,9 +20,10 @@ const ERP_SendMessagePage = () => {
   const callAPI = async() => {
     const res=await axios.get(`/erp/sendmessage/list/${uid}?page=${page}&size=${size}`);
     const data= res.data.list.map(msg=>msg && {...msg, checked:false});
-    console.log(res.data);
+    //console.log(res.data.list);
     setMessages(data);
     setCount(res.data.total);
+    console.log(res.data.total);
   }
 
   const onAllChecked = (e) => {
@@ -57,7 +57,7 @@ const ERP_SendMessagePage = () => {
     let cnt=0;
     messages.forEach(async(msg)=>{
       if(msg.checked) {
-        await axios.post(`/erp/sendmessage/update/send/state/${msg.message_id}`);
+        await axios.put(`/erp/sendmessage/update/send/state/${msg.message_id}`);
         cnt++;
       }
       if(cnt===checked) callAPI();
@@ -68,9 +68,6 @@ const ERP_SendMessagePage = () => {
 
   return (
     <div>
-      <a href='/erp/message'>
-      <IoIosArrowBack /> 메신저
-      </a>
         <div>보낸메일함</div>
        <hr/>
        <Table >

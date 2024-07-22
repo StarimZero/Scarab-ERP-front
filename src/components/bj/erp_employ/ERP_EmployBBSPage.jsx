@@ -18,7 +18,7 @@ const ERP_EmployBBSPage = () => {
         const res = await axios.get(`/employ/bbs/list.json?key=${key}&word=${word}&page=${page}&size=${size}`);
        // console.log(res.data);
         setList(res.data.list);
-        console.log(res.data.list);
+        //console.log(res.data.list);
         setCount(res.data.total);
     }
 
@@ -43,9 +43,7 @@ const ERP_EmployBBSPage = () => {
 
   return (
     <div>
-        {sessionStorage.getItem('member_info_id') && 
-        <div className='text-end'>
-            <Row>
+          <Row>
                 <Col  xs={8} md={5} lg={4}>
                 <form onSubmit={onSubmit}>
                     <InputGroup>
@@ -62,6 +60,9 @@ const ERP_EmployBBSPage = () => {
                 </form>
                 </Col>
             </Row>
+        {sessionStorage.getItem('member_info_id') && 
+        <div className='text-end'>
+          
             
 
             <a href='/erp/employ/insert'>

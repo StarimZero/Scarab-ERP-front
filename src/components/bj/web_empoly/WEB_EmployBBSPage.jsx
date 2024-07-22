@@ -17,14 +17,14 @@ const WEB_EmployBBSPage = () => {
 
     const callAPI = async() => {
         const res = await axios.get(`/employ/bbs/list.json?key=${key}&word=${word}&page=${page}&size=${size}`);
-        console.log(res.data);
+        //console.log(res.data);
         setList(res.data.list);
         setCount(res.data.total);
     }
 
     const callAPIlist = async() => {
         const res = await axios.get(`/employ/bbs/listtable`)
-        console.log(res.data);
+       // console.log(res.data);
         setListtable(res.data);
 
     }

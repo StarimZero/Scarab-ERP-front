@@ -21,7 +21,7 @@ const res = await axios.get('https://newsapi.org/v2/top-headlines', {
 });
 
 setNews(res.data.articles);
-console.log(res.data.articles);
+//console.log(res.data.articles);
 setLoading(false);
 } 
 useEffect(()=>{
