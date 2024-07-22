@@ -47,6 +47,7 @@ const ERP_Attendance_ListPage = () => {
             await axios.post(url, { member_info_key });
             alert("출근완료");
             callAttendanceList(); // 출근 후 목록을 다시 불러옴
+            window.location.reload();
         } else {
             alert("이미 출근하셨습니다!");
             return;
