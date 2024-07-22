@@ -36,7 +36,7 @@ const ERP_Client_InsertPage = () => {
             return;
         }
         if(!window.confirm("거래처를를 등록하시겠습니까?")) return;
-        console.log(form);
+        //console.log(form);
         await axios.post(`/erp/client`, form)
         alert("거래처등록완료")
         window.location.href="/erp/client/list"

@@ -51,7 +51,7 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
             const formData = new FormData();
             formData.append("byte", file.byte);
             await axios.post(`/erp/items/update/image/${item.items_id}`, formData);
-            console.log(formData)
+            //console.log(formData)
             alert("이미지 변경 완료")
         }else{
             alert("사진을 변경해주세요")
@@ -106,7 +106,7 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
                             <Card.Body>
                                 <InputGroup className='mb-2'>
                                     <InputGroup.Text>물품코드</InputGroup.Text>
-                                    <Form.Control value={item.items_id} name='items_id' readonly placeholder='coke_1.5L' />
+                                    <Form.Control value={item.items_id} name='items_id' readOnly placeholder='coke_1.5L' />
                                 </InputGroup>
                                 <InputGroup className='mb-2'>
                                     <InputGroup.Text>물품이름</InputGroup.Text>

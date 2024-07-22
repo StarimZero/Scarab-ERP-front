@@ -19,14 +19,14 @@ const ERP_Sales_ListPage = () => {
 
     const callAPI = async() => {
         const res = await axios.get(`/erp/sales?key=${key}&word=${word}&page=${page}&size=${size}`);
-        console.log(res.data);
+        //console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
     }
 
     const callAPIInfo = async() => {
         const res = await axios.get("/erp/sales/info");
-        console.log(res.data);
+        //console.log(res.data);
         setListInfo(res.data);
     } 
 
@@ -97,7 +97,7 @@ const ERP_Sales_ListPage = () => {
                 </thead>
                 <tbody>
                     {list && list.map(sales=>
-                        <tr>
+                        <tr key={sales.sales_id}>
                             <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales} /></div></td>
                             <td>{sales.sales_employee}({sales.member_info_name})</td>
                             <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>

@@ -32,7 +32,7 @@ const ERPItemsModalPurcahsejsx = ({ items, setItems, item_index}) => {
 
         items.forEach((item1, idx)=> {
             //console.log(item.items_id);
-            console.log(item.purchase_items_id, item_index);
+            //console.log(item.purchase_items_id, item_index);
         })
 
         setItems(data);
@@ -42,7 +42,7 @@ const ERPItemsModalPurcahsejsx = ({ items, setItems, item_index}) => {
 
   return (
     <>
-        <Form.Control onClick={handleShow} readOnly value={items[item_index].purchase_items_id}  />
+        <Form.Control onClick={handleShow}  value={items[item_index].purchase_items_id} readOnly />
 
 
         <Modal show={show} onHide={handleClose}>
@@ -60,8 +60,8 @@ const ERPItemsModalPurcahsejsx = ({ items, setItems, item_index}) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {list && list.map((item, index)=>
-                                <tr  key={item.items_id} onClick={() => onItemSelected(item)}>
+                            {list && list.map((item)=>
+                                <tr key={item.items_id} onClick={() => onItemSelected(item)}>
                                     <td  style={{ cursor: "pointer" }}>
                                        {item.items_id}
                                     </td>
