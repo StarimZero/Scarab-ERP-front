@@ -42,6 +42,9 @@ const WarehouseListPage = () => {
 
     const onClickWarehouse1 = () => {
         setWarehouseId(6);
+    }
+    
+
     const onClickWarehouse2 = () => {
         setWarehouseId(7);
         setKey("")
@@ -203,5 +206,6 @@ const WarehouseListPage = () => {
         </>
     )
 }
+
 
 export default WarehouseListPage
