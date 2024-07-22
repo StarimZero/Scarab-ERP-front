@@ -20,7 +20,7 @@ const ERPVendorMemberModal = ({form, setForm}) => {
     //담당자불러오기
     const callAPIMember = async () => {
         const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
-        console.log(res.data.list);
+        //console.log(res.data.list);
         setMemberList(res.data.list);
     }
 
@@ -37,7 +37,7 @@ const ERPVendorMemberModal = ({form, setForm}) => {
 
     return (
         <>
-        <Form.Control value={form.vendor_employee} name='vendor_employee' placeholder='거래처담당자' onClick={handleShow}/>
+        <Form.Control value={form.vendor_employee} name='vendor_employee' placeholder='거래처담당자' onClick={handleShow} readOnly/>
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>

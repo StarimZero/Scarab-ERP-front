@@ -18,7 +18,7 @@ const ERPNoticeUpdatePage = () => {
 
     const callAPI = async () =>{
         const res = await axios.get(`/erp/notice/${notice_id}`);
-        console.log(res.data);
+        //console.log(res.data);
         setForm(res.data);
     }
 

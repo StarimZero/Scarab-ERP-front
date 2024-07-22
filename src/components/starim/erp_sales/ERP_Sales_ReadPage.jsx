@@ -8,10 +8,6 @@ import Modal from 'react-bootstrap/Modal';
 
 const ERP_Sales_ReadPage = ({sales}) => {
 
-    
- 
-    
-
     const [page, setPage] = useState(1);
     const [size] = useState(150);
     const [key, setKey] = useState("title");
@@ -68,7 +64,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
     //아이템들불러오기
     const callAPIItems = async () => {
         const res = await axios.get(`/erp/sales/info/${sales_id}`)
-        console.log(res.data);
+        //console.log(res.data);
         setItems(res.data);
         
     }
@@ -147,11 +143,11 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                         <Form.Control type='date' value={formattedDate} name='sales_date' onChange={onChangeMaster}/>
                                     </Col>
                                     <Col lg={2}>
-                                        거래처 : 
+                                        판매처 : 
                                     </Col>
                                     <Col>
                                         <Form.Select value={sales_location} name='sales_location' onChange={onChangeMaster}>
-                                            <option value={0}>거래처를선택하세요</option>
+                                            <option value={0}>판매처를선택하세요</option>
                                             {clientList && clientList.map(cli=>
                                                 <option key={cli.client_id} value={cli.client_id}>
                                                     {cli.client_id}({cli.client_name})
@@ -168,7 +164,9 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                         <Form.Select value={sales_employee} name='sales_employee' onChange={onChangeMaster} >
                                             <option value={0}>담당자를선택하세요</option>
                                             {memberList && memberList.map(mem=>
-                                            <option key={mem.member_info_id} value={mem.member_info_id}>{mem.member_info_id}({mem.member_info_name})</option>
+                                                <option key={mem.member_info_id} value={mem.member_info_id}>
+                                                {mem.member_info_id}({mem.member_info_name})
+                                                </option>
                                             )}
                                         </Form.Select>
                                     </Col>
@@ -192,12 +190,12 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                             </thead>
                                             <tbody>
                                                 {items && items.map((item, index)=>
-                                                <tr>
-                                                    <td><Form.Control value={item.sales_items_id}/> </td>
+                                                <tr key={item.sales_items_id}>
+                                                    <td><Form.Control value={item.sales_items_id} readOnly/> </td>
                                                     <td><Form.Control value={parseInt(item.sales_qnt)} name='sales_qnt' onChange={(e)=>onChangeItem(e, index)} /></td>
                                                     <td><Form.Control value={item.sales_price} name='sales_price' onChange={(e)=>onChangeItem(e, index)}/></td>
-                                                    <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1) + "원"} /></td>
-                                                    <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`) + "원"} /></td>
+                                                    <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1) + "원"} readOnly/></td>
+                                                    <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`) + "원"} readOnly/></td>
                                                     <td>
                                                         <Form.Select value={parseInt(item.sales_warehouse)} name='sales_warehouse' onChange={(e)=>onChangeItem(e, index)}>
                                                             <option value={0}>출하창고를선택하세요</option>

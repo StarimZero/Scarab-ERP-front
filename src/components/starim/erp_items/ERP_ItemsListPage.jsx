@@ -24,7 +24,7 @@ const ERP_ItemsListPage = () => {
 
     const callAPI = async(searchWord) => {
         const res = await axios.get(`/erp/items?key=${key}&word=${searchWord}&page=${page}&size=${size}`);
-        console.log(res.data);
+        //console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
         setFile({name:res.data.image, byte:null})
@@ -36,8 +36,8 @@ const ERP_ItemsListPage = () => {
     },[page])
 
 
-    const onClickItemsInsert = (e) => {
-        window.location.href="/erp/items/insert";
+    const onClickItemsInsert = () => {
+        window.location.href = "/erp/items/insert";
     }
 
     const onClickItemDelete = async (item) => {
@@ -48,7 +48,6 @@ const ERP_ItemsListPage = () => {
             callAPI(); 
             alert("물품을 삭제하였습니다.");
           } catch (error) {
-            console.error("Error deleting item:", error);
             alert("삭제에 실패하였습니다."); 
           }
     };
@@ -124,7 +123,7 @@ const ERP_ItemsListPage = () => {
                 </thead>
                 <tbody className='align-middle text-center'>
                     {list && list.map(item=>
-                        <tr>
+                        <tr key={item.items_id}>
                             <td><div style={{cursor: "pointer"}}><ERP_ItemsReadPage item={item} file={file} setFile={setFile}/></div></td>
                             <td>{item.items_name}</td>
                             <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"}  width="20%"/></td>

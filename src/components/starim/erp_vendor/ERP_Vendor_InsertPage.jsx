@@ -33,7 +33,7 @@ const ERP_Vendor_InsertPage = () => {
             return;
         }
         if(!window.confirm("거래처를를 등록하시겠습니까?")) return;
-        console.log();
+        //console.log();
         await axios.post(`/erp/vendor`, form)
         alert("거래처등록완료")
         window.location.href="/erp/vendor/list"
@@ -62,7 +62,7 @@ const ERP_Vendor_InsertPage = () => {
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>담당직원</InputGroup.Text>
-                        <ERPVendorMemberModal form={form} setForm={setForm}/>
+                        <ERPVendorMemberModal form={form} setForm={setForm} />
                     </InputGroup>
                     <InputGroup className='mb-2'>
                         <InputGroup.Text>전화번호</InputGroup.Text>

@@ -41,7 +41,7 @@ const ERP_WareHouseReadPage = ({warehouse}) => {
                         <Col>
                             <InputGroup>                            
                                 <InputGroup.Text>창고코드</InputGroup.Text>
-                                <Form.Control value={warehouse_id}  />
+                                <Form.Control value={warehouse_id} readOnly />
                             </InputGroup>
                             <InputGroup>                            
                                 <InputGroup.Text>창고이름</InputGroup.Text>

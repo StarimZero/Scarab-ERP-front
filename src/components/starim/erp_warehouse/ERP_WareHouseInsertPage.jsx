@@ -17,7 +17,7 @@ const ERP_WareHouseInsertPage = () => {
             return;
         }
         if(!window.confirm("창고를 등록하시겠습니까?")) return;
-        console.log(wareHouseName, wareHouseAddress)
+        //console.log(wareHouseName, wareHouseAddress)
         await axios.post(`/erp/warehouse`, {warehouse_name : wareHouseName, warehouse_address:wareHouseAddress})
         alert("창고등록완료")
         window.location.href="/erp/warehouse/list"

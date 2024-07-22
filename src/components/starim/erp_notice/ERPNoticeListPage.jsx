@@ -26,7 +26,7 @@ const ERPNoticeListPage = () => {
 
     const callAPINotice = async () => {
         const res = await axios.get(`/erp/notice/list.json`)
-        console.log(res);
+        //console.log(res);
         setListNotice(res.data);
     }
 
@@ -107,9 +107,9 @@ const ERPNoticeListPage = () => {
                                     <td className='text-center'>{notice.notice_id}</td>
                                     <td >
                                         <div>
-                                        <a href={`/erp/notice/${notice.notice_id}`} style={{ textDecoration: 'none', color: 'white' }}>
-                                        {notice.notice_title}
-                                        </a>
+                                        <Link to={`/erp/notice/${notice.notice_id}`} style={{ textDecoration: 'none', color: 'white' }}>
+                                            {notice.notice_title}
+                                        </Link>
                                         </div>
                                     </td>
                                     <td >{notice.notice_writer}</td>

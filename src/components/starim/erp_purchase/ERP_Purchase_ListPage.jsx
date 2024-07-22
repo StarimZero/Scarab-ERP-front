@@ -88,7 +88,7 @@ const ERP_Purchase_ListPage = () => {
                 </thead>
                 <tbody>
                     {list && list.map(purchase=>
-                        <tr>
+                        <tr key={purchase.purchase_id}>
                             <td><div style={{cursor: "pointer"}}><ERP_Purchase_ReadPage purchase={purchase}/></div></td>
                             <td>{purchase.purchase_employee}({purchase.member_info_name})</td>
                             <td>{moment(purchase.purchase_date).format('yy년MM월DD일')}</td>
