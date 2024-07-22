@@ -40,14 +40,14 @@ const LoginPage = () => {
                 window.location.href = '/web';
             } else if (res.data === 2) {
                 alert("비밀번호가 틀렸습니다.")
-            } else if (res.data=== 3) {
+            } else if (res.data === 3) {
                 alert("탈퇴한 회원입니다.")
             }
-             else { alert("존재하지 않는 ID입니다.") }
+            else { alert("존재하지 않는 ID입니다.") }
         } catch (error) {
             console.error("로그인중 오류 : ", error)
         }
-        
+
         setLoading(false);
     }
 
@@ -55,60 +55,60 @@ const LoginPage = () => {
         window.location.href = '/web/visitor/insert';
     }
 
-return (
-    <Row className="justify-content-center">
-        <Col xs={8} md={6} lg={4}>
-            <Card>
-                <Card.Body>
-                    <Card.Title className="mb-4 text-center">로그인</Card.Title>
-                    <Form onSubmit={onSubmit}>
-                        <Form.Group className="mb-3" controlId="formVisitor_id">                           
-                            <InputGroup>
-                            <InputGroup.Text style={{width:'90px'}}>아이디</InputGroup.Text>
-                                <Form.Control
-                                    type="text"
-                                    name="visitor_id"
-                                    value={visitor_id}
-                                    onChange={onChangeVisitor_id}
-                                    placeholder="아이디를 입력하세요."
-                                />
-                            </InputGroup>
-                        </Form.Group>
+    return (
+        <Row className="justify-content-center">
+            <Col xs={8} md={6} lg={4}>
+                <Card>
+                    <Card.Body>
+                        <Card.Title className="mb-4 text-center">로그인</Card.Title>
+                        <Form onSubmit={onSubmit}>
+                            <Form.Group className="mb-3" controlId="formVisitor_id">
+                                <InputGroup>
+                                    <InputGroup.Text style={{ width: '90px' }}>아이디</InputGroup.Text>
+                                    <Form.Control
+                                        type="text"
+                                        name="visitor_id"
+                                        value={visitor_id}
+                                        onChange={onChangeVisitor_id}
+                                        placeholder="아이디를 입력하세요."
+                                    />
+                                </InputGroup>
+                            </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formVisitor_pass">
-                            <InputGroup>
-                            <InputGroup.Text style={{width:'90px'}}>비밀번호</InputGroup.Text>
-                                <Form.Control
-                                    type={showPassword ? "text" : "password"}
-                                    name="visitor_pass"
-                                    value={visitor_pass}
-                                    onChange={onChangeVisitor_pass}
-                                    placeholder="비밀번호를 입력하세요."
-                                />
-                                <InputGroup.Text onClick={toggleShowPassword} style={{cursor:'pointer'}}>
-                                    {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
-                                </InputGroup.Text>
-                            </InputGroup>
-                        </Form.Group>
-                        <div className='text-center'>
-                        <Button variant="outline-dark" type="submit" disabled={loading} style={{width:'90px'}}>
-                            로그인
-                        </Button>
-                        <Button variant='outline-dark ms-3' style={{width:'90px'}} onClick={onClickJoin}>
-                            회원가입
-                        </Button>
-                        </div>
-                        <div className='text-end mt-2' style={{fontSize:'15px'}}>
-                            <a href='/web/visitor/searchid'>아이디찾기</a>
-                             / 
-                            <a href='/web/visitor/searchpass'>비밀번호찾기</a>
-                        </div>
-                    </Form>
-                </Card.Body>
-            </Card>
-        </Col>
-    </Row>
-)
+                            <Form.Group className="mb-3" controlId="formVisitor_pass">
+                                <InputGroup>
+                                    <InputGroup.Text style={{ width: '90px' }}>비밀번호</InputGroup.Text>
+                                    <Form.Control
+                                        type={showPassword ? "text" : "password"}
+                                        name="visitor_pass"
+                                        value={visitor_pass}
+                                        onChange={onChangeVisitor_pass}
+                                        placeholder="비밀번호를 입력하세요."
+                                    />
+                                    <InputGroup.Text onClick={toggleShowPassword} style={{ cursor: 'pointer' }}>
+                                        {showPassword ? <RiEyeLine /> : <RiEyeOffLine />}
+                                    </InputGroup.Text>
+                                </InputGroup>
+                            </Form.Group>
+                            <div className='text-center'>
+                                <Button variant="outline-dark" type="submit" disabled={loading} style={{ width: '90px' }}>
+                                    로그인
+                                </Button>
+                                <Button variant='outline-dark ms-3' style={{ width: '90px' }} onClick={onClickJoin}>
+                                    회원가입
+                                </Button>
+                            </div>
+                            <div className='text-end mt-2' style={{ fontSize: '15px' }}>
+                                <a href='/web/visitor/searchid'>아이디찾기</a>
+                                /
+                                <a href='/web/visitor/searchpass'>비밀번호찾기</a>
+                            </div>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+    )
 }
 
 export default LoginPage

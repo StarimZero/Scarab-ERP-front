@@ -29,10 +29,14 @@ const UpdatePage = () => {
     }, []);
 
     const callAPI = async () => {
-        const url = `/web/visitor/mypage/${vid}`;
-        const res = await axios.get(url);
-        const { visitor_pass, ...rest } = res.data;
-        setForm(rest);
+        try {
+            const url = `/web/visitor/mypage/${vid}`;
+            const res = await axios.get(url);
+            const { visitor_pass, ...rest } = res.data;
+            setForm(rest);
+        } catch (error) {
+            console.log("마이페이지 로딩 중 오류", error);
+        }
     };
 
     const onChangeForm = (e) => {
@@ -87,33 +91,38 @@ const UpdatePage = () => {
         console.log('Visitor ID:', vid);
         console.log('Selected File:', selectedFile);
 
-        
-            const formData = { ...form, visitor_id: vid }; // visitor_id를 formData에 추가
-            setLoading(true)
-            //텍스트 정보 업데이트
+
+        const formData = { ...form, visitor_id: vid }; // visitor_id를 formData에 추가
+        setLoading(true)
+        //텍스트 정보 업데이트
+        try {
             await axios.post('/web/visitor/update', formData);
             setLoading(false)
-            //이미지 업데이트
-            if (selectedFile) {
-                try {
-                    const photoData = new FormData();
-                    photoData.append('visitor_id', vid);
-                    photoData.append('visitor_photo', selectedFile);
-        
-                    // FormData 내용 출력
-                    for (let [key, value] of photoData.entries()) {
-                        console.log(`${key}:`, value);
-                    }
-        
-                    setLoading(true);
-                    await axios.post('/web/visitor/updatePhoto', photoData);
-                    setLoading(false);
-                    alert("저장완료! 마이페이지로 이동합니다.");
-                    window.location.href = '/web/visitor/mypage';
-                } catch (error) {
-                    console.error("정보수정중 오류", error);
+
+        } catch (error) {
+            console.log("텍스트정보 업데이트중 오류", error);
+        }
+        //이미지 업데이트
+        if (selectedFile) {
+            try {
+                const photoData = new FormData();
+                photoData.append('visitor_id', vid);
+                photoData.append('visitor_photo', selectedFile);
+
+                // FormData 내용 출력
+                for (let [key, value] of photoData.entries()) {
+                    console.log(`${key}:`, value);
                 }
+
+                setLoading(true);
+                await axios.post('/web/visitor/updatePhoto', photoData);
+                setLoading(false);
+                alert("저장완료! 마이페이지로 이동합니다.");
+                window.location.href = '/web/visitor/mypage';
+            } catch (error) {
+                console.error("정보수정중 오류", error);
             }
+        }
     };
 
     const onClickReset = () => {
@@ -219,7 +228,7 @@ const UpdatePage = () => {
                                     placeholder='상세주소를 입력하세요.'
                                 />
                             </Form.Group>
-                            
+
                             <Form.Group controlId="visitor_photo" className='mb-4'>
                                 <Form.Label>프로필 사진 변경</Form.Label>
                                 <Form.Control

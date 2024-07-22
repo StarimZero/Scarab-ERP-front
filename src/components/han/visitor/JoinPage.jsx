@@ -53,7 +53,7 @@ const JoinPage = () => {
         return newErrors;
     };
 
-    
+
     //사진관련
     const [visitorPhoto, setVisitorPhoto] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -84,23 +84,24 @@ const JoinPage = () => {
             setErrors(prevErrors => ({ ...prevErrors, visitor_id: "아이디는 8글자 이상의 영문과 숫자가 포함되어야 합니다." }));
             return;
         }
-        if(visitor_id === ''){
+        if (visitor_id === '') {
             alert('아이디를 입력하세요');
             return;
         }
-        axios.get(`/web/visitor/check/${visitor_id}`)
-            .then(response => {
-                console.log(response.data.visitor_id);
-                if (response.data.visitor_id === "0"){
-                    alert("사용가능한 아이디입니다.");
-                    setCheck(true);
-                } else {
-                    alert("이미 사용중인 아이디입니다.");
-                }
-            })
-            .catch(error => {
-                console.error("Error checking visitor ID:", error);
-            });
+        try {
+            axios.get(`/web/visitor/check/${visitor_id}`)
+                .then(response => {
+                    console.log(response.data.visitor_id);
+                    if (response.data.visitor_id === "0") {
+                        alert("사용가능한 아이디입니다.");
+                        setCheck(true);
+                    } else {
+                        alert("이미 사용중인 아이디입니다.");
+                    }
+                })
+        } catch (error) {
+            console.error("아이디 중복체크 중 오류", error);
+        };
     };
 
 
@@ -127,7 +128,7 @@ const JoinPage = () => {
         }
     };
 
-    
+
     return (
         <Row className='justify-content-center'>
             <Col sm={8} md={6} lg={4}>
@@ -191,17 +192,17 @@ const JoinPage = () => {
                                 <Form.Label className='me-3'>생년월일 (아래의 날짜를 클릭해서 선택)</Form.Label>
                                 <div>
                                     <DatePicker
-                                    selected={visitor_birthday}
-                                    onChange={handleDateChange}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="Select a date"
-                                    className="form-control"
-                                    name="visitor_birthday"
-                                    showYearDropdown
-                                    scrollableYearDropdown
-                                    yearDropdownItemNumber={90}
-                                    minDate={new Date("1901-01-01")}
-                                    maxDate={today}
+                                        selected={visitor_birthday}
+                                        onChange={handleDateChange}
+                                        dateFormat="yyyy-MM-dd"
+                                        placeholderText="Select a date"
+                                        className="form-control"
+                                        name="visitor_birthday"
+                                        showYearDropdown
+                                        scrollableYearDropdown
+                                        yearDropdownItemNumber={90}
+                                        minDate={new Date("1901-01-01")}
+                                        maxDate={today}
                                     />
                                 </div>
                             </Form.Group>
@@ -217,7 +218,7 @@ const JoinPage = () => {
                             <Form.Group controlId="visitor_address1" className='mb-1'>
                                 <Form.Label>주소</Form.Label>
                                 <InputGroup>
-                                    
+
                                     <Form.Control
                                         type="text"
                                         name="visitor_address1"
@@ -226,7 +227,7 @@ const JoinPage = () => {
                                         readOnly
                                         placeholder='주소검색을 이용하세요.'
                                     />
-                                    <AddressModal setForm={setForm} form={form}/>
+                                    <AddressModal setForm={setForm} form={form} />
                                 </InputGroup>
                             </Form.Group>
                             <Form.Group controlId="visitor_address2" className='mb-4'>
