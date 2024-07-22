@@ -8,10 +8,6 @@ import Modal from 'react-bootstrap/Modal';
 
 const ERP_Sales_ReadPage = ({sales}) => {
 
-    
- 
-    
-
     const [page, setPage] = useState(1);
     const [size] = useState(150);
     const [key, setKey] = useState("title");

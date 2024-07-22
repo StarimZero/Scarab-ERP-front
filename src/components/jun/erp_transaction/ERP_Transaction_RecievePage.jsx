@@ -113,7 +113,6 @@ const ERP_Transaction_RecievePage = ({sales}) => {
     const callMember = async () => {
         const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
         setMemberList(res.data.list);
-
     }
 
     // 아이템들불러오기
@@ -138,7 +137,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
             return;
         }
         if (!window.confirm(`${sales_location}
-            (${clientList.find(client => client.client_id === sales_location)?.client_name || ""})에 송금하시겠습니까?`))
+            (${clientList.find(client => client.client_id === sales_location)?.client_name || ""})를 수령하시겠습니까?`))
             return;
         const totalAmount = Math.round(items.reduce((total, item) => total + (item.sales_price * item.sales_qnt * 1.1), 0));
         const transactionData = {
@@ -149,7 +148,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
             sales_type: 1,
         }
         await axios.post(`/erp/transaction`, transactionData);
-        alert("송금완료")
+        alert("수령완료")
         handleClose();
         callItems();
     }
@@ -180,7 +179,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
                                             <img src="#" width='90%' />
                                             <div className='ellipsis'>통장 이름 : {account.account_name}</div>
                                             <div className='ellipsis'>상세 내용 : {account.account_detail}</div>
-                                            <div>현재 자금 : {account.account_total}원</div>
+                                            <div>현재 자금 : {formatNumber(account.account_total)}원</div>
                                         </Card.Body>
                                     </Card>
                                 </Col>
