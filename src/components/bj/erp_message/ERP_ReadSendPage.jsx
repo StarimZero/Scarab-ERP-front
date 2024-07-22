@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { IoIosArrowBack } from "react-icons/io";
 import { Card } from 'react-bootstrap';
 import moment from 'moment';
 
@@ -11,7 +10,7 @@ const ERP_ReadSendPage = () => {
   
     const callAPI = async() => {
         const res= await axios.get(`/erp/sendmessage/read/${message_id}`)
-        console.log(res.data);
+       // console.log(res.data);
         setList(res.data);
     }
   
@@ -23,9 +22,6 @@ const ERP_ReadSendPage = () => {
     
     return (
       <div>
-        <a href='/erp/message/send'>
-            <IoIosArrowBack /> 보낸메일함
-        </a>
         <hr/>
         <h3>
             {list.message_title}

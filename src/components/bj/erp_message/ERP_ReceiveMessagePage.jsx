@@ -1,10 +1,9 @@
 import axios from 'axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import {Button, Col, InputGroup, Row, Table, Form } from 'react-bootstrap'
+import {Button, Table} from 'react-bootstrap'
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
-import { IoIosArrowBack } from "react-icons/io";
 import Pagination from 'react-js-pagination';
 
 
@@ -23,9 +22,10 @@ const ERP_ReceiveMessagePage = () => {
   const callAPI = async() => {
     const res=await axios.get(`/erp/receivemessage/list/${uid}?key=${key}&word=${word}&page=${page}&size=${size}`);
     const data= res.data.list.map(msg=>msg && {...msg, checked:false});
-    console.log(res.data);
+   // console.log(res.data);
     setMessages(data);
     setCount(res.data.total);
+    console.log(res.data.total);
   }
 
   const onAllChecked = (e) => {
@@ -59,7 +59,7 @@ const ERP_ReceiveMessagePage = () => {
     let cnt=0;
     messages.forEach(async(msg)=>{
       if(msg.checked) {
-        await axios.post(`/erp/receivemessage/update/receive/state/${msg.message_id}`);
+        await axios.put(`/erp/receivemessage/update/receive/state/${msg.message_id}`);
         cnt++;
       }
       if(cnt===checked) callAPI();
@@ -72,16 +72,13 @@ const clickRead = async(message_id) => {
   
   const message = messages.find(msg => msg.message_id === message_id);
   if (!message.message_readdate) {
-    await axios.post(`/erp/receivemessage/update/readdate/${message_id}`);
+    await axios.put(`/erp/receivemessage/update/readdate/${message_id}`);
     callAPI();
   }
 }
 
   return (
     <div>
-      <a href='/erp/message'>
-      <IoIosArrowBack /> 메신저
-      </a>
           <div>받은메일함</div>
        <hr/>
        <Table >

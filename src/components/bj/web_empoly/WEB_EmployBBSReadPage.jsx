@@ -12,7 +12,7 @@ const WEB_EmployBBSReadPage = () => {
 
     const callAPI = async () => {
         const res = await axios.get(`/employ/bbs/${employ_bbs_id}`);
-        console.log(res.data);
+     //   console.log(res.data);
         setList(res.data);
         setLoading(false);
     }

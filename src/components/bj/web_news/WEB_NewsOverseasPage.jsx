@@ -20,7 +20,7 @@ const callAPI = async()=> {
   });
 
   setNews(res.data.articles);
-  console.log(res.data.articles);
+  //console.log(res.data.articles);
   setLoading(false);
 } 
   useEffect(()=>{

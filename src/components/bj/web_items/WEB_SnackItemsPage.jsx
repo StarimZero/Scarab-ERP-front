@@ -8,7 +8,7 @@ const WEB_SnackItemsPage = () => {
 
     const CallAPI = async () => {
         const res = await axios.get('/erp/items/list.json');
-        console.log(res.data);
+       // console.log(res.data);
         setItems(res.data);
     }
 

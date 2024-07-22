@@ -28,7 +28,7 @@ const Web_HomePage = () => {
   return (
     <>
       <Popup/>
-      <Row style={{ height: "45rem" }}>
+      <Row style={{ height: "45rem" }} className='web-hompage-slick'>
         <Col>
 
           <div className="web-background-image-container">

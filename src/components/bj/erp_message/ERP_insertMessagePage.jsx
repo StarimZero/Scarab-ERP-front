@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { IoIosArrowBack } from "react-icons/io";
 import ERP_ModalInsertListPage from './ERP_ModalInsertListPage';
 
 const ERP_insertMessagePage = () => {
@@ -16,7 +15,7 @@ const ERP_insertMessagePage = () => {
 
   const callAPI = async () => {
       const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
-      console.log(res.data.list);
+     // console.log(res.data.list);
       setMembers(res.data.list);
   };
 
@@ -55,9 +54,7 @@ const ERP_insertMessagePage = () => {
   return (
     <div>
       <div className="mb-4">메신저 쓰기</div>
-      <a href='/erp/message'>
-        <IoIosArrowBack /> 메신저
-      </a>
+
       <hr/>
       <div className="mb-2">
         <Button className="btn-sm" variant="outline-primary" onClick={onSendMsg}>
