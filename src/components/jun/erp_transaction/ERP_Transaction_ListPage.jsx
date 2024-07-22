@@ -13,6 +13,17 @@ const ERP_Transaction_ListPage = ({ account_number }) => {
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(10);
     const [total, setTotal] = useState(0);
+    const [salaryDate, setSalaryDate] = useState('');
+
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        return `${year}년 ${month}월 ${day}일  ${hours}시 ${minutes}분 ${seconds}초`;
+    };
 
     const callTransaction = async () => {
         let url = `/erp/transaction?page=${page}&size=${size}&key=${key}&account_number=${account_number}`;
@@ -22,12 +33,18 @@ const ERP_Transaction_ListPage = ({ account_number }) => {
         if (selectedDate && key === 'transaction_date') {
             const formattedDate = selectedDate.toISOString().split('T')[0];
             url += `&transaction_date=${formattedDate}`;
-            console.log(formattedDate);
         }
         const res = await axios.get(url);
         setTransactions(res.data.list);
         setTotal(res.data.total);
-        console.log(res.data.list);
+        // console.log(res.data.list);
+
+        // 거래날짜에서 월만 추출하여 salary_date 상태에 저장
+        if (res.data.list.length > 0) {
+            const firstTransactionDate = new Date(res.data.list[0].transaction_date);
+            const monthYear = `${firstTransactionDate.getFullYear()}년 ${String(firstTransactionDate.getMonth() + 1).padStart(2, '0')}월`;
+            setSalaryDate(monthYear);
+        }
     };
 
     const onSubmit = (e) => {
@@ -102,8 +119,8 @@ const ERP_Transaction_ListPage = ({ account_number }) => {
                     <tbody>
                         {transactions.map(transaction =>
                             <tr key={transaction.transaction_id}>
-                                <td>{transaction.transaction_date}</td>
-                                <td>{transaction.member_info_key && transaction.member_info_key}
+                                <td>{formatDate(new Date(transaction.transaction_date))}</td>
+                                <td>{transaction.member_info_key && `${salaryDate} ${transaction.member_info_name} 월급`}
                                     {transaction.client_id !== 0 && transaction.client_id}
                                     {transaction.vendor_id !== 0 && transaction.vendor_id}
                                 </td>

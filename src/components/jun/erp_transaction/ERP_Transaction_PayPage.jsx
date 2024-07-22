@@ -181,7 +181,7 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
                                             <img src="#" width='90%' />
                                             <div className='ellipsis'>통장 이름 : {account.account_name}</div>
                                             <div className='ellipsis'>상세 내용 : {account.account_detail}</div>
-                                            <div>현재 자금 : {account.account_total}원</div>
+                                            <div>현재 자금 : {formatNumber(account.account_total)}원</div>
                                         </Card.Body>
                                     </Card>
                                 </Col>

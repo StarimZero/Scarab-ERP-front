@@ -211,7 +211,7 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="#" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/transaction/salary" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-file-description"></i>
                                 </span>
