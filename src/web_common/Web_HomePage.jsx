@@ -3,6 +3,8 @@ import Slider from "react-slick";
 import { Button, Col, Row } from 'react-bootstrap';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import Popup from '../components/starim/web_popup/Popup';
+
 
 
 const Web_HomePage = () => {
@@ -25,6 +27,7 @@ const Web_HomePage = () => {
 
   return (
     <>
+      <Popup/>
       <Row style={{ height: "45rem" }}>
         <Col>
 

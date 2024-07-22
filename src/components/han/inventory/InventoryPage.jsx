@@ -70,7 +70,6 @@ const InventoryPage = () => {
         setPage(1);
     }
 
-
     return (
         <>
             <Row className='justify-content-center'>
@@ -156,3 +155,4 @@ const InventoryPage = () => {
 }
 
 export default InventoryPage
+

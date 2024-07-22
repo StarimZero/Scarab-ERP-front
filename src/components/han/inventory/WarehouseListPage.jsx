@@ -42,10 +42,6 @@ const WarehouseListPage = () => {
 
     const onClickWarehouse1 = () => {
         setWarehouseId(6);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
     const onClickWarehouse2 = () => {
         setWarehouseId(7);
         setKey("")
