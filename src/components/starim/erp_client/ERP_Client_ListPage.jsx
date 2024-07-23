@@ -12,7 +12,7 @@ const ERP_Client_ListPage = () => {
     const callAPI = async () => {
         
         const res = await axios.get(`/erp/client`)
-        console.log(res.data);
+        //console.log(res.data);
         setList(res.data);
 
     }
@@ -31,11 +31,10 @@ const ERP_Client_ListPage = () => {
         const client_id = client.client_id;
         try {
             await axios.delete(`/erp/client/${client_id}`);
-            callAPI(); // 성공적인 삭제 후 목록 새로 고침
+            callAPI();
             alert("거래처를 삭제하였습니다.");
           } catch (error) {
-            console.error("Error deleting item:", error);
-            alert("삭제에 실패하였습니다."); // 사용자에게 오류 알림
+            alert("삭제에 실패하였습니다."); 
           }
           
     };
@@ -60,7 +59,7 @@ const ERP_Client_ListPage = () => {
                 </thead>
                 <tbody>
                     {list && list.map(client=>
-                        <tr>
+                        <tr key={client.client_id}>
                             <td><div style={{cursor: "pointer"}}><ERP_Client_ReadPage client={client}/></div></td>
                             <td>{client.client_name}</td>
                             <td>{client.client_employee}({client.member_info_name})</td>

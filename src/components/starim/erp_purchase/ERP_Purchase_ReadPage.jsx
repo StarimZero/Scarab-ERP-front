@@ -61,7 +61,7 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
     //아이템들불러오기
     const callAPIItems = async () => {
         const res = await axios.get(`/erp/purchase/info/${purchase_id}`)
-        console.log(res.data);
+        //console.log(res.data);
         setItems(res.data);
     }
      
@@ -136,11 +136,11 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                         <Form.Control type='date' value={new Date(purchase_date).toISOString().substring(0, 10)} name='purchase_date' onChange={onChangeMaster}/>
                                     </Col>
                                     <Col lg={2}>
-                                        거래처 : 
+                                        구매처 : 
                                     </Col>
                                     <Col>
                                         <Form.Select value={purchase_location} name='purchase_location' onChange={onChangeMaster}>
-                                            <option value={0}>거래처를선택하세요</option>
+                                            <option value={0} >구매처를선택하세요</option>
                                             {vendorList && vendorList.map(ven=>
                                                 <option key={ven.vendor_id} value={ven.vendor_id} >
                                                     {ven.vendor_id}({ven.vendor_name})
@@ -181,7 +181,7 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                             </thead>
                                             <tbody>
                                                 {items && items.map((item, index)=>
-                                                <tr>
+                                                <tr key={item.purchase_info_id}>
                                                     <td><Form.Control value={item.purchase_items_id}/> </td>
                                                     <td><Form.Control value={parseInt(item.purchase_qnt)} name='purchase_qnt' onChange={(e)=>onChangeItem(e, index)} /></td>
                                                     <td><Form.Control value={item.purchase_price} name='purchase_price' onChange={(e)=>onChangeItem(e, index)}/></td>

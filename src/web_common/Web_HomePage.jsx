@@ -29,13 +29,13 @@ const Web_HomePage = () => {
     <>
       <Popup/>
       <Row style={{ height: "45rem" }} className='web-hompage-slick'>
-        <Col>
+        <Col xs={6} md={8} lg={12}>
 
-          <div className="web-background-image-container">
+          <div className="web-background-image-container ">
             <Slider {...settings}>
               {images.map(img => (
-                <div key={img} className="slider-image-container">
-                  <img src={img} className="slider-image" />
+                <div key={img} className="slider-image-container ">
+                  <img src={img} className="slider-image web-responsive-image" />
                 </div>
               ))}
             </Slider>
@@ -49,7 +49,7 @@ const Web_HomePage = () => {
 
     <div className='web-body-page'>
       <h2 className='mb-2 text-center'>쇠똥라면 이벤트</h2>
-      <img src='/images/menupage/r1.png' alt='쇠똥라면 이벤트 이미지' />
+      <img src='/images/menupage/r1.png' alt='쇠똥라면 이벤트 이미지' className='web-responsive-image' />
       <div className='mt-2 text-center'>
         <Button  onClick={() => window.location.href = '/web/items/read'}
           className='btn-lg' variant='outline-danger'>
@@ -62,7 +62,7 @@ const Web_HomePage = () => {
 
     <div className='text-center'>
       <h2 className='mb-2 text-center'>쇠똥구리</h2>
-      <img src='/images/menupage/f1.png' alt='쇠똥구리 이미지' />
+      <img src='/images/menupage/f1.png' alt='쇠똥구리 이미지' className='web-responsive-image' />
       <div className='mt-2 text-center'>
         <Button   onClick={() => window.location.href = '/web/company/view'}
           className='btn-lg'variant='outline-danger'>

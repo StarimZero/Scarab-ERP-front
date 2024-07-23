@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Col, Modal, Row, Table } from 'react-bootstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
-import Slider from "react-slick";
-import ERP_Transaction_ListPage from '../erp_transaction/ERP_Transaction_ListPage';
-
+import Slider from 'react-slick';
+import ERP_Transaction_Member from './ERP_Transaction_Member';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -30,9 +29,14 @@ function SamplePrevArrow(props) {
     );
 }
 
+const ERP_Transaction_Salary = () => {
 
-const ERP_Account_ListPage = () => {
+    // 금액에 천 단위 구분 기호를 추가하는 함수
+    const formatNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
 
+    // 계좌 불러오기
     const [accounts, setAccounts] = useState([]);
     const [accountNumber, setAccountNumber] = useState('');
     const [index, setIndex] = useState(0);
@@ -61,24 +65,21 @@ const ERP_Account_ListPage = () => {
         }
         // console.log(accountNumber);
     }
-
+    
     useEffect(() => {
         callAccount();
     }, [accountNumber]);
 
-    // 금액에 천 단위 구분 기호를 추가하는 함수
-    const formatNumber = (num) => {
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
-
-
     return (
         <div className='px-3'>
             <div className='mb-5'>
-                <h2>자금현황</h2>
+                <h2>급여관리</h2>
             </div>
-            {accountNumber &&
-                <Row className='account'>
+            <div className='mb-5 px-5'>
+
+            </div>
+            <div className='px-5'>
+                <Row className='account my-5'>
                     <Slider {...settings}>
                         {accounts.map((account, index) =>
                             <Col key={account.account_number}>
@@ -93,11 +94,11 @@ const ERP_Account_ListPage = () => {
                             </Col>
                         )}
                     </Slider>
-                    {accountNumber && <ERP_Transaction_ListPage account_number={accountNumber} />}
+                    {accountNumber && <ERP_Transaction_Member account_number={accountNumber} callAccount={callAccount}/>}
                 </Row>
-            }
+            </div>
         </div>
     )
 }
 
-export default ERP_Account_ListPage
+export default ERP_Transaction_Salary

@@ -52,7 +52,7 @@ const ERP_Vendor_ReadPage = ({vendor}) => {
     }
     if(!window.confirm(`${vendor.vendor_id}의 구매처정보를 수정하시겠습니까?`)) return;
     await axios.put(`/erp/vendor`, form);
-    console.log(form);
+    //console.log(form);
     alert("수정완료")
     handleClose();
     window.location.reload();

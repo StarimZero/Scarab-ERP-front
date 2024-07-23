@@ -4,7 +4,6 @@ import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap'
 
 const ERP_ItemsInsertPage = () => {
 
-
     const [file, setFile] = useState({
         name:"",
         byte:""
@@ -21,15 +20,11 @@ const ERP_ItemsInsertPage = () => {
     const refFile = useRef();
 
 
-    
-
     const photoStyle ={
         borderRadius : "10px",
         cursor: "pointer",
         border : "10px groove gray"
     }
-
-
 
 
     const onChangeFile = (e) => {
@@ -40,22 +35,6 @@ const ERP_ItemsInsertPage = () => {
     }
     
 
-
-
-
-
-
-    const onClicItemsInsert =  async () => {
-        if(items_id==="" || items_name==="" || items_type===""){
-            alert("모든정보를 입력하세요")
-            return;
-        }
-        if(!window.confirm("물품를 등록하시겠습니까?")) return;
-        await axios.post(`/erp/items`, form)
-        alert("아이템등록완료")
-        window.location.href="/erp/items/list"
-
-    }
 
     const onChangeForm = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value});
@@ -69,17 +48,13 @@ const ERP_ItemsInsertPage = () => {
         }
         if(!window.confirm("물품를 등록하시겠습니까?")) return;
         const res = await axios.post(`/erp/items`, form)
-        console.log(res.data);
+        //console.log(res.data);
         const newItems_id = res.data;
         const formData = new FormData();
         formData.append("byte", file.byte);
         await axios.post(`/erp/items/update/image/${newItems_id}`, formData);
         alert("아이템등록완료")
-        window.location.href="/erp/items/list"
-
     }
-
-    console.log(file);
 
 
 

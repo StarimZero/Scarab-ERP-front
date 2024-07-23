@@ -32,10 +32,10 @@ const ERP_Sales_InsertPage = () => {
     const [clientList, setClientList] = useState([]);
     const [warehouseList, setWarehouseList] = useState([]);
     const [memberList, setMemberList] = useState([]);
+    const [isClick, setIsClick] = useState(false); 
     
     //거래처불러오기
     const callAPIClient = async () => {
-        
         const res = await axios.get(`/erp/client`)
         //console.log(res.data);
         setClientList(res.data);
@@ -45,7 +45,7 @@ const ERP_Sales_InsertPage = () => {
     //담당자불러오기
     const callAPIMember = async () => {
         const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
-        console.log(res.data.list);
+        //console.log(res.data.list);
         setMemberList(res.data.list);
 
     }
@@ -75,7 +75,7 @@ const ERP_Sales_InsertPage = () => {
     }
     const onClickDelete = (index) => {
         setItems(items.filter(( idx) => idx !== index));
-        console.log(index);
+        //console.log(index);
     };
 
     const onChangeItem = (e, index) => {
@@ -86,15 +86,34 @@ const ERP_Sales_InsertPage = () => {
     const onChageMaster = (e) => {
         const data = {...master, [e.target.name] : e.target.value};
         setMaster(data);
+        console.log(data);
     }
 
     const onClickSaleInsert = async () => {
+        if (isClick) return;
+
+
+        if (!master.sales_date || !master.sales_location || !master.sales_employee) {
+            alert("모든 정보를 입력하세요.");
+            setIsClick(false);
+            return;
+        }
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (!item.sales_qnt || !item.sales_price || !item.sales_warehouse) {
+                alert("모든 정보를 입력하세요.");
+                setIsClick(false);
+                return;
+            }
+        }
         const res = await axios.post(`/erp/sales`, master)
         const sales_id = res.data;
-        console.log(sales_id);
+        //console.log(sales_id);
         sales_id && await Promise.all(items.map(item => axios.post(`/erp/sales/info`, { ...item, sales_id })));
         alert("등록완료")
+        setIsClick(true);
         window.location.href="/erp/sales/list"
+        
       };
 
 
@@ -114,11 +133,11 @@ const ERP_Sales_InsertPage = () => {
                                 <Form.Control type='date' value={master.sales_date} name='sales_date' onChange={onChageMaster} />
                             </Col>
                             <Col lg={2}>
-                                거래처 : 
+                                판매처 : 
                             </Col>
                             <Col>
                                 <Form.Select value={master.sales_location} name='sales_location' onChange={onChageMaster}  >
-                                    <option>거래처를선택하세요</option>
+                                    <option>판매처를선택하세요</option>
                                     {clientList && clientList.map(cli=>
                                         <option key={cli.client_id} value={cli.client_id}>
                                             {cli.client_id}({cli.client_name})
@@ -161,15 +180,15 @@ const ERP_Sales_InsertPage = () => {
                                     </thead>
                                     <tbody>
                                         {items && items.map((item, index)=>
-                                            <tr>
+                                            <tr key={item.sales_items_id}>
                                                 <td><ERP_Items_Modal items={items} setItems={setItems} item_index={index} /></td>
-                                                <td><Form.Control value={item.items_name}/> </td>
+                                                <td><Form.Control value={item.items_name} readOnly/> </td>
                                                 <td><Form.Control value={item.sales_qnt}  name="sales_qnt" onChange={(e)=>onChangeItem(e, index)}/>
                                                 </td>
                                                 <td><Form.Control value={item.sales_price} name="sales_price" onChange={(e)=>onChangeItem(e, index)}/>
                                                 </td>
-                                                <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1) + "원"}/></td>
-                                                <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`) + "원"}/></td>
+                                                <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1) + "원"} readOnly/></td>
+                                                <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`) + "원"} readOnly/></td>
                                                 <td>
                                                     <Form.Select value={item.sales_warehouse}  name="sales_warehouse" onChange={(e)=>onChangeItem(e, index)}>
                                                         <option>출하지점</option>

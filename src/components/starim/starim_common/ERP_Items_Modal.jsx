@@ -32,7 +32,7 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
 
         items.forEach((item1, idx)=> {
             //console.log(item.items_id);
-            console.log(item.sales_items_id, item_index);
+            //console.log(item.sales_items_id, item_index);
         })
 
         setItems(data);
@@ -42,7 +42,7 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
 
   return (
     <>
-        <Form.Control onClick={handleShow} readOnly value={items[item_index].sales_items_id}  />
+        <Form.Control onClick={handleShow}  defaultValue={items[item_index].sales_items_id} readOnly />
 
 
         <Modal show={show} onHide={handleClose}>

@@ -37,12 +37,12 @@ const ERP_TopMenu = () => {
             <Navbar expand="lg" variant="light">
                 <Nav className="me-auto">
                     <Nav.Item className="d-block d-xl-none">
-                        <Nav.Link href="javascript:void(0)" id="headerCollapse">
+                        <Nav.Link href="#" id="headerCollapse" >
                             <AiOutlineMenu />
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="javascript:void(0)">
+                        <Nav.Link href="#">
                             <AiOutlineBell />
                             <div className="notification bg-primary rounded-circle"></div>
                         </Nav.Link>
@@ -59,7 +59,7 @@ const ERP_TopMenu = () => {
                         }
                         {member_info_id ?
                             <NavDropdown
-                                title={<Image src="../common/assets/erp/images/profile/user-1.jpg" width="35" height="35" roundedCircle />}
+                                title={<img src={"./user-1.jpg" && "http://via.placeholder.com/50x50"} width="35" height="35" />}
                                 id="drop2"
                                 align="end"
                             >
@@ -68,11 +68,11 @@ const ERP_TopMenu = () => {
                                         <AiOutlineUser className="fs-6" />
                                         <p className="mb-0 fs-6">My Profile</p>
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="javascript:void(0)" className="d-flex align-items-center gap-2">
+                                    <NavDropdown.Item href="#" className="d-flex align-items-center gap-2">
                                         <AiOutlineMail className="fs-6" />
                                         <p className="mb-0 fs-6">My Account</p>
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item href="javascript:void(0)" className="d-flex align-items-center gap-2">
+                                    <NavDropdown.Item href="#" className="d-flex align-items-center gap-2">
                                         <AiOutlineUnorderedList className="fs-6" />
                                         <p className="mb-0 fs-6">My Task</p>
                                     </NavDropdown.Item>

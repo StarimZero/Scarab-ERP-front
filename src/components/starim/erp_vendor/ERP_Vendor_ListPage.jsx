@@ -11,7 +11,7 @@ const ERP_Vendor_ListPage = () => {
     const callAPI = async () => {
         
         const res = await axios.get(`/erp/vendor`)
-        console.log(res.data);
+        //console.log(res.data);
         setList(res.data);
 
     }
@@ -59,7 +59,7 @@ const ERP_Vendor_ListPage = () => {
                 </thead>
                 <tbody>
                     {list && list.map(vendor=>
-                        <tr>
+                        <tr key={vendor.vendor_id}>
                             <td><div style={{cursor: "pointer"}}><ERP_Vendor_ReadPage vendor={vendor}/></div></td>
                             <td>{vendor.vendor_name}</td>
                             <td>{vendor.vendor_employee}({vendor.member_info_name})</td>

@@ -35,7 +35,7 @@ const callAPI = async()=> {
     
       return (
         <Container>
-          <h2 className='my-5 text-center'>Dung beetle domestic news</h2>
+          <h2 className='my-5 text-center'>Sinhyang domestic news</h2>
           <Row>
             {news.map((article) => (
               <Col md={6} lg={4} className='mb-4'>

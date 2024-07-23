@@ -46,7 +46,7 @@ const ERP_WareHouseListPage = () => {
                 </thead>
                 <tbody>
                 {list && list.map(warehouse=>
-                        <tr>
+                        <tr key={warehouse.warehouse_id}>
                             <td>{warehouse.warehouse_id}</td>
                             <td>{warehouse.warehouse_name}</td>
                             <td>{warehouse.warehouse_address}</td>

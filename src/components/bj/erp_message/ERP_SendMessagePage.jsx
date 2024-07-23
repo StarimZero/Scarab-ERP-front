@@ -9,7 +9,7 @@ const ERP_SendMessagePage = () => {
   const [checked, setChecked] = useState(0);
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(4);
+  const [size, setSize] = useState(5);
   const [count, setCount] = useState(0);
   
 
