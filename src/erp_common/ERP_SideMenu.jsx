@@ -266,7 +266,7 @@ const ERP_SideMenu = () => {
                                 <span>
                                     <i className="ti ti-cards"></i>
                                 </span>
-                                <span className="hide-menu">Card</span>
+                                <span className="hide-menu">FAQ게시판</span>
                             </a>
                         </li>
                         <li className="sidebar-item">
