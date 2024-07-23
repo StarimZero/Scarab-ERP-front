@@ -4,6 +4,7 @@ import ERPNoticeInsertPage from '../../components/starim/erp_notice/ERPNoticeIns
 import ERPNoticeListPage from '../../components/starim/erp_notice/ERPNoticeListPage'
 import ERPNoticeReadPage from '../../components/starim/erp_notice/ERPNoticeReadPage'
 import ERPNoticeUpdatePage from '../../components/starim/erp_notice/ERPNoticeUpdatePage'
+import ERPEventTestPage from '../../components/starim/erp_notice/ERPEventTestPage'
 
 
 const NoticeRouter = () => {
@@ -13,6 +14,7 @@ const NoticeRouter = () => {
         <Route path='list' element={<ERPNoticeListPage/>}/>
         <Route path=':notice_id' element={<ERPNoticeReadPage/>}/>
         <Route path='update/:notice_id' element={<ERPNoticeUpdatePage/>}/>
+        <Route path='event' element={<ERPEventTestPage/>}/>
        
     </Routes>
   )

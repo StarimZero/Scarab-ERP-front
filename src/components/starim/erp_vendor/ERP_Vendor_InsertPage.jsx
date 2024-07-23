@@ -18,7 +18,7 @@ const ERP_Vendor_InsertPage = () => {
         vendor_email : ""
     })
 
-    const {vendor_name, vendor_person, vendor_employee, vendor_phone, vendor_address, vendor_credit_limit, vendor_fax, vendor_email} = form;
+    const {vendor_name, vendor_person,  vendor_phone, vendor_address, vendor_credit_limit, vendor_fax, vendor_email} = form;
 
     const onChagneForm = (e) => {
         setForm({...form, [e.target.name]:e.target.value})

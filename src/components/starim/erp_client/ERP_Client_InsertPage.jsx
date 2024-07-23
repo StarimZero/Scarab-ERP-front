@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react'
-import { Button, Card, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
+import React, {  useState } from 'react'
+import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import AddressModal from '../../../common/AddressModal';
 import ERPClientMemberModal from '../starim_common/ERPClientMemberModal';
 
@@ -19,7 +19,7 @@ const ERP_Client_InsertPage = () => {
         client_email : ""
     })
 
-    const {client_name, client_person, client_employee, client_phone, client_address, client_credit_limit, client_fax, client_email} = form;
+    const {client_name, client_person, client_phone, client_address, client_credit_limit, client_fax, client_email} = form;
 
 
 
