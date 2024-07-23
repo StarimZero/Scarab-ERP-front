@@ -13,14 +13,14 @@ const ERPClientMemberModal = ({form, setForm}) => {
 
     const [page] = useState(1);
     const [size] = useState(15);
-    const [key] = useState("");
-    const [word] = useState("");
+    const [key] = useState("dept_key");
+    const [word] = useState("1");
     const [memberList, setMemberList] = useState([]);
 
     //담당자불러오기
     const callAPIMember = async () => {
         const res = await axios.get(`/erp/member?key=${key}&word=${word}&page=${page}&size=${size}`)
-        //console.log(res.data.list);
+        console.log(res.data.list);
         setMemberList(res.data.list);
     }
 

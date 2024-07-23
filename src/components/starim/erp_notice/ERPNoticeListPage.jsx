@@ -119,6 +119,7 @@ const ERPNoticeListPage = () => {
                             )}
                     </tbody>
                 </Table>
+                <Link to="/erp/notice/event"><Button  variant='outline-info'>asdf</Button></Link>
             </Col>
         </Row>
         {count > size && 
