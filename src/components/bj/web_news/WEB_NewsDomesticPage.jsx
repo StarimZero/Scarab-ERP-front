@@ -37,7 +37,7 @@ useEffect(()=>{
 
   return (
     <Container>
-      <h2 className='my-5 text-center'>쇠똥구리  국내뉴스</h2>
+      <h2 className='my-5 text-center'>신향  국내뉴스</h2>
       <Row>
         {news.map((article) => (
           <Col md={6} lg={4} className='mb-4'>

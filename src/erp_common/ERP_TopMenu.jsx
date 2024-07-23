@@ -37,7 +37,7 @@ const ERP_TopMenu = () => {
             <Navbar expand="lg" variant="light">
                 <Nav className="me-auto">
                     <Nav.Item className="d-block d-xl-none">
-                        <Nav.Link href="#" id="headerCollapse">
+                        <Nav.Link href="#" id="headerCollapse" >
                             <AiOutlineMenu />
                         </Nav.Link>
                     </Nav.Item>

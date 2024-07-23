@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { Nav } from 'react-bootstrap';
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { CiMenuBurger } from "react-icons/ci";
 
 const Web_Menu = () => {
     const [showDropdownCompany, setShowDropdownCompany] = useState(false);
@@ -10,6 +12,7 @@ const Web_Menu = () => {
     const [showDropdownEmploy, setShowDropdownEmploy] = useState(false);
     const [showDropdownCustomer, setShowDropdownCustomer] = useState(false);
     const [showDropdownLog, setShowDropdownLog] = useState(false);
+    
 
     const handleMouseOver = (setShowDropdown) => {
         setShowDropdown(true);
@@ -25,14 +28,15 @@ const Web_Menu = () => {
           sessionStorage.clear();
           window.location.reload();
         }
-    }    
-    const vid = sessionStorage.getItem("visitor_id")
+    };
+
+    const vid = sessionStorage.getItem("visitor_id");
 
     return (
 
         <div>
             <div className='my-5'>   
-                <nav className="web-nav-container d-flex align-items-center justify-content-between web-nav-border">
+                <Nav className="web-nav-container d-flex align-items-center justify-content-between web-nav-border">
                     <div className="web-menu-items d-flex">
                     <div className='me-3 ms-3'>
                         <a href="/erp">
@@ -154,7 +158,7 @@ const Web_Menu = () => {
                             <img src="/images/menupage/logo.png" alt="Description" className="web-logo-image" />
                         </a>
                     </div>
-                </nav>
+                </Nav>
             </div>
             
         </div>

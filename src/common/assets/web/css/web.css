@@ -84,7 +84,6 @@
 
 
 
-
 /* Web_HomePage에서 사용 */
 .web-background-image-container {
   background-size: cover; /* 이미지가 요소를 덮도록 설정 */
@@ -108,6 +107,10 @@
    
   }
 
+  .web-responsive-image {
+    max-width: 100%;
+    height: auto;
+  }
 
 
 
@@ -178,7 +181,7 @@ ul li a {
     margin-top: 200px;  
   }
   
-
+ 
 
 
 
@@ -435,5 +438,12 @@ ul li a {
   display: flex;
   justify-content: center;
 }
+
+
+
+.card-body-contents{
+  margin-bottom: 300px;
+}
+
 
 

@@ -254,11 +254,11 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./sample-page.html" aria-expanded="false">
+                            <a className="sidebar-link" href="/web" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-aperture"></i>
                                 </span>
-                                <span className="hide-menu">Sample Page</span>
+                                <span className="hide-menu">신향F&B</span>
                             </a>
                         </li>
                         <li className="sidebar-item">

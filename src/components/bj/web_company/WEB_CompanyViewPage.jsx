@@ -14,7 +14,7 @@ const WEB_CompanyViewPage = () => {
       <Row className="company-banner align-items-center">
         <Col>
           <div className="blue-content">
-            <h3>선향F&B</h3>
+            <h3>신향F&B</h3>
             <p>고객의 식생활을 향상시키는 글로벌 식품 기업</p>
           </div>
         </Col>
@@ -32,7 +32,7 @@ const WEB_CompanyViewPage = () => {
               <strong>대표자:</strong> 김레드
             </li>
             <li>
-              <strong>전체 직원수:</strong> 선향 한국 1,500명 베트남 3,500명, 인도 3,000명
+              <strong>전체 직원수:</strong> 신향 한국 1,500명 베트남 3,500명, 인도 3,000명
             </li>
             <li>
               <strong>연매출:</strong> 	23년 기준 1조 2,628억원

@@ -1,27 +1,35 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import ERP_ModalInsertListPage from './ERP_ModalInsertListPage';
 
 const ERP_insertMessagePage = () => {
   const [members, setMembers] = useState([]);
-  const [page, setPage]=useState(1);
-  const [size, setSize]=useState(50);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(50);
 
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
   const [receiver, setReceiver] = useState('');
   const [receiverName, setReceiverName] = useState('');
 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      setReceiver(location.state.receiver);
+    }
+  }, [location.state]);
+
   const callAPI = async () => {
-      const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
-     // console.log(res.data.list);
-      setMembers(res.data.list);
+    const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
+    setMembers(res.data.list);
   };
 
   useEffect(() => {
     callAPI();
-  }, []);
+  }, [page]);
 
   const onSendMsg = async () => {
     if (title === '') {
@@ -38,10 +46,10 @@ const ERP_insertMessagePage = () => {
       });
 
       alert('메세지 전송 완료');
-      window.location.href = '/erp/message';
+      window.location.href = '/erp/message/send';
 
     } catch (error) {
-      console.error('뭔지는 몰라도 못보냄:', error);
+      console.error('메세지 전송 실패:', error);
       alert('메세지 전송 실패');
     }
   };
@@ -55,7 +63,7 @@ const ERP_insertMessagePage = () => {
     <div>
       <div className="mb-4">메신저 쓰기</div>
 
-      <hr/>
+      <hr />
       <div className="mb-2">
         <Button className="btn-sm" variant="outline-primary" onClick={onSendMsg}>
           보내기
@@ -64,15 +72,15 @@ const ERP_insertMessagePage = () => {
       <Form>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column sm="1">받는 사람:</Form.Label>
-          <Col sm="9" lg={8} md={6} >
+          <Col sm="9" lg={8} md={6}>
             <Form.Control
               readOnly
-              value={receiverName}
-              placeholder="주소록에서 선택하세요"/>
-           
+              value={receiver}
+              placeholder="주소록에서 선택하세요"
+            />
           </Col>
           <Col lg={3} md={4}>
-          <ERP_ModalInsertListPage onSelect={onClickModal} />
+            <ERP_ModalInsertListPage onSelect={onClickModal} />
           </Col>
         </Form.Group>
 
@@ -83,7 +91,8 @@ const ERP_insertMessagePage = () => {
             className="mb-2"
             rows={1}
             style={{ width: '90%' }}
-            placeholder="제목"/>
+            placeholder="제목"
+          />
 
           <Form.Control
             value={content}
@@ -91,7 +100,8 @@ const ERP_insertMessagePage = () => {
             as="textarea"
             rows={10}
             style={{ width: '90%' }}
-            placeholder="내용"/>
+            placeholder="내용"
+          />
         </Form.Group>
       </Form>
     </div>

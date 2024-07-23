@@ -183,7 +183,7 @@ const ERP_DeleteMessagePage = () => {
                             )}
                         </tbody>
                     </Table>
-                    {count > size &&
+                   
                         <Pagination
                             activePage={page}
                             itemsCountPerPage={size}
@@ -192,7 +192,7 @@ const ERP_DeleteMessagePage = () => {
                             prevPageText={"‹"}
                             nextPageText={"›"}
                             onChange={(e) => setPage(e)} />
-                    }
+                   
                 </Tab>
 
                 <Tab eventKey="profile" title="보낸메세지">
@@ -226,7 +226,6 @@ const ERP_DeleteMessagePage = () => {
                             )}
                         </tbody>
                     </Table>
-                    {count > size &&
                         <Pagination
                             activePage={spage}
                             itemsCountPerPage={ssize}
@@ -235,7 +234,6 @@ const ERP_DeleteMessagePage = () => {
                             prevPageText={"‹"}
                             nextPageText={"›"}
                             onChange={(e) => setSpage(e)} />
-                    }
                 </Tab>
             </Tabs>
         </div>

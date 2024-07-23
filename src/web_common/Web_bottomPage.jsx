@@ -28,7 +28,6 @@ const Web_bottomPage = () => {
               <ul>
                 <li><a href="/web/items/read">제품소개</a></li>
                 <li><a href="/web/items/research">연구중인제품</a></li>
-                <li><a href='#'>공모전</a></li>
               </ul>
             </Col>
             <Col>
@@ -42,8 +41,8 @@ const Web_bottomPage = () => {
           </Row>
           <div className='row mt-3'>
             <Col>
-              <p>쇠똥구리 고객상담실: 080-125-1111</p>
-              <p>쇠똥구리 견적문의실: 080-123-1212 (월-금 09:30-18:30)</p>
+              <p>신향 고객상담실: 080-125-1111</p>
+              <p>신향 견적문의실: 080-123-1212 (월-금 09:30-18:30)</p>
             </Col>
           </div>
         </div>
