@@ -5,6 +5,8 @@ import ERP_Member_JoinPage from '../../components/jun/erp_member/ERP_Member_Join
 import ERP_Member_RegisterPage from '../../components/jun/erp_member/ERP_Member_RegisterPage'
 import ERP_Member_MyPage from '../../components/jun/erp_member/ERP_Member_MyPage'
 import ERP_Member_UpdateInfoPage from '../../components/jun/erp_member/ERP_Member_UpdateInfoPage'
+import ERP_Member_ListPage from '../../components/jun/erp_member/ERP_Member_ListPage'
+import ERP_Member_ReadPage from '../../components/jun/erp_member/ERP_Member_ReadPage'
 
 const MemberRouter = () => {
     return (
@@ -14,6 +16,8 @@ const MemberRouter = () => {
             <Route path='join' element={<ERP_Member_JoinPage/>}/>
             <Route path='mypage' element={<ERP_Member_MyPage/>}/>
             <Route path='updateInfo' element={<ERP_Member_UpdateInfoPage/>}/>
+            <Route path='list' element={<ERP_Member_ListPage/>}/>
+            <Route path='read/:member_info_id' element={<ERP_Member_ReadPage/>}/>
         </Routes>
     )
 }

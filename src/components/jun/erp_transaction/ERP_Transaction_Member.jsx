@@ -18,7 +18,7 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
     // 사원 불러오기
     const [memberList, setMemberList] = useState([]);
     const callMember = async () => {
-        let url = `/erp/member?key=${key}&page=${page}&size=${size}`;
+        let url = `/erp/salary/member?key=${key}&page=${page}&size=${size}`;
         if (key !== 'member_info_hiredate') {
             url += `&word=${word}`;
         }
@@ -28,9 +28,11 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
             // console.log(`${formattedDate}`);
         }
         const res = await axios.get(url);
+
         setMemberList(res.data.list);
         setTotal(res.data.total);
         // console.log(res.data.list);
+        // console.log(res.data.total);
     }
 
     // 부서 불러오기
@@ -76,9 +78,9 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
             });
             return;
         }
-        
+
         Swal.fire({
-            title:  `${chk}명의 급여를 송금하시겠습니까?`,
+            title: `${chk}명의 급여를 송금하시겠습니까?`,
             text: "",
             icon: "info",
             showCancelButton: true,
@@ -125,6 +127,11 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
         });
     }
     
+    // 금액에 천 단위 구분 기호를 추가하는 함수
+    const formatNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
 
     return (
         <div className='my-5'>
@@ -189,7 +196,7 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
                 </Col>
             </Row>
             <Row>
-                {chk !== 0 && 
+                {chk !== 0 &&
                     <Col lg={4}>
                         <Button onClick={onCheckedPay}>송금하기</Button>
                     </Col>
@@ -219,8 +226,9 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
                                 <td>{member.dept_name}</td>
                                 <td>{member.member_info_job}</td>
                                 <td>{member.member_info_hiredate}</td>
-                                <td>{member.member_info_salary}</td>
+                                <td>{formatNumber(member.member_info_salary)}원</td>
                             </tr>
+
                         )}
                     </tbody>
                 </Table>
