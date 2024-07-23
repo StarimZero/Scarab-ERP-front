@@ -86,19 +86,19 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
+                            <a className="sidebar-link" href="/erp/member/list" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-cards"></i>
+                                </span>
+                                <span className="hide-menu">사원목록</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
                             <a className="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-alert-circle"></i>
                                 </span>
                                 <span className="hide-menu">Alerts</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-card.html" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-cards"></i>
-                                </span>
-                                <span className="hide-menu">Card</span>
                             </a>
                         </li>
                         <li className="sidebar-item">

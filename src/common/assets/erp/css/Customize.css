@@ -1,0 +1,11 @@
+.title{
+    width: 100px;
+}
+
+.member-photo{
+    color: gray;
+    font-size: 3rem;
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+}
