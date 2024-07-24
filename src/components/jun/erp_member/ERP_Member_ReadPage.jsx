@@ -84,7 +84,8 @@ const ERP_Member_ReadPage = () => {
     const validateForm = () => {
         const errors = {};
         if (!member_info_id) errors.member_info_id = 'ID를 입력해야 합니다.';
-        // if (!member_info_pass) errors.member_info_pass = '패스워드를 입력해야 합니다.';
+        if (!dept_key) errors.dept_key = '부서를 선택해주십시오.';
+        if (!member_info_job) errors.member_info_job = '직급을 선택해주십시오.'
         return errors;
     }
 
@@ -123,6 +124,36 @@ const ERP_Member_ReadPage = () => {
         }
     }
 
+    const onDelete = () => {
+        Swal.fire({
+            title: `${member_info_name}님을 퇴사처리 하시겠습니까?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "confirm"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put('/erp/member', {
+                    ...member,
+                    member_info_salary: 0, 
+                    member_info_job: "퇴사"
+                });
+                const formData = new FormData();
+                formData.append("byte", file.byte);
+                await axios.post(`/erp/member/update/photo/${member_info_key}`, formData);
+                Swal.fire({
+                    title: "퇴사처리 완료",
+                    text: "",
+                    icon: "success"
+                }).then(() => {
+                    window.location.href = `/erp/member/list`;
+                });
+            }
+        });
+    }
+
     return (
         <Row className="justify-content-center readPage">
             <Col className="col-xl-10 col-lg-12 col-md-9">
@@ -148,7 +179,7 @@ const ERP_Member_ReadPage = () => {
                                         <InputGroup.Text className='title justify-content-center'>사원명</InputGroup.Text>
                                         <Form.Control name='member_info_name' value={member_info_name} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
                                     </InputGroup>
-                                    <InputGroup className='mb-3'>
+                                    <InputGroup>
                                         <InputGroup.Text className='title justify-content-center'>부서</InputGroup.Text>
                                         <Form.Select name='dept_key' value={dept_key} onChange={onChangeForm}>
                                             <option value="">부서선택</option>
@@ -159,7 +190,8 @@ const ERP_Member_ReadPage = () => {
                                             )}
                                         </Form.Select>
                                     </InputGroup>
-                                    <InputGroup className='mb-3'>
+                                    {formErrors.dept_key && <Form.Text style={{ color: 'red' }}>{formErrors.dept_key}</Form.Text>}
+                                    <InputGroup className='mt-3'>
                                         <InputGroup.Text className='title justify-content-center'>직급</InputGroup.Text>
                                         <Form.Select name='member_info_job' value={member_info_job} onChange={onChangeForm}>
                                             <option value="">직급선택</option>
@@ -173,7 +205,8 @@ const ERP_Member_ReadPage = () => {
                                             <option value="임원">임원</option>
                                         </Form.Select>
                                     </InputGroup>
-                                    <InputGroup className='mb-3'>
+                                    {formErrors.member_info_job && <Form.Text style={{ color: 'red' }}>{formErrors.member_info_job}</Form.Text>}
+                                    <InputGroup className='my-3'>
                                         <InputGroup.Text className='title justify-content-center'>입사일</InputGroup.Text>
                                         <Form.Control name='member_info_hiredate' value={member_info_hiredate} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
                                     </InputGroup>
@@ -206,6 +239,7 @@ const ERP_Member_ReadPage = () => {
                                     <div className='text-center my-3'>
                                         <Button className='me-2' variant='primary' type='submit'>정보수정</Button>
                                         <Button variant='secondary' type='reset'>수정취소</Button>
+                                        <Button className='ms-2' variant='danger' type='button' onClick={onDelete}>퇴사처리</Button>
                                     </div>
                                 </form>
                             </div>
