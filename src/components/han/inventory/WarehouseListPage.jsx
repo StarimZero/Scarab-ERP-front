@@ -15,8 +15,7 @@ const WarehouseListPage = () => {
     const [list, setList] = useState([]);
     const [warehouseId, setWarehouseId] = useState(6);
     const [isSearch, setIsSearch] = useState(false);
-    const [item, setItem] = useState("");
-    const [itemToFetch, setItemToFetch] = useState(null);
+
 
     const callAPI = async (searchWord) => {
         try {
@@ -43,40 +42,9 @@ const WarehouseListPage = () => {
     const onClickWarehouse1 = () => {
         setWarehouseId(6);
     }
-    
 
     const onClickWarehouse2 = () => {
         setWarehouseId(7);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
-    const onClickWarehouse3 = () => {
-        setWarehouseId(8);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
-    const onClickWarehouse4 = () => {
-        setWarehouseId(9);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
-    const onClickWarehouse5 = () => {
-        setWarehouseId(10);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
-    const onClickWarehouse6 = () => {
-        setWarehouseId(11);
-        setKey("")
-        setWord("")
-        setPage(1)
-    }
-    const onClickWarehouse7 = () => {
-        setWarehouseId(12);
         setKey("")
         setWord("")
         setPage(1)
@@ -122,11 +90,6 @@ const WarehouseListPage = () => {
                 <div>
                     <Button className='me-2 mb-2' onClick={onClickWarehouse1}>동부</Button>
                     <Button className='me-2 mb-2' onClick={onClickWarehouse2}>파주</Button>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse3}>대구</Button>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse4}>순천</Button>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse5}>창원</Button>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse6}>남부</Button>
-                    <Button className='me-2 mb-2' onClick={onClickWarehouse7}>인천</Button>
                 </div>
                 <div className='mb-2'>
                     <Col lg={3}>

@@ -5,6 +5,8 @@ import ERPItemsModalPurcahse from '../starim_common/ERPItemsModalPurcahse';
 
 const ERP_Purchase_InsertPage = () => {
 
+    const [totalAmount, setTotalAmount] = useState(0);
+
     const todayDate = new Date().toISOString().split('T')[0];
     const [page] = useState(1);
     const [size] = useState(15);
@@ -78,7 +80,8 @@ const ERP_Purchase_InsertPage = () => {
     };
 
     const onChangeItem = (e, index) => {
-        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:e.target.value} : item);
+        const number = parseInt(e.target.value.replace(/,/g, ''));
+        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:number} : item);
         setItems(data);
     }
 
@@ -115,12 +118,22 @@ const ERP_Purchase_InsertPage = () => {
         window.location.href="/erp/purchase/list"
       };
 
+      useEffect(() => {
+        // 아이템의 총액 합계 계산
+        let total = 0;
+        items.forEach(item => {
+            const subtotal = parseInt(item.purchase_price) * parseInt(item.purchase_qnt);
+            total += subtotal;
+        });
+        setTotalAmount(total);
+    }, [items]);
+
 
 
   return (
     <>
         <Row className='justify-content-center'>
-            <Col lg={7}>
+            <Col lg={12}>
                 <h1>구매작성</h1>
                 <Card>
                     <Card.Header>
@@ -180,12 +193,12 @@ const ERP_Purchase_InsertPage = () => {
                                             <tr key={item.purchase_items_id}>
                                                 <td><ERPItemsModalPurcahse items={items} setItems={setItems} item_index={index} readOnly/></td>
                                                 <td><Form.Control value={item.items_name} readOnly/> </td>
-                                                <td><Form.Control value={item.purchase_qnt}  name="purchase_qnt" onChange={(e)=>onChangeItem(e, index)}/>
+                                                <td><Form.Control value={item.purchase_qnt.toLocaleString()}  name="purchase_qnt" onChange={(e)=>onChangeItem(e, index)} maxLength={6}/>
                                                 </td>
-                                                <td><Form.Control value={item.purchase_price} name="purchase_price" onChange={(e)=>onChangeItem(e, index)}/>
+                                                <td><Form.Control value={item.purchase_price.toLocaleString()} name="purchase_price" onChange={(e)=>onChangeItem(e, index)} maxLength={6}/>
                                                 </td>
-                                                <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 0.1) + "원"} readOnly/></td>
-                                                <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 1.1 * `${item.purchase_qnt}`) + "원"} readOnly/></td>
+                                                <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 0.1).toLocaleString() + "원"} readOnly/></td>
+                                                <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 1.1 * `${item.purchase_qnt}`).toLocaleString() + "원"} readOnly/></td>
                                                 <td>
                                                     <Form.Select value={item.purchase_warehouse}  name="purchase_warehouse" onChange={(e)=>onChangeItem(e, index)}>
                                                         <option>입고지점</option>
@@ -199,6 +212,12 @@ const ERP_Purchase_InsertPage = () => {
                                                 <td><div className='text-end'><Button size='sm' onClick={()=>onClickDelete(item, index)}>ㅡ</Button></div></td>
                                             </tr>
                                         )}
+                                        <tr>
+                                            <td colSpan={4}></td>
+                                            <td className='text-end'><strong>총액 합계:</strong></td>
+                                            <td><strong>{totalAmount.toLocaleString()}원</strong></td>
+                                            <td></td>
+                                        </tr>
                                     </tbody>
                                     
                                 </Table>

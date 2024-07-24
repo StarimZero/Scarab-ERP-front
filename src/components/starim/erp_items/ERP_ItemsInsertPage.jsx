@@ -28,10 +28,12 @@ const ERP_ItemsInsertPage = () => {
 
 
     const onChangeFile = (e) => {
-        setFile({
-            name:URL.createObjectURL(e.target.files[0]),
-            byte:e.target.files[0]
-        });
+        if (e.target.files.length > 0) {
+            setFile({
+                name: URL.createObjectURL(e.target.files[0]),
+                byte: e.target.files[0]
+            });
+        } 
     }
     
 
@@ -54,6 +56,7 @@ const ERP_ItemsInsertPage = () => {
         formData.append("byte", file.byte);
         await axios.post(`/erp/items/update/image/${newItems_id}`, formData);
         alert("아이템등록완료")
+        window.location.href="/erp/items/list"
     }
 
 

@@ -5,6 +5,7 @@ import { Button, Col, Form, FormControl, InputGroup, Row, Table } from 'react-bo
 import moment from 'moment';
 import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
+import ChartTest from '../starim_common/ChartTest';
 
 const ERP_Purchase_ListPage = () => {
 
@@ -83,6 +84,7 @@ const ERP_Purchase_ListPage = () => {
                         <td>코드</td>
                         <td>이름</td>
                         <td>판매일</td>
+                        <td>메모</td>
                         <td>삭제</td>
                     </tr>
                 </thead>
@@ -92,6 +94,7 @@ const ERP_Purchase_ListPage = () => {
                             <td><div style={{cursor: "pointer"}}><ERP_Purchase_ReadPage purchase={purchase}/></div></td>
                             <td>{purchase.purchase_employee}({purchase.member_info_name})</td>
                             <td>{moment(purchase.purchase_date).format('yy년MM월DD일')}</td>
+                            <td>{purchase.purchase_memo}</td>
                             <td><Button onClick={()=>onClickPurchaseDelete(purchase)}>삭제</Button></td>
                         </tr>
                     )}
@@ -109,6 +112,7 @@ const ERP_Purchase_ListPage = () => {
         nextPageText={"›"}
         onChange={(e)=>setPage(e)}/>
     } 
+    <ChartTest/>
     </>
   )
 }
