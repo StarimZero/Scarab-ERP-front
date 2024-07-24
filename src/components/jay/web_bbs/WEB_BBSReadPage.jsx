@@ -1,13 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Card, Col, InputGroup, Row } from 'react-bootstrap';
-import { Form, useParams } from 'react-router-dom';
+import { Button, Card, Col, InputGroup, Row } from 'react-bootstrap';
+import { Form, Navigate, useNavigate, useParams } from 'react-router-dom';
 
 const WEB_BBSReadPage = () => {
   const {bbs_id} = useParams();
   const [form, setForm] = useState([]);
+  const [loginId, setLoginId] = useState();
+ 
   // console.log({bbs_id})
  
+
   
 
 
@@ -21,6 +24,20 @@ const WEB_BBSReadPage = () => {
   useEffect(() => {
     callAPI();
   },[]);
+
+  const onClickDelete = ()=>{
+    if(!window.confirm(`${bbs_id}를 삭제하시겠습니까?`)) return;
+    axios.delete(`/bbs/delete/${bbs_id}`);
+    alert("삭제되었습니다 목록으로 이동합니다.");
+    window.location.href='/web/customer/bbs'
+  }
+  
+  const onClickNavi = ()=> {
+    window.location.href=`/web/customer/bbs/update/${bbs_id}`;  
+    
+  }
+
+
 
   return (
     <div>
@@ -38,6 +55,16 @@ const WEB_BBSReadPage = () => {
         </Card>
       </Col>
      </Row>
+     <div>
+        {form.bbs_writer == sessionStorage.getItem('visitor_id') &&
+
+        <Button 
+            onClick={onClickDelete}
+        >글삭제</Button>}
+        <Button
+         onClick={onClickNavi}
+        >수정</Button>
+     </div>
     </div>
   )
 }
