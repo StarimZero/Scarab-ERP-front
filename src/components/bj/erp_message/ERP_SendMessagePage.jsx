@@ -79,7 +79,7 @@ const ERP_SendMessagePage = () => {
                 checked={messages.length> 0 && checked===messages.length} type='checkbox'/>
               <Button onClick={onDelete} className='ms-2 btn-sm' variant='outline-danger'>삭제</Button>
             </td>
-            <td>mid</td>
+            
             <td>받은사람</td>
             <td>제목</td>
             <td>발신일</td>
@@ -95,7 +95,7 @@ const ERP_SendMessagePage = () => {
                         <input onChange={(e)=>onSingleChecked(e, msg.message_id)} checked={msg.checked} type='checkbox'/>
                       </td>
 
-                      <td>{msg.message_id}</td>
+                   
 
                       <td>{msg.message_receiver}</td>
 

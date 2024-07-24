@@ -1,10 +1,11 @@
 import axios from 'axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import {Button, Table} from 'react-bootstrap'
+import {Button, Col, Form, InputGroup, Row, Table} from 'react-bootstrap'
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
 import Pagination from 'react-js-pagination';
+
 
 
 const ERP_ReceiveMessagePage = () => {
@@ -13,8 +14,15 @@ const ERP_ReceiveMessagePage = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
   const [count, setCount] = useState(0);
-  const [key, setKey] = useState('member_info_receiver');
+  const [key, setKey] = useState('message_title');
   const [word, setWord] = useState('');
+
+  const [nlist, setNlist] = useState([]);
+  const [npage, setNPage] = useState(1);
+  const [nsize, setNsize] = useState(5);
+  const [ncount, setNcount] = useState(0);
+  const [nkey, setNkey] = useState('message_title');
+  const [nword, setNword] = useState('');
 
 
   const uid=sessionStorage.getItem('member_info_id');
@@ -25,8 +33,13 @@ const ERP_ReceiveMessagePage = () => {
    // console.log(res.data);
     setMessages(data);
     setCount(res.data.total);
-    console.log(res.data.total);
+    //console.log(res.data.total);
+   const res1=await axios.get(`/erp/receivemessage/nlist/${uid}?key=${nkey}&word=${nword}&page=${npage}&size=${nsize}`);
+   setNcount(res1.data.ntotal);
+    //console.log(res1.data)
   }
+
+
 
   const onAllChecked = (e) => {
     const data=messages.map(msg=>msg && {...msg, checked:e.target.checked});
@@ -40,7 +53,7 @@ const ERP_ReceiveMessagePage = () => {
 
   useEffect(()=>{
     callAPI();
-  }, [page]);
+  }, [page, key]);
 
   useEffect(()=> {
     let cnt=0;
@@ -77,9 +90,11 @@ const clickRead = async(message_id) => {
   }
 }
 
+
   return (
     <div>
-          <div>받은메일함</div>
+        <div>받은메일함</div>
+        <div>안읽은거: {ncount}</div>
        <hr/>
        <Table >
         <thead>
@@ -91,7 +106,7 @@ const clickRead = async(message_id) => {
               <Button onClick={onDelete}
                 className='ms-2 btn-sm' variant='outline-danger'>삭제</Button>
             </td>
-            <td>mid</td>
+         
             <td>읽음</td>
             <td>보낸사람</td>
             <td>제목</td>
@@ -106,7 +121,7 @@ const clickRead = async(message_id) => {
                       <td><input onChange={(e)=>onSingleChecked(e, msg.message_id)}
                         checked={msg.checked} type='checkbox'/></td>
 
-                      <td>{msg.message_id}</td>
+                   
 
                       <td>
                           {msg.message_readdate ? <IoMdMailOpen  color='deepskyblue'/> : <IoMdMail color='deepskyblue'/>}
