@@ -86,7 +86,7 @@ const ERP_Sales_InsertPage = () => {
     const onChageMaster = (e) => {
         const data = {...master, [e.target.name] : e.target.value};
         setMaster(data);
-        console.log(data);
+        //console.log(data);
     }
 
     const onClickSaleInsert = async () => {

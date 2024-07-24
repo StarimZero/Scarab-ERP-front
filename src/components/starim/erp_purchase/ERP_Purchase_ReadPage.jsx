@@ -7,6 +7,9 @@ import Modal from 'react-bootstrap/Modal';
 
 const ERP_Purchase_ReadPage = ({purchase}) => {
 
+    const [totalAmount, setTotalAmount] = useState(0);
+
+
     const [page, setPage] = useState(1);
     const [size] = useState(150);
     const [key, setKey] = useState("title");
@@ -102,9 +105,21 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
 
 
     const onChangeItem = (e, index) => {
-        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:e.target.value} : item);
+        const number = parseInt(e.target.value.replace(/,/g, ''));
+        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:number} : item);
         setItems(data);
     }
+
+    useEffect(() => {
+        // 아이템의 총액 합계 계산
+        let total = 0;
+        items.forEach(item => {
+            const subtotal = parseInt(item.purchase_price) * parseInt(item.purchase_qnt);
+            total += subtotal;
+        });
+        setTotalAmount(total);
+    }, [items]);
+
 
 
   return (
@@ -118,7 +133,7 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
-            size='lg'
+            size='xl'
         >
             <Modal.Header closeButton>
                 <Modal.Title>{purchase.purchase_id}</Modal.Title>
@@ -176,17 +191,17 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                                     <td>부가세</td>
                                                     <td>총금액</td>
                                                     <td>입고창고</td>
-                                                    <td>삭제하기</td>
+                                                    <td>삭제</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {items && items.map((item, index)=>
                                                 <tr key={item.purchase_info_id}>
                                                     <td><Form.Control value={item.purchase_items_id}/> </td>
-                                                    <td><Form.Control value={parseInt(item.purchase_qnt)} name='purchase_qnt' onChange={(e)=>onChangeItem(e, index)} /></td>
-                                                    <td><Form.Control value={item.purchase_price} name='purchase_price' onChange={(e)=>onChangeItem(e, index)}/></td>
-                                                    <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 0.1) + "원"} /></td>
-                                                    <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 1.1 * `${item.purchase_qnt}`) + "원"} /></td>
+                                                    <td><Form.Control value={item.purchase_qnt.toLocaleString()} name='purchase_qnt' onChange={(e)=>onChangeItem(e, index)} /></td>
+                                                    <td><Form.Control value={item.purchase_price.toLocaleString()} name='purchase_price' onChange={(e)=>onChangeItem(e, index)}/></td>
+                                                    <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 0.1).toLocaleString() + "원"} /></td>
+                                                    <td><Form.Control value={Math.ceil(`${item.purchase_price}` * 1.1 * `${item.purchase_qnt}`).toLocaleString() + "원"} /></td>
                                                     <td>
                                                         <Form.Select value={parseInt(item.purchase_warehouse)} name='purchase_warehouse' onChange={(e)=>onChangeItem(e, index)}>
                                                             <option value={0}>입고창고를선택하세요</option>
@@ -202,6 +217,12 @@ const ERP_Purchase_ReadPage = ({purchase}) => {
                                                     </td>
                                                 </tr>
                                                 )}
+                                                <tr>
+                                                    <td colSpan={4}></td>
+                                                    <td className='text-end'><strong>총액 합계:</strong></td>
+                                                    <td><strong>{totalAmount.toLocaleString()}원</strong></td>
+                                                    <td></td>
+                                                </tr>
                                             </tbody>
                                         </Table>
                                     </Col>
