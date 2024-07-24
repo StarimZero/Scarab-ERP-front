@@ -4,9 +4,8 @@ import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
 import DatePicker from 'react-datepicker';
 import Pagination from 'react-js-pagination';
 
-const ERP_Transaction_ListPage = ({ account_number }) => {
+const ERP_Transaction_ListPage = ({ account_number, transactions, setTransactions }) => {
 
-    const [transactions, setTransactions] = useState([]);
     const [key, setKey] = useState('');
     const [word, setWord] = useState('');
     const [selectedDate, setSelectedDate] = useState();

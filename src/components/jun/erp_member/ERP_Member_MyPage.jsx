@@ -3,6 +3,9 @@ import { Button, Card, Col, Row, Table } from 'react-bootstrap'
 import { FaUser } from "react-icons/fa6";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../../../common/assets/erp/css/Customize.css';
+import ERP_Member_SalaryPage from './ERP_Member_SalaryPage';
+import ERP_Member_AttendancePage from './ERP_Member_AttendancePage';
 
 const ERP_Member_MyPage = () => {
     const member_info_id = sessionStorage.getItem('member_info_id');
@@ -13,19 +16,8 @@ const ERP_Member_MyPage = () => {
         member_info_hiredate, member_info_account, member_info_job, member_info_photo, dept_name } = member;
     const navigate = useNavigate('');
 
-    const style = {
-        color: 'gray',
-        fontSize: '3rem',
-        width: '100px',
-        height: '100px'
-    }
-
     const onUpdateInfo = () => {
         navigate('/erp/member/updateInfo');
-    }
-
-    const onUpdateLoginInfo = () => {
-        navigate('/erp/member/updateLoginInfo');
     }
 
     const callMember = async () => {
@@ -36,7 +28,7 @@ const ERP_Member_MyPage = () => {
 
     useEffect(() => {
         callMember();
-    }, [])
+    }, []);
 
     return (
         <Row className="justify-content-center readPage">
@@ -47,13 +39,16 @@ const ERP_Member_MyPage = () => {
                             <div className="text-center mt-5 mb-3">
                                 <h1 className="h4 text-gray-900 mb-4">My Page</h1>
                             </div>
+                            <div className='text-end my-3 px-5'>
+                                <Button className='px-3' variant='dark' onClick={onUpdateInfo}>비밀번호 변경</Button>
+                            </div>
                             <div className='px-5 text-center'>
                                 <Table bordered className='mb-5'>
                                     <tbody>
                                         <tr className='text-center'>
                                             <td rowSpan={6} className='text-center align-middle'>
-                                                {!member_info_photo && <FaUser style={style} />}
-                                                {member_info_photo && <img src={member_info_photo} style={style} />}
+                                                {!member_info_photo && <FaUser className="member-photo" />}
+                                                {member_info_photo && <img src={member_info_photo} className="member-photo" />}
                                             </td>
                                             <td className='text-center table-dark'>사원번호</td>
                                             <td>{member_info_key}</td>
@@ -88,12 +83,10 @@ const ERP_Member_MyPage = () => {
                                         </tr>
                                     </tbody>
                                 </Table>
-                                <div className='text-center my-5'>
-                                    <Button className='px-5 me-3' variant='dark' onClick={onUpdateInfo}>기본정보수정</Button>
-                                    <Button className='px-5' variant='secondary' onClick={onUpdateLoginInfo}>로그인정보수정</Button>
-                                </div>
                             </div>
                         </Row>
+                        <ERP_Member_AttendancePage />
+                        <ERP_Member_SalaryPage />
                     </Card.Body>
                 </Card>
             </Col>
