@@ -19650,7 +19650,7 @@ fieldset:disabled .btn {
 
 .left-sidebar {
     width: 270px;
-    background-color: #fff;
+    background-color: #333;
     position: absolute;
     -webkit-transition: 0.2s ease-in;
     transition: 0.2s ease-in;
@@ -19686,7 +19686,7 @@ fieldset:disabled .btn {
 
 .nav-small-cap {
     margin-top: 24px;
-    color: #2A3547;
+    color: #D6B534;
     font-size: 12px;
     font-weight: 700;
     padding: 3px 12px;
@@ -19699,7 +19699,7 @@ fieldset:disabled .btn {
 }
 
 .sidebar-nav ul .sidebar-item .sidebar-link {
-    color: #2A3547;
+    color: #D6B534;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
