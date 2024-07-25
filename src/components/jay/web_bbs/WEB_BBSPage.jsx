@@ -1,69 +1,68 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
+import Pagination from "react-js-pagination";  
+    
 
 const WEB_BBSPage = () => {
     const [list, setList] = useState([]);
-    const [page, setPage] = useState(5);
-    const [size, setSize] = useState(1);
-    const [count, setCount] = useState();
-    const [checked, setChecked] = useState(0);
+
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(5);
+
+    const [count, setCount] = useState(0);
+    const [key, setKey] = useState('bbs_title');
+    const [word, setWord] = useState('');
+
     
 
     const callAPI = async() =>{
-        const res= await axios.get(`/bbs/list`);
-        const data=res.data.map(bbs =>bbs && {...bbs , checked : false });
-        console.log(res.data);
-        setList(data);
+        const res= await axios.get(`/bbs/list?key=${key}&word=${word}&page=${page}&size=${size}`);
+        
+        //console.log(res.data.list);
+        setCount(res.data.total);
+        setList(res.data.list);
     }
 
     useEffect(()=>{
         callAPI();
-    }, [])
+    }, [page, key])
 
-    const onClickAllChecked = (e)=>{
-        
-    }
-
-    const onClickSingleChecked = (e)=>{
-        
-    }
-
+ const onSubmit=(e)=>{
+    e.preventDefault();
+    callAPI();
+ }
 
     return (
         <div>
             <h1 className='text-center'>문의 게시판</h1>
+            <form onSubmit={onSubmit}>
+                <Row>
+                    <Col xs={6} md={5} lg={4}>
+                    
+                            <InputGroup>
+                                <Form.Select value={key} onChange={(e)=>setKey(e.target.value)}>
+                                    <option value="bbs_title">제목</option>
+                                    <option value="bbs_content" >내용</option>
+                                </Form.Select>
 
-            <Row>
-                <Col>
-                    <form>
-                        <InputGroup>
-                            <Form.Select>
-                                <option>제목</option>
-                                <option>내용</option>
-                            </Form.Select>
-
-                            <Form.Control
-
-                            />
-                            <Button>검색</Button>
+                                <Form.Control
+                                value={word}  onChange={(e)=>setWord(e.target.value)}/>
+                                <Button type='submit'>검색</Button>
 
 
-                            <div>검색수:</div>
-                        </InputGroup>
-                    </form>
-                </Col>
-            </Row>
-
+                                <div>검색수:{count}</div>
+                            </InputGroup>
+                    
+                    </Col>
+                </Row>
+            </form>
 
             <Table>
                 <thead>
 
 
                     <tr >
-                        <td ><input checked={false}
-                            type='checkbox'
-                        /></td>
                         <th>카테고리</th>
                         <td>글번호</td>
                         <th>제목</th>
@@ -76,9 +75,6 @@ const WEB_BBSPage = () => {
                 <tbody>
                     {list.map((bbs) => (
                         <tr >
-                            <td ><input 
-                            type='checkbox'checked={bbs.checked}
-                        /></td>
                             <td>{bbs.bbs_category}</td>
                             <td>{bbs.bbs_id}</td>
                            <td><a href={`/web/customer/bbs/read/${bbs.bbs_id}`}> {bbs.bbs_title}</a></td>
@@ -99,7 +95,16 @@ const WEB_BBSPage = () => {
                 <Button>글삭제</Button>
 
             </div>
-
+            {count > size && 
+        <Pagination
+        activePage={page}
+        itemsCountPerPage={size}
+        totalItemsCount={count}
+        pageRangeDisplayed={5}
+        prevPageText={"‹"}
+        nextPageText={"›"}
+        onChange={(e)=>setPage(e)}/>
+        }
         </div>
     )
 }
