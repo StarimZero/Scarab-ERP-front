@@ -12,46 +12,21 @@ const ERP_Transaction_Sales = () => {
     const [word, setWord] = useState("");
     const [count, setCount] = useState("0");
     const [list, setList] = useState([]);
-    const [listInfo, setListInfo] = useState([]);
 
-    const callAPI = async () => {
+    const callSales = async () => {
         const res = await axios.get(`/erp/sales?key=${key}&word=${word}&page=${page}&size=${size}`);
         // console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
     }
 
-    const callAPIInfo = async () => {
-        const res = await axios.get("/erp/sales/info");
-        // console.log(res.data);
-        setListInfo(res.data);
-    }
-
     useEffect(() => {
-        callAPI();
-        callAPIInfo();
-    }, [])
-
-    const onClickItemPay = async (sales) => {
-        if (!window.confirm(`${sales.sales_id}를 송금하시겠습니까?`)) return;
-        const sales_id = sales.sales_id;
-        try {
-            await axios.delete(`/erp/sales/${sales_id}`);
-            callAPI();
-            alert("물품을 삭제하였습니다.");
-        } catch {
-            alert("판매물품이 존재합니다..");
-        }
-    };
-
-
-    const onClickSaleInsert = (e) => {
-        window.location.href = "/erp/sales/insert";
-    }
+        callSales();
+    }, [page])
 
     const onSubmit = (e) => {
         e.preventDefault();
-        callAPI();
+        callSales();
         setPage(1);
     }
 
