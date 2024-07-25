@@ -63,7 +63,6 @@ const WEB_BBSPage = () => {
 
 
                     <tr >
-                       
                         <th>카테고리</th>
                         <td>글번호</td>
                         <th>제목</th>
@@ -76,7 +75,6 @@ const WEB_BBSPage = () => {
                 <tbody>
                     {list.map((bbs) => (
                         <tr >
-                           
                             <td>{bbs.bbs_category}</td>
                             <td>{bbs.bbs_id}</td>
                            <td><a href={`/web/customer/bbs/read/${bbs.bbs_id}`}> {bbs.bbs_title}</a></td>
@@ -88,7 +86,6 @@ const WEB_BBSPage = () => {
                 </tbody>
 
             </Table>
-         
             <div className='text-end'>
 
                 <a href='/web/customer/bbs/insert'>

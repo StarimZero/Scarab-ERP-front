@@ -39,7 +39,7 @@
 
   
   .web-logo-image {
-    width: 50px; /* 너비 설정 */
+    width: 70px; /* 너비 설정 */
     height: auto; /* 높이를 자동으로 설정하여 비율 유지 */
   }
   
@@ -250,7 +250,16 @@ ul li a {
 }
 
 
-
+.web-company-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #818681;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
 
 
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row, Card } from 'react-bootstrap';
+import { HiOutlineLightBulb } from "react-icons/hi";
+import { PiHandshakeThin } from "react-icons/pi";
 
 const WEB_CompanyViewPage = () => {
   return (
@@ -21,7 +23,7 @@ const WEB_CompanyViewPage = () => {
       </Row>
       <Row className="company-info mt-4 align-items-center">
         <Col xs={2} className="text-center">
-          <img src='/images/menupage/logo.png' width='200px' alt='Company Logo'/>
+          <img src='/images/menupage/shlogo.png' width='200px' alt='Company Logo'/>
         </Col>
         <Col xs={10}>
           <ul className="company-info-list">
@@ -46,12 +48,12 @@ const WEB_CompanyViewPage = () => {
     <div className="mt-5">
         <Row className="align-items-center">
           <Col xs={12} md={6}>
-            <img src='/images/menupage/f1.png' alt='Company Research' className="img-fluid  compnay-view-img" />
+            <img src='/images/menupage/shf.png' alt='Company Research' className="img-fluid  compnay-view-img" />
           </Col>
           <Col xs={12} md={6}>
             <div>
               <h2>최고의 신선도</h2>
-              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 선향은 오늘도 열심히 일합니다.</p>
+              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 신향은 오늘도 열심히 일합니다.</p>
 
             </div>
           </Col>
@@ -60,25 +62,39 @@ const WEB_CompanyViewPage = () => {
 
 
 
+      <Container>
+      <h2 className='text-center mt-3'>가치체계</h2>
+      <Row className='text-center mt-5 justify-content-center'>
+        <Col lg={5} >
+          <Card>
+            <Card.Body>
+              <div className='d-flex justify-content-between align-items-center'>
+                <div>우리 제품을 사용한 고객의 경쟁우위 확보</div>
+                <div className='web-company-icon'>
+                  <PiHandshakeThin color='blue' size={32} />
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
 
+        <Col lg={5} >
+          <Card>
+            <Card.Body>
+              <div className='d-flex justify-content-between align-items-center'>
+                <div>끊임없는 도전과 혁신을 통한 Group의 지속적 성장</div>
+                <div className='web-company-icon'>
+                  <HiOutlineLightBulb color='yellow' size={32} />
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
 
-      <div className="mt-5">
-        <Row className="align-items-center">
-          <Col xs={12} md={6}>
-          <div className='ms-5'>
-              <h2>보다 높은 품질의 제품</h2>
-              <p>자동화된 생산라인과 첨단설비, 위생적인 환경을 구축하여 최고의 품질로 제공합니다.</p>
-
-            </div>
-          </Col>
-          <Col xs={12} md={6}>
-     
-            <img src='/images/menupage/f1.png' alt='Company Research' className="img-fluid  compnay-view-img" />
-          </Col>
-        </Row>
-      </div>
     </div>
-    //이거 복붙해서 쭈욱전개할 사진 구해요
+   
   );
 }
 

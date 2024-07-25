@@ -135,7 +135,7 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
 
     return (
         <div className='my-5'>
-            <h1 className='text-center mb-5'>사원목록</h1>
+            <h3 className='text-center mb-3'>사원목록</h3>
             <Row className='mb-4'>
                 <Col className='col-5'>
                     <form onSubmit={onSubmit}>

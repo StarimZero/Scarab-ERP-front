@@ -4,8 +4,19 @@ import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Pagination from 'react-js-pagination';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ERP_Member_ListPage = () => {
+
+    const member_info_key = sessionStorage.getItem("member_info_key");
+
+    useEffect(() => {
+        if (!member_info_key) {
+            window.location.href = '/erp/member/login';
+            sessionStorage.setItem('target', '/erp/member/list');
+        }
+    }, [member_info_key]);
+
     const [page, setPage] = useState(1);
     const [size] = useState(10);
     const [key, setKey] = useState("");
@@ -75,6 +86,7 @@ const ERP_Member_ListPage = () => {
                                     <option value="member_info_key">사원번호</option>
                                     <option value="member_info_name">사원명</option>
                                     <option value="dept_key">부서</option>
+                                    <option value="member_info_job">직책</option>
                                     <option value="member_info_hiredate">입사일</option>
                                 </Form.Select>
                             </Col>
@@ -109,7 +121,23 @@ const ERP_Member_ListPage = () => {
                                             <Button variant='dark' type='submit'>검색</Button>
                                         </>
                                     )}
-                                    {key !== '' && key !== 'member_info_hiredate' && key !== 'dept_key' && (
+                                    {key === 'member_info_job' && (
+                                        <>
+                                            <Form.Select value={word} onChange={(e) => setWord(e.target.value)}>
+                                                <option value="">직책선택</option>
+                                                <option value="인턴">인턴</option>
+                                                <option value="사원">사원</option>
+                                                <option value="주임">주임</option>
+                                                <option value="대리">대리</option>
+                                                <option value="과장">과장</option>
+                                                <option value="차장">차장</option>
+                                                <option value="팀장">팀장</option>
+                                                <option value="임원">임원</option>
+                                            </Form.Select>
+                                            <Button variant='dark' type='submit'>검색</Button>
+                                        </>
+                                    )}
+                                    {key !== '' && key !== 'member_info_hiredate' && key !== 'dept_key' && key !== 'member_info_job' && (
                                         <>
                                             <Form.Control placeholder='검색어' value={word} onChange={(e) => setWord(e.target.value)} />
                                             <Button variant='dark' type='submit'>검색</Button>
@@ -119,11 +147,11 @@ const ERP_Member_ListPage = () => {
                             </Col>
                         </InputGroup>
                     </form>
-                </Col>
+                </Col >
                 <Col className='text-end mt-2'>
                     검색수 : {total}건
                 </Col>
-            </Row>
+            </Row >
             <Row>
                 <Table striped bordered hover className="my-4">
                     <thead>
@@ -138,7 +166,7 @@ const ERP_Member_ListPage = () => {
                     </thead>
                     <tbody>
                         {memberList.map(member =>
-                            <tr key={member.member_info_key} onClick={()=>onRowClick(member.member_info_id)} style={{cursor:'pointer'}}>
+                            <tr key={member.member_info_key} onClick={() => onRowClick(member.member_info_id)} style={{ cursor: 'pointer' }}>
                                 <td>{member.member_info_key}</td>
                                 <td>{member.member_info_name}</td>
                                 <td>{member.dept_name}</td>
@@ -161,7 +189,7 @@ const ERP_Member_ListPage = () => {
                         onChange={(e) => setPage(e)} />
                 }
             </Row>
-        </div>
+        </div >
     )
 }
 

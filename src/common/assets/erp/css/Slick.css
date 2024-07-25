@@ -32,5 +32,12 @@
 
 .account .account-component {
     width: 80%;
+    height: 130px;
     margin-left: 10%;
+}
+
+.account .newAccount {
+    margin-top:auto;
+    margin-bottom: auto;
+    cursor: pointer;
 }

@@ -155,7 +155,7 @@ const Web_Menu = () => {
 
                     <div className='me-3 ms-3'>
                         <a href="/web">
-                            <img src="/images/menupage/logo.png" alt="Description" className="web-logo-image" />
+                            <img src="/images/menupage/shlogo.png" alt="Description" className="web-logo-image" />
                         </a>
                     </div>
                 </Nav>

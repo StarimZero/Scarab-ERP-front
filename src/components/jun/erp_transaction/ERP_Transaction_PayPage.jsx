@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row, Table } from 'react-bootstrap';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import Slider from 'react-slick';
+import Swal from 'sweetalert2';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -35,7 +36,7 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
     const [key, setKey] = useState("title");
     const [word, setWord] = useState("");
 
-    const [master, setMasert] = useState({
+    const [master, setMaster] = useState({
         purchase_id: purchase.purchase_id,
         purchase_employee: purchase.purchase_employee,
         purchase_location: purchase.purchase_location,
@@ -100,7 +101,7 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
     const callVendor = async () => {
         const res = await axios.get(`/erp/vendor`)
         setVendorList(res.data);
-
+        console.log(res.data);
     }
 
     // 저장창고불러오기
@@ -134,24 +135,43 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
 
     const onClickPurchase = async () => {
         if (!accounts) {
-            alert("송금할 계좌를 선택하세요.")
+            Swal.fire({
+                title: "송금할 계좌를 선택하세요.",
+                text: "",
+                icon: "error"
+            });
             return;
         }
-        if (!window.confirm(`${purchase_location}
-            (${vendorList.find(vendor => vendor.vendor_id === purchase_location)?.vendor_name || ""})에 송금하시겠습니까?`))
-            return;
-        const totalAmount = Math.round(items.reduce((total, item) => total + (item.purchase_price * item.purchase_qnt * 1.1), 0));
-        const transactionData = {
-            account_number: accountNumber,
-            transaction_withdraw: totalAmount,
-            purchase_id,
-            vendor_id: purchase_location,
-            purchase_type: 1,
-        }
-        await axios.post(`/erp/transaction`, transactionData);
-        alert("송금완료")
-        handleClose();
-        callItems();
+        Swal.fire({
+            title: `${purchase_location}(${vendorList.find(vendor => vendor.vendor_id === purchase_location)?.vendor_name || ""})에 송금하시겠습니까?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirm"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                const totalAmount = Math.round(items.reduce((total, item) => total + (item.purchase_price * item.purchase_qnt * 1.1), 0));
+                const transactionData = {
+                    account_number: accountNumber,
+                    transaction_withdraw: totalAmount,
+                    purchase_id,
+                    vendor_id: purchase_location,
+                    purchase_type: 1,
+                }
+                await axios.post(`/erp/transaction`, transactionData);
+                Swal.fire({
+                    title: "대금 송금 완료",
+                    text: "",
+                    icon: "success"
+                }).then(() => {
+                    handleClose();
+                    callItems();
+                    window.location.reload();
+                });
+            }
+        });
     }
 
 

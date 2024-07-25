@@ -3,10 +3,19 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Accordion, Button, Card, Col, Dropdown, Row, Table } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa6';
+import Swal from 'sweetalert2';
 
 const ERP_Attendance_ListPage = () => {
     const member_info_key = sessionStorage.getItem("member_info_key");
     const member_info_name = sessionStorage.getItem('member_info_name');
+
+    useEffect(() => {
+        if (!member_info_key) {
+            window.location.href = '/erp/member/login';
+            sessionStorage.setItem('target', '/erp/member/list');
+        }
+    }, [member_info_key]);
+
     const [currentDate, setCurrentDate] = useState(moment());
     const [attendance, setAttendance] = useState({});
     const [list, setList] = useState([]);

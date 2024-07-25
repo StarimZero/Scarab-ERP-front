@@ -1,4 +1,5 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Navbar, Nav, NavDropdown, Image, Button } from 'react-bootstrap';
 import { AiOutlineMenu, AiOutlineBell, AiOutlineUser, AiOutlineMail, AiOutlineUnorderedList } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +9,18 @@ const ERP_TopMenu = () => {
     const member_info_id = sessionStorage.getItem('member_info_id');
     const member_info_key = sessionStorage.getItem('member_info_key');
     const member_info_name = sessionStorage.getItem('member_info_name');
+    const [member, setMember] = useState({});
+
+    const callMember = async () => {
+        const url = `/erp/member/${member_info_id}`;
+        const res = await axios.get(url);
+        setMember(res.data);
+    }
+
+    useEffect(() => {
+        callMember();
+    }, []);
+
     const navigate = useNavigate('');
 
     const onClickMyPage = () => {
@@ -59,7 +72,8 @@ const ERP_TopMenu = () => {
                         }
                         {member_info_id ?
                             <NavDropdown
-                                title={<img src={"./user-1.jpg" && "http://via.placeholder.com/50x50"} width="35" height="35" />}
+                                title={
+                                <img src={member.member_info_photo ? member.member_info_photo : "http://via.placeholder.com/50x50"} width="35" height="35" />}
                                 id="drop2"
                                 align="end"
                             >

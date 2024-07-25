@@ -48,7 +48,7 @@ const Web_HomePage = () => {
 
 
     <div className='web-body-page'>
-      <h2 className='mb-2 text-center'>쇠똥라면 이벤트</h2>
+      <h2 className='mb-2 text-center'>신향라면 이벤트</h2>
       <img src='/images/menupage/r1.png' alt='쇠똥라면 이벤트 이미지' className='web-responsive-image' />
       <div className='mt-2 text-center'>
         <Button  onClick={() => window.location.href = '/web/items/read'}
@@ -61,8 +61,8 @@ const Web_HomePage = () => {
 
 
     <div className='text-center'>
-      <h2 className='mb-2 text-center'>쇠똥구리</h2>
-      <img src='/images/menupage/f1.png' alt='쇠똥구리 이미지' className='web-responsive-image' />
+      <h2 className='mb-2 text-center'>신향</h2>
+      <img src='/images/menupage/shf.png' alt='쇠똥구리 이미지' className='web-responsive-image' />
       <div className='mt-2 text-center'>
         <Button   onClick={() => window.location.href = '/web/company/view'}
           className='btn-lg'variant='outline-danger'>

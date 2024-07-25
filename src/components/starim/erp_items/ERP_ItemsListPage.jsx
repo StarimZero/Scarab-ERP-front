@@ -50,6 +50,7 @@ const ERP_ItemsListPage = () => {
           } catch (error) {
             alert("삭제에 실패하였습니다."); 
           }
+        window.location.reload();
     };
 
     const onSubmit = (e) => {
