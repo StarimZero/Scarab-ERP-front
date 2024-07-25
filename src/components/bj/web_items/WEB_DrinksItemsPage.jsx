@@ -9,7 +9,12 @@ const WEB_DrinksItemsPage = () => {
     const CallAPI = async () => {
         const res = await axios.get('/erp/items/list.json');
     //    console.log(res.data);
-        setItems(res.data);
+    const modifiedItems = res.data.map(item => ({
+        ...item,
+        items_name: item.items_name.slice(0, -5)  // items_name을 뒤에서 5자리만 자름
+    }));
+    setItems(modifiedItems);
+    
     }
 
     useEffect(() => {

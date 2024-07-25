@@ -25,15 +25,16 @@ const ERP_SideMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+
     const callAPI = async() => {
         const res1=await axios.get(`/erp/receivemessage/nlist/${uid}?key=${nkey}&word=${nword}&page=${npage}&size=${nsize}`);
         setNcount(res1.data.ntotal);
-        
+
       }
 
-      useEffect(()=>{
-        callAPI();
-      }, []);
+    //   useEffect(()=>{
+    //     callAPI();
+    //   }, []);
 
       useEffect(()=>{
         if(location.pathname.includes('/message')){
@@ -64,7 +65,7 @@ const ERP_SideMenu = () => {
                                 <span>
                                     <i className="ti ti-layout-dashboard"></i>
                                 </span>
-                                <span className="hide-menu">Dashboard</span>
+                                <span className="hide-menu">메인페이지</span>
                             </a>
                         </li>
                         <li className="sidebar-item">
@@ -132,7 +133,7 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                            <a className="sidebar-link" href="#" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-file-description"></i>
                                 </span>

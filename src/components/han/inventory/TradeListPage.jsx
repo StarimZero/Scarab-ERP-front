@@ -17,8 +17,9 @@ const TradeListPage = () => {
 
     const callAPI = async (searchWord) => {
         try {
+            setList([]);
             const res = await axios.get(`/erp/inventory/listAlltrade?key=${key}&word=${searchWord}&page=${page}&size=${size}`)
-            //console.log(res.data);
+            console.log(res.data);
             setCount(res.data.count);
             setList(res.data.documents);
             setIsSearch((key === "" && word === "") || (word === ""));
@@ -28,6 +29,7 @@ const TradeListPage = () => {
     }
 
     useEffect(() => {
+        setList([]);
         callAPI("");
     }, [page, size])
 
@@ -56,8 +58,9 @@ const TradeListPage = () => {
                 default: break;
             }
         }
-        callAPI(searchWord);
         setPage(1);
+        callAPI(searchWord);
+        
     }
 
     return (

@@ -15,7 +15,7 @@ const WEB_ItmesReadPage = () => {
     return (
         <div >
                 <div className='text-center itmes-header-image'>
-                        <img src='/images/menupage/f1.png'/>
+                        <img src='/images/menupage/shf.png'/>
                 </div>
                 <h3 className='text-center mb-4'>
                     제품소개
