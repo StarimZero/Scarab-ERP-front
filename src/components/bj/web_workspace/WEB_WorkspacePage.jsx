@@ -43,7 +43,7 @@ const WEB_WorkspacePage = () => {
     return (
       <div>
         <div className='mb-3'>
-              <h1 className='text-center mb-5'>세계로 뻗어가는 쇠똥구리</h1>
+              <h1 className='text-center mb-5'>세계로 뻗어가는 신향</h1>
               <img className='place-gsa-img' src='/images/menupage/gs1.png' alt='GSA' />
         </div>
           <div className='text-center mb-3'>
