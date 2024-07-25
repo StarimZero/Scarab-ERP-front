@@ -95,7 +95,7 @@ const ERP_Purchase_ListPage = () => {
                             <td>{purchase.purchase_employee}({purchase.member_info_name})</td>
                             <td>{moment(purchase.purchase_date).format('yy년MM월DD일')}</td>
                             <td>{purchase.purchase_memo}</td>
-                            <td><Button onClick={()=>onClickPurchaseDelete(purchase)}>삭제</Button></td>
+                            <td><Button variant='outline-danger' size='sm' onClick={()=>onClickPurchaseDelete(purchase)}>삭제</Button></td>
                         </tr>
                     )}
                 </tbody>

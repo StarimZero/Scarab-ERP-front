@@ -26,8 +26,7 @@ const ERP_Vendor_ReadPage = ({vendor}) => {
 
     const handleClose = () => {
     setShow(false);
-    window.location.reload();
-
+    
     }
     const handleShow = () => {
     setShow(true);
