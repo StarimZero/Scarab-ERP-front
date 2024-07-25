@@ -95,8 +95,8 @@ const WEB_EmployProcedurePage = () => {
 
         <Card.Body>
         <ul>
-            <li><TbPointFilled /> 연락처 : 02-1241-1234 쇠똥구리㈜ 인사채용 담당자</li>
-            <li><TbPointFilled /> 메일 : dongfood.com</li>
+            <li><TbPointFilled /> 연락처 : 02-1241-1234 신향㈜ 인사채용 담당자</li>
+            <li><TbPointFilled /> 메일 : sinfood.com</li>
         </ul>
         </Card.Body>
       </Card>
