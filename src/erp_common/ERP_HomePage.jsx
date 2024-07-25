@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ERP_Transaction_Chart from '../components/jun/erp_chart/ERP_Transaction_Chart'
+import Swal from 'sweetalert2';
 
 const ERP_HomePage = () => {
+
+
+    const member_info_key = sessionStorage.getItem("member_info_key");
+
+    useEffect(() => {
+        if (!member_info_key) {
+            window.location.href = '/erp/member/login';
+            sessionStorage.setItem('target', '/erp/member/list');
+        }
+    }, [member_info_key]);
 
 
     return (
@@ -9,20 +21,7 @@ const ERP_HomePage = () => {
                 <div class="col-lg-8 d-flex align-items-strech">
                     <div class="card w-100">
                         <div class="card-body">
-                            <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                                <div class="mb-3 mb-sm-0">
-                                    <h5 class="card-title fw-semibold">Sales Overview</h5>
-                                </div>
-                                <div>
-                                    <select class="form-select">
-                                        <option value="1">March 2023</option>
-                                        <option value="2">April 2023</option>
-                                        <option value="3">May 2023</option>
-                                        <option value="4">June 2023</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="chart"></div>
+                            <ERP_Transaction_Chart />
                         </div>
                     </div>
                 </div>
@@ -291,7 +290,7 @@ const ERP_HomePage = () => {
                     <div class="card overflow-hidden rounded-2">
                         <div class="position-relative">
                             <a href="javascript:void(0)"><img src="../assets/images/products/s4.jpg"
-                                class="card-img-top rounded-0" alt="..."/></a>
+                                class="card-img-top rounded-0" alt="..." /></a>
                             <a href="javascript:void(0)"
                                 class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
@@ -322,7 +321,7 @@ const ERP_HomePage = () => {
                     <div class="card overflow-hidden rounded-2">
                         <div class="position-relative">
                             <a href="javascript:void(0)"><img src="../assets/images/products/s5.jpg"
-                                class="card-img-top rounded-0" alt="..."/></a>
+                                class="card-img-top rounded-0" alt="..." /></a>
                             <a href="javascript:void(0)"
                                 class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
@@ -353,7 +352,7 @@ const ERP_HomePage = () => {
                     <div class="card overflow-hidden rounded-2">
                         <div class="position-relative">
                             <a href="javascript:void(0)"><img src="../assets/images/products/s7.jpg"
-                                class="card-img-top rounded-0" alt="..."/></a>
+                                class="card-img-top rounded-0" alt="..." /></a>
                             <a href="javascript:void(0)"
                                 class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
@@ -384,7 +383,7 @@ const ERP_HomePage = () => {
                     <div class="card overflow-hidden rounded-2">
                         <div class="position-relative">
                             <a href="javascript:void(0)"><img src="../assets/images/products/s11.jpg"
-                                class="card-img-top rounded-0" alt="..."/></a>
+                                class="card-img-top rounded-0" alt="..." /></a>
                             <a href="javascript:void(0)"
                                 class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
                                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i

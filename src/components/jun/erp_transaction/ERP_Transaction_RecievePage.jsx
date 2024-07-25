@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Modal, Row, Table } from 'react-bootstrap';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import Slider from 'react-slick';
+import Swal from 'sweetalert2';
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -35,7 +36,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
     const [key, setKey] = useState("title");
     const [word, setWord] = useState("");
 
-    const [master, setMasert] = useState({
+    const [master, setMaster] = useState({
         sales_id: sales.sales_id,
         sales_employee: sales.sales_employee,
         sales_location: sales.sales_location,
@@ -56,7 +57,6 @@ const ERP_Transaction_RecievePage = ({sales}) => {
     };
 
     const { sales_employee, sales_location, sales_date, sales_id } = master;
-
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -99,7 +99,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
 
     const callClient = async () => {
         const res = await axios.get(`/erp/client`)
-        //console.log(res.data);
+        console.log(res.data);
         setClientList(res.data);
     }
 
@@ -133,24 +133,43 @@ const ERP_Transaction_RecievePage = ({sales}) => {
 
     const onClickRecieve = async () => {
         if (!accounts) {
-            alert("송금할 계좌를 선택하세요.")
+            Swal.fire({
+                title: "수령할 계좌를 선택하세요.",
+                text: "",
+                icon: "error"
+            });
             return;
         }
-        if (!window.confirm(`${sales_location}
-            (${clientList.find(client => client.client_id === sales_location)?.client_name || ""})를 수령하시겠습니까?`))
-            return;
-        const totalAmount = Math.round(items.reduce((total, item) => total + (item.sales_price * item.sales_qnt * 1.1), 0));
-        const transactionData = {
-            account_number: accountNumber,
-            transaction_deposit: totalAmount,
-            sales_id,
-            client_id: sales_location,
-            sales_type: 1,
-        }
-        await axios.post(`/erp/transaction`, transactionData);
-        alert("수령완료")
-        handleClose();
-        callItems();
+        Swal.fire({
+            title: `${sales_location} (${clientList.find(client => client.client_id === sales_location)?.client_name || ""})를 수령하시겠습니까?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirm"
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                const totalAmount = Math.round(items.reduce((total, item) => total + (item.sales_price * item.sales_qnt * 1.1), 0));
+                const transactionData = {
+                    account_number: accountNumber,
+                    transaction_deposit: totalAmount,
+                    sales_id,
+                    client_id: sales_location,
+                    sales_type: 1,
+                }
+                await axios.post(`/erp/transaction`, transactionData);
+                Swal.fire({
+                    title: "대금 수령 완료",
+                    text: "",
+                    icon: "success"
+                }).then(() => {
+                    handleClose();
+                    callItems();
+                    window.location.reload(); 
+                });
+            }
+        });
     }
 
     return (
@@ -219,7 +238,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
                                                         <td>단가</td>
                                                         <td>부가세</td>
                                                         <td>총금액</td>
-                                                        <td>입고창고</td>
+                                                        <td>출하창고</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
