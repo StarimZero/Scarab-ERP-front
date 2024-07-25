@@ -44,6 +44,12 @@ const InventoryPage = () => {
     const onClickMove2 = () => {
         window.location.href = '/erp/inventory/warehouselist'
     }
+    const onClickMove3 = () => {
+        window.location.href = '/erp/inventory/totalsalebywarehousechart'
+    }
+    const onClickMove4 = () => {
+        window.location.href='/erp/inventory/salebycountry'
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -77,6 +83,8 @@ const InventoryPage = () => {
                 <h3 className="mb-2" onClick={() => callAPI()} style={{ cursor: 'pointer' }}>전체물품목록</h3>
                 <div>
                     <Button className='mb-2' onClick={onClickMove}>전체거래내역</Button>
+                    <Button className='ms-5 mb-2' onClick={onClickMove3}>창고별매출비율차트</Button>
+                    <Button className='ms-2 mb-2'onClick={onClickMove4}>해외수출표기</Button>
                 </div>
                 <div>
                     <Button className='me-2 mb-2' onClick={onClickMove2}>창고별물품목록</Button>

@@ -25,15 +25,15 @@ const ERP_SideMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const callAPI = async() => {
-        const res1=await axios.get(`/erp/receivemessage/nlist/${uid}?key=${nkey}&word=${nword}&page=${npage}&size=${nsize}`);
-        setNcount(res1.data.ntotal);
+    // const callAPI = async() => {
+    //     const res1=await axios.get(`/erp/receivemessage/nlist/${uid}?key=${nkey}&word=${nword}&page=${npage}&size=${nsize}`);
+    //     setNcount(res1.data.ntotal);
        
-      }
+    //   }
 
-      useEffect(()=>{
-        callAPI();
-      }, []);
+    //   useEffect(()=>{
+    //     callAPI();
+    //   }, []);
 
       useEffect(()=>{
         if(location.pathname.includes('/message')){
