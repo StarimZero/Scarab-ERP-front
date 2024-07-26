@@ -4,7 +4,6 @@ import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import Pagination from 'react-js-pagination';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 
 const ERP_Member_ListPage = () => {
 

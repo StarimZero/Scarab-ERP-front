@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, BarElement } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, BarElement, plugins, Tooltip } from 'chart.js';
 import React, { useEffect, useState } from 'react'
 import { Chart, Line } from 'react-chartjs-2';
 
-ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(LineElement, BarElement, CategoryScale, LinearScale, PointElement, plugins, Tooltip);
 
 const ERP_Transaction_Chart = () => {
     const [transactionData, setTransactionData] = useState([]);
@@ -53,6 +53,8 @@ const ERP_Transaction_Chart = () => {
 
         const data = sortedMonthYears.map(monthYear => ({
             monthYear,
+            withdraw: monthlyData[monthYear].withdraw,
+            deposit: monthlyData[monthYear].deposit,
             difference: monthlyData[monthYear].deposit - monthlyData[monthYear].withdraw
         }));
 
@@ -78,32 +80,72 @@ const ERP_Transaction_Chart = () => {
         }
     }, [key]);
 
+    // 금액에 천 단위 구분 기호를 추가하는 함수
+    const formatNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
     // 데이터가 없으면 빈 배열을 반환
     const labels = transactionData.length ? transactionData.map(item => item.monthYear) : [];
     const salesData = transactionData.length ? transactionData.map(item => item.difference) : [];
+    const withdrawData = transactionData.length ? transactionData.map(item => item.withdraw) : [];
+    const depositData = transactionData.length ? transactionData.map(item => item.deposit) : [];
 
     const data = {
         labels,
         datasets: [
             {
                 type: 'line',
-                label: 'Line Dataset',
+                label: '총수입',
                 data: salesData,
                 fill: false,
-                borderColor: 'rgba(75,192,192,1)',
+                borderColor: '#90EE90',
                 tension: 0.1,
             },
             {
                 type: 'bar',
-                label: 'Bar Dataset',
-                data: salesData,
-                backgroundColor: 'rgba(153,102,255,0.6)',
+                label: '지출',
+                data: withdrawData,
+                backgroundColor: '#FFB6C1',
+            },
+            {
+                type: 'bar',
+                label: '수입',
+                data: depositData,
+                backgroundColor: '#ADD8E6',
             },
         ],
     };
 
     const options = {
         responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    label: function (context) {
+                        let label = context.dataset.label || '';
+
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed.y !== null) {
+                            label += `${formatNumber(context.parsed.y)}원`;
+                        }
+                        return label;
+                    },
+                    title: function (context) {
+                        return `Month: ${context[0].label}`;
+                    },
+                    footer: function (context) {
+                        return '';
+                    }
+                }
+            }
+        },
         scales: {
             x: {
                 title: {

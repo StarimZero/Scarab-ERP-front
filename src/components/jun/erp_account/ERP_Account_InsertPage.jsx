@@ -1,14 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const ERP_Account_InsertPage = () => {
     const [account, setAccount] = useState({});
     const { account_number, account_name, account_detail } = account;
     const [formErrors, setFormErrors] = useState({});
-    const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
     const handleClose = () => {

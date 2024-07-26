@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
-import Swal from 'sweetalert2';
 
 const ERP_Member_AttendancePage = () => {
     const member_info_key = sessionStorage.getItem('member_info_key');
