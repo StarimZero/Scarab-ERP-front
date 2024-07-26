@@ -25,15 +25,16 @@ const ERP_Member_LoginPage = () => {
         e.preventDefault();
         const errors = validateForm();
         if (Object.keys(errors).length === 0) {
-            const res = await axios.get(`/erp/member/${member_info_id}`);
-            if (!res.data) {
+            const res = await axios.post('/erp/member/login', {member_info_id, member_info_pass});
+            console.log(res.data);
+            if (res.data == 0) {
                 Swal.fire({
                     title: "로그인 에러",
                     text: "아이디가 존재하지 않습니다!",
                     icon: "error"
                 });
                 return;
-            } else if (member_info_pass !== res.data.member_info_pass) {
+            } else if (res.data == 1) {
                 Swal.fire({
                     title: "로그인 에러",
                     text: "비밀번호가 일치하지 않습니다!",
@@ -45,7 +46,8 @@ const ERP_Member_LoginPage = () => {
                     title: "로그인 성공",
                     text: "",
                     icon: "success"
-                }).then(() => {
+                }).then(async () => {
+                    const res = await axios.get(`/erp/member/${member_info_id}`);
                     sessionStorage.setItem('member_info_id', res.data.member_info_id);
                     sessionStorage.setItem('member_info_key', res.data.member_info_key);
                     sessionStorage.setItem('member_info_name', res.data.member_info_name);

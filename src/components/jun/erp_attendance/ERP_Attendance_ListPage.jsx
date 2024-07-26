@@ -12,7 +12,7 @@ const ERP_Attendance_ListPage = () => {
     useEffect(() => {
         if (!member_info_key) {
             window.location.href = '/erp/member/login';
-            sessionStorage.setItem('target', '/erp/member/list');
+            sessionStorage.setItem('target', '/erp/attendance/list');
         }
     }, [member_info_key]);
 
@@ -54,21 +54,57 @@ const ERP_Attendance_ListPage = () => {
         if (!attendance) {
             const url = '/erp/attendance';
             await axios.post(url, { member_info_key });
-            alert("출근완료");
-            callAttendanceList(); // 출근 후 목록을 다시 불러옴
-            window.location.reload();
+            Swal.fire({
+                title: "출근 완료!",
+                text: "",
+                icon: "success"
+            }).then(() => {
+                callAttendanceList(); // 출근 후 목록을 다시 불러옴
+                window.location.reload();
+            });
+
         } else {
-            alert("이미 출근하셨습니다!");
+            Swal.fire({
+                title: "이미 출근하셨습니다.",
+                text: "",
+                icon: "warning"
+            });
             return;
         }
     }
 
     // 퇴근
     const onLeave = async () => {
-        const url = '/erp/attendance';
-        await axios.put(url, { member_info_key });
-        alert("퇴근완료");
-        callAttendanceList(); // 퇴근 후 목록을 다시 불러옴
+        if (!attendance.member_attendance_end) {
+            Swal.fire({
+                title: `퇴근하시겠습니까?`,
+                text: "한 번 퇴근 이후에는 다시 퇴근할 수 없습니다.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Confirm"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const url = '/erp/attendance';
+                    await axios.put(url, { member_info_key });
+                    Swal.fire({
+                        title: "퇴근 완료!",
+                        text: "",
+                        icon: "success"
+                    }).then(() => {
+                        callAttendanceList(); // 퇴근 후 목록을 다시 불러옴
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "이미 퇴근하셨습니다.",
+                text: "",
+                icon: "warning"
+            });
+            return;
+        }
     }
 
     const handlePreviousMonth = () => {

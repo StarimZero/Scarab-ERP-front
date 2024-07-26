@@ -1,86 +1,73 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap';
-import AddressModal from '../../../common/AddressModal';
-import { FaUser } from "react-icons/fa6";
+import Swal from 'sweetalert2';
 
 const ERP_Member_UpdateInfoPage = () => {
     const member_info_id = sessionStorage.getItem('member_info_id');
     const member_info_key = sessionStorage.getItem('member_info_key');
     const [form, setForm] = useState({});
     const [formErrors, setFormErrors] = useState({});
-    const { dept_name, member_info_name, member_info_pass, member_info_job, member_info_hiredate, member_info_resident,
-        member_info_phone, member_info_email, member_info_address1, member_info_address2, member_info_account } = form;
-    const [file, setFile] = useState({});
-    const { fileBytes, fileName } = file;
-    const refFile = useRef(null);
-
-    const style = {
-        color:'gray',
-        fontSize:'3rem',
-        cursor: 'pointer',
-        width: '100px',
-        height: '100px'
-    }
+    const [storedPass, setStoredPass] = useState('');
 
     const callMember = async () => {
         const url = `/erp/member/${member_info_id}`;
         const res = await axios.get(url);
-        setForm(res.data);
-    }
-
-    const onChangeFile = (e) => {
-        setFile({
-            fileBytes: e.target.files[0],
-            fileName: URL.createObjectURL(e.target.files[0]),
-        });
-        setForm({
-            ...form,
-            member_info_photo: e.target.files[0].name  // fileName을 form에 추가
-        });
+        setStoredPass(res.data.member_info_pass);
     }
 
     const onChangeForm = (e) => {
         let { name, value } = e.target;
-        if (name === 'member_info_phone') {
-            value = value.replace(/[^0-9]/g, '');
-            if (value.length > 12) {
-                value = value.slice(0, 12);
-            }
-            if (value.length > 3) {
-                value = value.slice(0, 3) + '-' + value.slice(3, 12); // 3자리 이후에 '-' 추가
-            }
-            if (value.length > 8) {
-                value = value.slice(0, 8) + '-' + value.slice(8, 12); // 8자리 이후에 '-' 추가
-            }
-        }
         setForm({ ...form, [name]: value });
         setFormErrors({ ...formErrors, [name]: '' });
     }
 
     const validateForm = () => {
         const errors = {};
-        if (!member_info_id) errors.member_info_id = 'ID를 입력해야 합니다.';
-        if (!member_info_pass) errors.member_info_pass = '패스워드를 입력해야 합니다.';
+        if (!form.member_info_pass) errors.member_info_pass = '기존 비밀번호를 입력해야 합니다.';
+        if (!form.member_info_pass_new) errors.member_info_pass_new = '새 비밀번호를 입력해야 합니다.';
+        if (!form.member_info_pass_check) errors.member_info_pass_check = '비밀번호 확인을 입력해야 합니다.';
+        if (form.member_info_pass_new !== form.member_info_pass_check) errors.member_info_pass_check = '새 비밀번호와 비밀번호 확인이 일치하지 않습니다.';
         return errors;
     }
 
     const onSubmit = async (e) => {
         e.preventDefault();
         const errors = validateForm();
-        if (Object.keys(errors).length === 0) {
-            // 사진 업로드
-            const formData = new FormData();
-            formData.append("byte", fileBytes);
-            Object.keys(form).forEach(key => {
-                formData.append(key, form[key]);
-                console.log(key, form[key]);
-            });
-            await axios.post(`/erp/member/info/${member_info_key}`, formData);
-            window.location.href = '/erp/member/mypage';
-        } else {
+        if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
+            return;
         }
+        if (form.member_info_pass !== storedPass) {
+            alert('기존 비밀번호가 일치하지 않습니다.');
+            return;
+        }
+        Swal.fire({
+            title: `비밀번호를 변경하시겠습니까?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirm"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // 비밀번호 변경
+                await axios.put('/erp/member/login', {
+                    member_info_id: member_info_id,
+                    member_info_pass: form.member_info_pass_new,
+                    member_info_key: member_info_key
+                });
+                Swal.fire({
+                    title: "비밀번호 변경 완료!",
+                    text: "",
+                    icon: "success"
+                }).then(() => {
+                    sessionStorage.clear();
+                    window.location.href = '/erp/member/login';
+                });
+            }
+        });
     }
 
     useEffect(() => {
@@ -88,70 +75,37 @@ const ERP_Member_UpdateInfoPage = () => {
     }, [])
 
     return (
-        <Row className="justify-content-center readPage">
+        <Row className="justify-content-center">
             <Col className="col-xl-10 col-lg-12 col-md-9">
                 <Card className="o-hidden border-0 shadow-lg my-5">
                     <Card.Body className="p-0">
-                        <Row>
-                            <div className="p-5">
+                        <Form className='p-5' onSubmit={onSubmit}>
+                            <Row className='d-flex justify-content-center align-items-center'>
                                 <div className="text-center">
-                                    <h1 className="h4 text-gray-900 mb-4">기본 정보 수정</h1>
+                                    <h1 className="h4 text-gray-900 mb-4">Register</h1>
                                 </div>
-                                <form onSubmit={onSubmit}>
-                                    <InputGroup className='mb-3'>
-                                        {!fileName && <FaUser style={style} onClick={() => refFile.current.click()} />}
-                                        {fileName && <img src={fileName} onClick={() => refFile.current.click()} style={style} />}
-                                        <Form.Control type="file" ref={refFile} style={{ display: 'none' }} onChange={onChangeFile} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>사원번호</InputGroup.Text>
-                                        <Form.Control name='member_info_key' value={member_info_key} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>사원명</InputGroup.Text>
-                                        <Form.Control name='member_info_name' value={member_info_name} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>부서</InputGroup.Text>
-                                        <Form.Control name='dept_name' value={dept_name + "팀"} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>직급</InputGroup.Text>
-                                        <Form.Control name='member_info_job' value={member_info_job} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>입사일</InputGroup.Text>
-                                        <Form.Control name='member_info_hiredate' value={member_info_hiredate} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>생년월일</InputGroup.Text>
-                                        <Form.Control name='member_info_resident' value={member_info_resident} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>연락처</InputGroup.Text>
-                                        <Form.Control name='member_info_phone' value={member_info_phone} onChange={onChangeForm} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>이메일</InputGroup.Text>
-                                        <Form.Control name='member_info_email' value={member_info_email} onChange={onChangeForm} />
-                                    </InputGroup>
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>주소</InputGroup.Text>
-                                        <Form.Control name='member_info_address1' value={member_info_address1} onChange={onChangeForm} />
-                                        <AddressModal form={form} setForm={setForm} />
-                                    </InputGroup>
-                                    <Form.Control className='mb-3' name='member_info_address2' value={member_info_address2} placeholder='상세주소' onChange={onChangeForm} />
-                                    <InputGroup className='mb-3'>
-                                        <InputGroup.Text className='title justify-content-center'>계좌번호</InputGroup.Text>
-                                        <Form.Control name='member_info_account' value={member_info_account} onChange={onChangeForm} />
-                                    </InputGroup>
-                                    <div className='text-center my-3'>
-                                        <Button className='me-2' variant='dark' type='submit'>정보수정</Button>
-                                        <Button variant='secondary'>수정취소</Button>
+                                <Col lg={6}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control name="member_info_id" value={member_info_id} readOnly style={{ backgroundColor: 'white' }} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control name="member_info_pass" type='password' placeholder="기존 비밀번호" onChange={onChangeForm} />
+                                        {formErrors.member_info_pass && <div style={{ color: 'red' }}>{formErrors.member_info_pass}</div>}
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control name="member_info_pass_new" type='password' placeholder="새비밀번호" onChange={onChangeForm} />
+                                        {formErrors.member_info_pass_new && <div style={{ color: 'red' }}>{formErrors.member_info_pass_new}</div>}
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Control type="password" name="member_info_pass_check" placeholder="비밀번호확인" onChange={onChangeForm} />
+                                        {formErrors.member_info_pass_check && <div style={{ color: 'red' }}>{formErrors.member_info_pass_check}</div>}
+                                    </Form.Group>
+                                    <div className='mb-3 mt-3'>
+                                        <Button className="btn btn-dark w-100" type="submit">비밀번호 변경</Button>
                                     </div>
-                                </form>
-                            </div>
-                        </Row>
+                                </Col>
+                            </Row>
+                        </Form>
                     </Card.Body>
                 </Card>
             </Col>

@@ -10,7 +10,6 @@ const ERP_HomePage = () => {
     useEffect(() => {
         if (!member_info_key) {
             window.location.href = '/erp/member/login';
-            sessionStorage.setItem('target', '/erp/member/list');
         }
     }, [member_info_key]);
 

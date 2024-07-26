@@ -107,23 +107,6 @@ const ERP_Member_RegisterPage = () => {
                                         <Button className="btn btn-dark w-100" type="submit">Register</Button>
                                     </div>
                                 </Col>
-                                <hr />
-
-                                <div className="text-center mb-3">
-                                    <Button href="#" className="btn btn-google btn-user btn-block me-3">
-                                        <i className="fab fa-google fa-fw"></i> Login with Google
-                                    </Button>
-                                    <Button href="#" className="btn btn-facebook btn-user btn-block">
-                                        <i className="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                    </Button>
-                                </div>
-                                <hr />
-                                <div className="text-center">
-                                    <a className="small" href="#">Forgot Password?</a>
-                                </div>
-                                <div className="text-center">
-                                    <a className="small" href="#">Create an Account!</a>
-                                </div>
                             </Row>
                         </Form>
                     </Card.Body>

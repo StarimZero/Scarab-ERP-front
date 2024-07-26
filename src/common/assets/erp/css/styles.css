@@ -19806,15 +19806,15 @@ fieldset:disabled .btn {
 
 .sidebar-nav ul .sidebar-item .sidebar-link:hover {
     background-color: rgba(93, 135, 255, 0.1);
-    color: #5D87FF
+    color: #5D87FF;
 }
 
 .sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow:after {
-    border-color: #5D87FF
+    border-color: #5D87FF;
 }
 
 .sidebar-nav ul .sidebar-item .sidebar-link.active:hover.has-arrow:after {
-    border-color: #fff
+    border-color: #fff;
 }
 
 .sidebar-nav ul .sidebar-item .link-disabled {
@@ -19829,11 +19829,11 @@ fieldset:disabled .btn {
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link:hover {
     background-color: transparent;
-    color: #5D87FF
+    color: #5D87FF;
 }
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item .sidebar-link.active.has-arrow:after {
-    border-color: #5D87FF
+    border-color: #5D87FF;
 }
 
 .sidebar-nav ul .sidebar-item .first-level .sidebar-item>.sidebar-link {
