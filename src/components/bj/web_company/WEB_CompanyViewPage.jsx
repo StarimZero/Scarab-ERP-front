@@ -34,10 +34,10 @@ const WEB_CompanyViewPage = () => {
               <strong>대표자:</strong> 김레드
             </li>
             <li>
-              <strong>전체 직원수:</strong> 신향 한국 1,500명 베트남 3,500명, 인도 3,000명
+              <strong>전체 직원수:</strong> 신향 한국 52명 베트남 125명, 인도 150명
             </li>
             <li>
-              <strong>연매출:</strong> 	23년 기준 1조 2,628억원
+              <strong>연매출:</strong> 	23년 기준 124억원
             </li>
           </ul>
         </Col>
@@ -63,7 +63,7 @@ const WEB_CompanyViewPage = () => {
 
 
       <Container>
-      <h2 className='text-center mt-3'>가치체계</h2>
+      <h2 className='text-center mt-5'>가치체계</h2>
       <Row className='text-center mt-5 justify-content-center'>
         <Col lg={5} >
           <Card>

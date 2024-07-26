@@ -3,10 +3,10 @@ import { Button, Container } from 'react-bootstrap';
 
 
 const WEB_WorkspacePage = () => {
-    const [select, setSelect] = useState({ lat: 37.5665, lng: 126.9780 }); 
+    const [select, setSelect] = useState({ lat:  37.47686303748636, lng: 126.87989913834599 }); 
 
     const locations = {
-      seoul: { lat: 37.5665, lng: 126.9780 },
+      seoul: { lat:  37.47686303748636, lng: 126.87989913834599 },
       india: { lat: 20.5937, lng: 78.9629 },
       vat: { lat: 20.86194, lng: 106.68028 },
     };
@@ -22,7 +22,7 @@ const WEB_WorkspacePage = () => {
       script.onload = () => {
         const map = new window.google.maps.Map(document.getElementById('map'), {
           center: select,
-          zoom: 10,
+          zoom: 17,
         });
   
         new window.google.maps.Marker({
@@ -41,10 +41,10 @@ const WEB_WorkspacePage = () => {
     };
   
     return (
-      <div>
+      <div className='mt-5'>
         <div className='mb-3'>
               <h1 className='text-center mb-5'>세계로 뻗어가는 신향</h1>
-              <img className='place-gsa-img' src='/images/menupage/gs1.png' alt='GSA' />
+              <img className='place-gsa-img' src='/images/menupage/gsa1.png' alt='GSA' />
         </div>
           <div className='text-center mb-3'>
               <Button className='me-3' variant='outline-success' onClick={() => ButtonOnClick('seoul')}>서울</Button>

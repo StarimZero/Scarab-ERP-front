@@ -6,11 +6,13 @@ import WEB_EmployBBSReadPage from '../../components/bj/web_empoly/WEB_EmployBBSR
 
 const EmployRouter = () => {
   return (
+   
     <Routes>
         <Route path='procedure' element={<WEB_EmployProcedurePage/>}/>
         <Route path='bbs' element={<WEB_EmployBBSPage/>}/>
         <Route path='bbs/read/:employ_bbs_id' element={<WEB_EmployBBSReadPage/>}/>
     </Routes>
+
   )
 }
 

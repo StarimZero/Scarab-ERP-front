@@ -14,10 +14,15 @@ const WEB_ItmesReadPage = () => {
 
     return (
         <div >
-                <div className='text-center itmes-header-image'>
-                        <img src='/images/menupage/shf.png'/>
-                </div>
-                <h3 className='text-center mb-4'>
+        <>
+            <img src='/images/menupage/itemsl.png' className='no-space' />
+
+            <div className='web-image-text'>    
+                <h1>제품소개</h1>
+                <p>즐거운 하루, 행복한 시간</p>
+            </div>
+        </>
+                <h3 className='text-center mb-4 mt-5'>
                     제품소개
                 </h3>
        

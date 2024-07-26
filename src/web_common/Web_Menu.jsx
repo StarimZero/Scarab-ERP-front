@@ -12,7 +12,7 @@ const Web_Menu = () => {
     const [showDropdownEmploy, setShowDropdownEmploy] = useState(false);
     const [showDropdownCustomer, setShowDropdownCustomer] = useState(false);
     const [showDropdownLog, setShowDropdownLog] = useState(false);
-    
+
 
     const handleMouseOver = (setShowDropdown) => {
         setShowDropdown(true);
@@ -24,9 +24,9 @@ const Web_Menu = () => {
 
     const onClickLogout = (e) => {
         e.preventDefault();
-        if(window.confirm("정말로 로그아웃하실래요?")){
-          sessionStorage.clear();
-          window.location.reload();
+        if (window.confirm("정말로 로그아웃하실래요?")) {
+            sessionStorage.clear();
+            window.location.reload();
         }
     };
 
@@ -35,14 +35,22 @@ const Web_Menu = () => {
     return (
 
         <div>
-            <div className='my-5'>   
+            <div className='my-5'>
                 <Nav className="web-nav-container d-flex align-items-center justify-content-between web-nav-border">
-                    <div className="web-menu-items d-flex">
-                    <div className='me-3 ms-3'>
-                        <a href="/erp">
-                            편의용 ERP로 가는문
+                    <div className='d-flex align-items-center'>
+
+                        <div className='ms-5'>
+                            <a href="/web">
+                                <img src="/images/menupage/shlogi3.png" alt="Description" className="web-logo-image" />
+                            </a>
+                        </div>
+                        <a href="/web">
+                            <img src="/images/menupage/shlogi.png" alt="Description" className="web-logo-write-image" />
                         </a>
                     </div>
+
+                    <div className="web-menu-items d-flex">
+
                         <div
                             className='web-menu-item d-inline-block me-3'
                             onMouseEnter={() => handleMouseOver(setShowDropdownCompany)}
@@ -102,7 +110,6 @@ const Web_Menu = () => {
                             {showDropdownProduct && (
                                 <div className="web-dropdown1-menu">
                                     <a className="web-dropdown1-item" href="/web/items/read">제품소개</a>
-                                    <a className="web-dropdown1-item" href="/web/items/research">연구중인제품</a>
                                 </div>
                             )}
                         </div>
@@ -135,7 +142,7 @@ const Web_Menu = () => {
                         </div>
                     </div>
 
-                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{color:'white'}} >{vid} 님</div>}
+                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{ color: 'white' }} >{vid} 님</div>}
                     <div className="web-menu-item web-right-box d-inline-block  me-3" onMouseEnter={() => handleMouseOver(setShowDropdownLog)}
                         onMouseLeave={() => handleMouseLeave(setShowDropdownLog)}>
                         <a className="web-nav-link web-nav-link-custom" href="#"><IoPersonCircleOutline size={32} /></a>
@@ -143,26 +150,25 @@ const Web_Menu = () => {
                             <div className="web-dropdown1-menu">
                                 {sessionStorage.getItem("visitor_id") ?
                                     <>
-                                    <a className="web-dropdown1-item" href="#" onClick={onClickLogout}>로그아웃</a>
-                                    <a className="web-dropdown1-item" href="/web/visitor/mypage">마이페이지</a>
+                                        <a className="web-dropdown1-item" href="#" onClick={onClickLogout}>로그아웃</a>
+                                        <a className="web-dropdown1-item" href="/web/visitor/mypage">마이페이지</a>
                                     </>
-                                    :                                
+                                    :
                                     <a className="web-dropdown1-item" href="/web/visitor/login">로그인</a>
-                            }
+                                }
                             </div>
                         )}
                     </div>
 
-                    <div className='me-3 ms-3'>
-                        <a href="/web">
-                            <img src="/images/menupage/shlogo.png" alt="Description" className="web-logo-image" />
-                        </a>
+                    <div className='me-5'>
+
                     </div>
+
                 </Nav>
             </div>
-            
+
         </div>
-     
+
     );
 }
 
