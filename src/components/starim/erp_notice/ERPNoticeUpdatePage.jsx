@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Form } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ERPNoticeUpdatePage = () => {
 
@@ -14,7 +15,7 @@ const ERPNoticeUpdatePage = () => {
     });
     
 
-    const {notice_writer :  notice_title, notice_contents} = form;
+    const {notice_title, notice_contents} = form;
 
     const callAPI = async () =>{
         const res = await axios.get(`/erp/notice/${notice_id}`);
@@ -39,10 +40,22 @@ const ERPNoticeUpdatePage = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if(!window.confirm("글을 수정하시겠습니까?")) return;
-        await axios.put(`/erp/notice`, form, notice_id);
-        alert("게시글 수정완료");
-        window.location.href="/erp/notice/list";
+        Swal.fire({
+            title: "글을 수정 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "수정"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/erp/notice`, form, notice_id);
+                window.location.href="/erp/notice/list";
+            }
+        });  
     }
 
 

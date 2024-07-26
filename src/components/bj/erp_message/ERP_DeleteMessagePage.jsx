@@ -4,6 +4,7 @@ import { Button, Table } from 'react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Pagination from 'react-js-pagination';
+import Swal from 'sweetalert2';
 
 const ERP_DeleteMessagePage = () => {
     const [page, setPage] = useState(1);
@@ -73,74 +74,135 @@ const ERP_DeleteMessagePage = () => {
 
     const onReset = () => {
         if (checked === 0) {
-            alert("복원 시킬 메신저를 선택하세요!");
+            Swal.fire({
+                title: "에러",
+                text: "복원시킬 메세지를 선택하세요.",
+                icon: "error"
+            });
             return;
         }
 
-        if (window.confirm("복원 하시겠습니까?")) {
-            let cnt = 0;
-            message.forEach(async (msg) => {
+        Swal.fire({
+            title: "복원 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                let cnt = 0;
+                message.forEach(async (msg) => {
                 if (msg.checked) {
                     await axios.put(`/erp/receivemessage/reset/state/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
-            });
-        }
+                });
+            }
+        });
     };
 
     const onSreset = () => {
         if (checked === 0) {
-            alert("복원 시킬 메신저를 선택하세요!");
+            Swal.fire({
+                title: "에러",
+                text: "복원시킬 메세지를 선택하세요.",
+                icon: "error"
+            });
             return;
         }
-
-        if (window.confirm("복원 하시겠습니까?")) {
-            let cnt = 0;
-            smessage.forEach(async (msg) => {
+        Swal.fire({
+            title: "복원 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                let cnt = 0;
+                smessage.forEach(async (msg) => {
                 if (msg.checked) {
                     await axios.put(`/erp/sendmessage/reset/state/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
-            });
-        }
+                });
+            }
+        });
     };
 
     const onDelete = () => {
         if (checked === 0) {
-            alert("삭제할 메신저를 선택하세요!");
+            Swal.fire({
+                title: "에러",
+                text: "삭제하실 메세지를 선택하세요!",
+                icon: "error"
+            });
             return;
         }
-
-        if (window.confirm("영구삭제 하시겠습니까?")) {
-            let cnt = 0;
-            message.forEach(async (msg) => {
+        Swal.fire({
+            title: "영구삭제 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                let cnt = 0;
+                message.forEach(async (msg) => {
                 if (msg.checked) {
                     await axios.delete(`/erp/receivemessage/delete/${msg.message_id}`);
                     cnt++;
                 }
                 if (cnt === checked) callAPI();
-            });
-        }
+                });
+            }
+        });
     };
 
     const onSdelete = () => {
         if (checked === 0) {
-            alert("삭제할 메신저를 선택하세요!");
+            Swal.fire({
+                title: "에러",
+                text: "삭제하실 메세지를 선택하세요!",
+                icon: "error"
+            });
             return;
         }
-
-        if (window.confirm("영구삭제 하시겠습니까?")) {
-            let cnt = 0;
-            smessage.forEach(async (msg) => {
-                if (msg.checked) {
-                    await axios.delete(`/erp/sendmessage/delete/${msg.message_id}`);
-                    cnt++;
-                }
-                if (cnt === checked) callAPI();
-            });
-        }
+        Swal.fire({
+            title: "영구삭제 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                let cnt = 0;
+                smessage.forEach(async (msg) => {
+                    if (msg.checked) {
+                        await axios.delete(`/erp/sendmessage/delete/${msg.message_id}`);
+                        cnt++;
+                    }
+                    if (cnt === checked) callAPI();
+                });
+            }
+        });
     };
 
     return (

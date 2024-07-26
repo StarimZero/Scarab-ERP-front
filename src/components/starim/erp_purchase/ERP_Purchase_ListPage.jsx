@@ -6,6 +6,7 @@ import moment from 'moment';
 import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
 import ChartTest from '../starim_common/ChartTest';
+import Swal from 'sweetalert2';
 
 const ERP_Purchase_ListPage = () => {
 
@@ -29,15 +30,38 @@ const ERP_Purchase_ListPage = () => {
     },[page])
 
     const onClickPurchaseDelete = async (purchase) => {
-        if(!window.confirm(`${purchase.purchase_id}를 삭제하시겠습니까?`)) return;
-        const purchase_id = purchase.purchase_id;
-        try {
-            await axios.delete(`/erp/purchase/${purchase_id}`);
-            callAPI();
-            alert("구매목록을 삭제하였습니다.");
-          } catch {
-            alert("구매품목이 존재합니다."); 
-          }
+
+        Swal.fire({
+            title: `${purchase.purchase_id}를 삭제하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "삭제"
+            
+        }).then(async (result) => {
+            const purchase_id = purchase.purchase_id;
+            if (result.isConfirmed) {
+                try{
+                    await axios.delete(`/erp/purchase/${purchase_id}`);
+                    Swal.fire({
+                        title: "삭제완료",
+                        text: "구매목록을 삭제하였습니다!",
+                        icon: "success"
+                    });
+                    callAPI();
+                }catch{
+                    Swal.fire({
+                        title: "에러",
+                        text: "구매품목이 존재합니다!",
+                        icon: "error"
+                    });
+                }
+                
+            } 
+        });
     };
 
 

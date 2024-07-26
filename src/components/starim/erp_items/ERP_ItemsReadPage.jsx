@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Swal from 'sweetalert2';
 
 
 const ERP_ItemsReadPage = ({item, file, setFile}) => {
@@ -63,11 +64,28 @@ const ERP_ItemsReadPage = ({item, file, setFile}) => {
             alert("모든정보를 입력하세요")
             return;
         }
-        if(!window.confirm(`${item.items_id}의 물품정보를 수정하시겠습니까?`)) return;
-        await axios.put(`/erp/items`, form);
-        alert("수정완료")
-        handleClose();
-        window.location.reload();
+        Swal.fire({
+            title: `${item.items_id}의 물품정보를 수정하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/erp/items`, form);
+                Swal.fire({
+                    title: "성공",
+                    text: "물품정보를 수정하였습니다.",
+                    icon: "success"
+                });
+                handleClose();
+                window.location.reload();
+            }
+        });
     }
 
     const onChangeFile = (e) => {

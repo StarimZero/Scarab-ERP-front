@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card, Col, Form, Row, Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Swal from 'sweetalert2';
 
 
 const ERP_Sales_ReadPage = ({sales}) => {
@@ -86,22 +87,60 @@ const ERP_Sales_ReadPage = ({sales}) => {
 
       const onClickSaleUpdate = async () => {
         if(sales_employee==="0" || sales_location==="0"){
-            alert("모든정보를 입력하세요")
+            Swal.fire({
+                title: "에러",
+                text: "모든정보를 입력하세요!",
+                icon: "error"
+            });
             return;
         }
-        if(!window.confirm(`${sales.sales_id}의 판매정보를 수정하시겠습니까?`)) return;
-            await axios.put(`/erp/sales`, master);
-            await Promise.all(items.map(item => axios.put(`/erp/sales/info`, item)));
-            alert("수정완료")
-            handleClose();
+        Swal.fire({
+            title: `${sales.sales_id}의 판매정보를 수정하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/erp/sales`, master);
+                await Promise.all(items.map(item => axios.put(`/erp/sales/info`, item)));
+                Swal.fire({
+                    title: "성공",
+                    text: "판매정보를 수정하였습니다.",
+                    icon: "success"
+                });
+                handleClose();
+            }
+        });
     }
 
     const onClickDelete = async (item) => {
-        if(!window.confirm(`${item.sales_info_id}의 판매를 삭제하시겠습니까?`)) return;
-        const sales_info_id = item.sales_info_id;
-        await axios.delete(`/erp/sales/info/${sales_info_id}`);
-        alert("삭제완료");
-        callAPIItems();
+        Swal.fire({
+            title: `${item.sales_info_id}의 판매를 삭제하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "삭제"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const sales_info_id = item.sales_info_id;
+                await axios.delete(`/erp/sales/info/${sales_info_id}`);
+                Swal.fire({
+                    title: "성공",
+                    text: "삭제완료.",
+                    icon: "success"
+                });
+                callAPIItems();
+            }
+        });
     }
 
 

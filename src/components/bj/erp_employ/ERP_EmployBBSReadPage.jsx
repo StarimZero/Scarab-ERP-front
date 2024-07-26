@@ -5,6 +5,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 const ERP_EmployBBSReadPage = () => {
     const { employ_bbs_id } = useParams();
@@ -23,25 +24,76 @@ const ERP_EmployBBSReadPage = () => {
     }, []);
 
     const onDelete = async()=> {
-        if(!window.confirm(`${list.employ_bbs_id}번 채용공고를 삭제하실래요?`)) return;
-        await axios.delete(`/employ/bbs/${list.employ_bbs_id}`);
-        alert("삭제완료");
-        window.location.href='/erp/employ';
+        Swal.fire({
+            title: `${list.employ_bbs_id}번 채용공고를 삭제하실래요?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.delete(`/employ/bbs/${list.employ_bbs_id}`);
+                Swal.fire({
+                    title: "성공",
+                    text: "채용공고를 삭제하였습니다.",
+                    icon: "success"
+                });
+                window.location.href='/erp/employ';
+            }
+        });
     }
 
     
     const onClickType = async () => {
-        if(!window.confirm(`${list.employ_bbs_id}게시글을 접수상태로 업데이트하겠습니까?`)) return;
-        await axios.put(`/employ/bbs/1`, list, employ_bbs_id);
-        alert("채용상태 업데이트 완료");
-        window.location.href="/erp/employ";
+        Swal.fire({
+            title: `${list.employ_bbs_id}게시글을 접수상태로 업데이트하겠습니까?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/employ/bbs/1`, list, employ_bbs_id);
+                Swal.fire({
+                    title: "성공",
+                    text: "채용상태 업데이트 완료",
+                    icon: "success"
+                });
+                window.location.href="/erp/employ";
+            }
+        });
     }
 
     const onClickReset = async () => {
-        if(!window.confirm(`${list.employ_bbs_id}게시글을 완료상태로 업데이트하겠습니까?`)) return;
-        await axios.put(`/employ/bbs/0`, list, employ_bbs_id);
-        alert("채용상태 업데이트 완료");
-        window.location.href="/erp/employ";
+        Swal.fire({
+            title: `${list.employ_bbs_id}게시글을 완료상태로 업데이트하겠습니까?`,
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/employ/bbs/0`, list, employ_bbs_id);
+                Swal.fire({
+                    title: "성공",
+                    text: "채용상태를 해제하였습니다.",
+                    icon: "success"
+                });
+                window.location.href="/erp/employ";
+            }
+        });
     }
 
        

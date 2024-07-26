@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button, Card, Col, InputGroup, Row, Form } from 'react-bootstrap';
 import AddressModal from '../../../common/AddressModal';
 import ERPVendorMemberModal from '../starim_common/ERPVendorMemberModal';
+import Swal from 'sweetalert2';
 
 const ERP_Vendor_InsertPage = () => {
 
@@ -28,16 +29,30 @@ const ERP_Vendor_InsertPage = () => {
 
 
     const onClicVendorInsert =  async () => {
-        if(vendor_name===""){
-            alert("모든정보를 입력하세요")
+        if(vendor_name==="" || form.vendor_employee===""){
+            Swal.fire({
+                title: "등록불가",
+                text: "모든정보를 입력해주세요!",
+                icon: "error"
+            });
             return;
         }
-        if(!window.confirm("거래처를를 등록하시겠습니까?")) return;
-        //console.log();
-        await axios.post(`/erp/vendor`, form)
-        alert("거래처등록완료")
-        window.location.href="/erp/vendor/list"
-
+        Swal.fire({
+            title: "거래처를 등록 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.post(`/erp/vendor`, form)
+                window.location.href="/erp/vendor/list"
+            }
+        });
     }
 
 

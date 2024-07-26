@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { IoIosArrowBack } from "react-icons/io";
+import Swal from 'sweetalert2';
 
 const ERP_EmployBBSInsertPage = () => {
     const [form, setForm] = useState({
@@ -18,9 +19,22 @@ const ERP_EmployBBSInsertPage = () => {
 
     const onSubmit = async(e) => {
         e.preventDefault();
-        await axios.post('/employ/bbs/insert', form);
-        alert("채용공고 등록완료!");
-        window.location.href='/erp/employ';
+        Swal.fire({
+            title: "채용공고를 등록 하시겠습니까?",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.post('/employ/bbs/insert', form);
+                window.location.href='/erp/employ';
+            }
+        });
     }
 
 

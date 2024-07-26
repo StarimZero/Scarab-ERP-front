@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Col, Form, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Swal from 'sweetalert2';
 
 const ERP_WareHouseReadPage = ({warehouse}) => {
 
@@ -19,11 +20,28 @@ const ERP_WareHouseReadPage = ({warehouse}) => {
     }
 
     const onClickWareHouseUpdate = async () => {
-        if(!window.confirm(`${warehouse_id}의 창고정보를 수정하시겠습니까?`)) return;
-        await axios.put(`/erp/warehouse`, {warehouse_id, warehouse_name, warehouse_address})
-        alert("수정완료")
-        handleClose();
-        window.location.reload();
+        Swal.fire({
+            title: `${warehouse_id}의 창고정보를 수정하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "수정"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/erp/warehouse`, {warehouse_id, warehouse_name, warehouse_address})
+                Swal.fire({
+                    title: "성공",
+                    text: "물품정보를 수정하였습니다.",
+                    icon: "success"
+                });
+                handleClose();
+                window.location.reload();
+            }
+        });
     }
 
 

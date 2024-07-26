@@ -5,6 +5,7 @@ import {Button, Col, Form, InputGroup, Row, Table} from 'react-bootstrap'
 import { IoMdMail } from "react-icons/io";
 import { IoMdMailOpen } from "react-icons/io";
 import Pagination from 'react-js-pagination';
+import Swal from 'sweetalert2';
 
 
 
@@ -63,22 +64,36 @@ const ERP_ReceiveMessagePage = () => {
 
   const onDelete = () => {
     if(checked===0){
-      alert("삭제할 목록을 선택하세요!");
+      Swal.fire({
+        title: "에러",
+        text: "삭제할 메세지를 선택하세요!",
+        icon: "error"
+    });
       return;
     }
 
-    if(window.confirm("휴지통으로 이동하실래요?")) {
-
-    let cnt=0;
-    messages.forEach(async(msg)=>{
-      if(msg.checked) {
-        await axios.put(`/erp/receivemessage/update/receive/state/${msg.message_id}`);
-        cnt++;
+    Swal.fire({
+      title: "휴지통으로 이동시키겠습니까?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "취소",
+      confirmButtonText: "예"
+      
+  }).then(async (result) => {
+      if (result.isConfirmed) {
+        let cnt=0;
+        messages.forEach(async(msg)=>{
+          if(msg.checked) {
+            await axios.put(`/erp/receivemessage/update/receive/state/${msg.message_id}`);
+            cnt++;
+          }
+          if(cnt===checked) callAPI();
+        });
       }
-      if(cnt===checked) callAPI();
-    });
-
-  }
+  });
 };
 
 const clickRead = async(message_id) => {

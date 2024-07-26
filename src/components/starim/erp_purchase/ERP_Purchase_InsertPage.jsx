@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Row, Table } from 'react-bootstrap';
 import ERPItemsModalPurcahse from '../starim_common/ERPItemsModalPurcahse';
+import Swal from 'sweetalert2';
 
 const ERP_Purchase_InsertPage = () => {
 
@@ -76,7 +77,7 @@ const ERP_Purchase_InsertPage = () => {
     }
     const onClickDelete = (index) => {
         setItems(items.filter(( idx) => idx !== index));
-        console.log(index);
+        //console.log(index);
     };
 
     const onChangeItem = (e, index) => {
@@ -94,14 +95,22 @@ const ERP_Purchase_InsertPage = () => {
         if (isClick) return;
        
         if (!master.purchase_date || !master.purchase_location || !master.purchase_employee) {
-            alert("모든 정보를 입력하세요.");
+            Swal.fire({
+                title: "에러",
+                text: "모든정보를 입력하세요!",
+                icon: "error"
+            });
             setIsClick(false);
             return;
         }
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (!item.purchase_qnt || !item.purchase_price || !item.purchase_warehouse) {
-                alert("모든 정보를 입력하세요.");
+                Swal.fire({
+                    title: "에러",
+                    text: "모든정보를 입력하세요!",
+                    icon: "error"
+                });
                 setIsClick(false);
                 return;
             }
@@ -113,7 +122,11 @@ const ERP_Purchase_InsertPage = () => {
             purchase_qnt: parseInt(item.purchase_qnt, 10),
             purchase_price: parseInt(item.purchase_price, 10),
             purchase_warehouse: parseInt(item.purchase_warehouse, 10) })));
-        alert("등록완료")
+        Swal.fire({
+            title: "성공",
+            text: "등록완료.",
+            icon: "success"
+        });
         setIsClick(true);
         window.location.href="/erp/purchase/list"
       };
