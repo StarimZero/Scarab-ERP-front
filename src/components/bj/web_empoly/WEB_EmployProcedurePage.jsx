@@ -8,7 +8,15 @@ import { TbPointFilled } from "react-icons/tb";
 
 const WEB_EmployProcedurePage = () => {
   return (
-    <div>
+    <>
+    <img src='/images/menupage/empi.jpg' className='image-no-space'/>
+
+        <div className='web-image-text'>
+          <h1>인재 채용</h1>
+          <p>당신의 꿈터는 어디입니까?<br/>
+          꿈을 키우고 행복한 내일을 함께 만들어 갈 수 있는 곳. 바로 신향입니다.</p>
+        </div>
+    <div className='mt-5'>
         <h3 className='text-center mb-4'>채용절차</h3>
         <hr/>
    
@@ -104,6 +112,7 @@ const WEB_EmployProcedurePage = () => {
 
 
     </div>
+    </>
   );
 }
 

@@ -9,7 +9,7 @@ import Popup from '../components/starim/web_popup/Popup';
 
 const Web_HomePage = () => {
   const [images, setImages] = useState([
-   '/images/menupage/nd.png', 
+   '/images/menupage/nsm1.png', 
    '/images/menupage/ns1.jpg', 
    '/images/menupage/slider2.png',
 
@@ -47,29 +47,6 @@ const Web_HomePage = () => {
 
 
 
-    <div className='web-body-page'>
-      <h2 className='mb-2 text-center'>신향라면 이벤트</h2>
-      <img src='/images/menupage/r1.png' alt='쇠똥라면 이벤트 이미지' className='web-responsive-image' />
-      <div className='mt-2 text-center'>
-        <Button  onClick={() => window.location.href = '/web/items/read'}
-          className='btn-lg' variant='outline-danger'>
-          제품소개
-        </Button>
-      </div>
-    </div>
-
-
-
-    <div className='text-center'>
-      <h2 className='mb-2 text-center'>신향</h2>
-      <img src='/images/menupage/shf.png' alt='쇠똥구리 이미지' className='web-responsive-image' />
-      <div className='mt-2 text-center'>
-        <Button   onClick={() => window.location.href = '/web/company/view'}
-          className='btn-lg'variant='outline-danger'>
-          회사개요
-        </Button>
-      </div>
-    </div>
       
     </>
   )

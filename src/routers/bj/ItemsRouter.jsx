@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import WEB_ItmesReadPage from '../../components/bj/web_items/WEB_ItmesReadPage'
-import WEB_ItemsResearch from '../../components/bj/web_items/WEB_ItemsResearch'
 import WEB_DrinksItemsPage from '../../components/bj/web_items/WEB_DrinksItemsPage'
 import WEB_NoodleItemsPage from '../../components/bj/web_items/WEB_NoodleItemsPage'
 import WEB_SnackItemsPage from '../../components/bj/web_items/WEB_SnackItemsPage'
@@ -15,7 +14,6 @@ const ItemsRouter = () => {
     <Routes>
         <Route path='/read' element={<WEB_DrinksItemsPage/>}/>
         <Route path='/noodle' element={<WEB_NoodleItemsPage/>}/>
-        <Route path='/research' element={<WEB_ItemsResearch/>}/>
         <Route path='/snack' element={<WEB_SnackItemsPage/>}/>
         <Route path='/efood' element={<WEB_EfoodItemsPage/>}/>
     </Routes>

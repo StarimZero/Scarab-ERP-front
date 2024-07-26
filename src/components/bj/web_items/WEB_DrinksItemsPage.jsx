@@ -41,11 +41,7 @@ const WEB_DrinksItemsPage = () => {
                                         <Card.Body>
                                             <Card.Title>{item.items_name}</Card.Title>
                                             <hr />
-                                            <Card.Text>
-                                                가격: {}
-                                                <br />
-                                                출시일자: {}
-                                            </Card.Text>
+                                    
                                         </Card.Body>
                                     </div>
                                 </Col>

@@ -41,13 +41,17 @@ const WEB_EmployBBSPage = () => {
 
   return (
   <div>
-      <div className='text-end mb-4 ms-5'>
+      
+
+
+  <Container>
+  <div className='text-end mb-4 ms-5'>
             <Row>
 
-                <Col  xs={8} md={5} lg={4}>
+                <Col  xs={8} md={6} lg={6}>
                 <form onSubmit={onSubmit}>
                     <InputGroup>
-                        <Form.Select className='me-2' value={key} onChange={(e)=>setKey(e.target.value)}>
+                        <Form.Select   className='me-2' value={key} onChange={(e)=>setKey(e.target.value)}>
                             <option value="employ_bbs_title">제목</option>
                             <option value="employ_bbs_contents">내용</option>
                         </Form.Select>
@@ -61,9 +65,6 @@ const WEB_EmployBBSPage = () => {
                 </Col>
             </Row>
         </div>
-
-
-  <Container>
 
      <Table hover bordered>
             <thead className='web-thead-br'>

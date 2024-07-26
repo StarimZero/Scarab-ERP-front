@@ -13,7 +13,7 @@ const Web_bottomPage = () => {
         <div className='web-bottom-container'>
           <Row className=' justify-content: space-between;'>
             <Col>
-              <img src='/images/menupage/shlogo.png' className='company-logo' />
+              <img src='/images/menupage/shlogi3.png' className='company-logo' />
             </Col>
             <Col>
               <h5>회사소개</h5>
