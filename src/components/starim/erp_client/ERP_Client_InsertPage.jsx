@@ -3,6 +3,7 @@ import React, {  useState } from 'react'
 import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import AddressModal from '../../../common/AddressModal';
 import ERPClientMemberModal from '../starim_common/ERPClientMemberModal';
+import Swal from 'sweetalert2';
 
 const ERP_Client_InsertPage = () => {
 
@@ -32,15 +33,34 @@ const ERP_Client_InsertPage = () => {
 
     const onClicItemsInsert =  async () => {
         if(client_name===""){
-            alert("모든정보를 입력하세요")
+            Swal.fire({
+                title: "에러",
+                text: "모든정보를 입력하세요!",
+                icon: "error"
+            });
             return;
         }
-        if(!window.confirm("거래처를를 등록하시겠습니까?")) return;
-        //console.log(form);
-        await axios.post(`/erp/client`, form)
-        alert("거래처등록완료")
-        window.location.href="/erp/client/list"
-
+        Swal.fire({
+            title: "거래처를를 등록하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.post(`/erp/client`, form)
+                Swal.fire({
+                    title: "성공",
+                    text: "거래처를 등록하였습니다.",
+                    icon: "success"
+                });
+                window.location.href="/erp/client/list"
+            }
+        });
     }
 
     

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
 import { Button, Card, Col, Form, InputGroup, Row } from 'react-bootstrap'
+import Swal from 'sweetalert2';
 
 const ERP_ItemsInsertPage = () => {
 
@@ -48,15 +49,31 @@ const ERP_ItemsInsertPage = () => {
             alert("모든정보를 입력하세요")
             return;
         }
-        if(!window.confirm("물품를 등록하시겠습니까?")) return;
-        const res = await axios.post(`/erp/items`, form)
-        //console.log(res.data);
-        const newItems_id = res.data;
-        const formData = new FormData();
-        formData.append("byte", file.byte);
-        await axios.post(`/erp/items/update/image/${newItems_id}`, formData);
-        alert("아이템등록완료")
-        window.location.href="/erp/items/list"
+        Swal.fire({
+            title: "물품을 등록하시겠습니까??",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.post(`/erp/items`, form)
+                const newItems_id = res.data;
+                const formData = new FormData();
+                formData.append("byte", file.byte);
+                await axios.post(`/erp/items/update/image/${newItems_id}`, formData);
+                window.location.href="/erp/items/list"
+                Swal.fire({
+                    title: "등록완료",
+                    text: "물품이 등록되었습니다.",
+                    icon: "success"
+                });
+            }
+        });  
     }
 
 

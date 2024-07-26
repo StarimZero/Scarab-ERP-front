@@ -44,10 +44,10 @@ const ERP_SideMenu = () => {
 
     return (
         <aside className="left-sidebar">
-
             <div>
                 <div className="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="./index.html" className="text-nowrap logo-img">
+                    <a href="/erp" >
+                        <img src='/images/logo/sinhyangback.png' style={{width:"14rem"}}/>
                     </a>
                     <div className="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i className="ti ti-x fs-8"></i>
@@ -124,31 +124,6 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">사원목록</span>
                             </a>
                         </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-alert-circle"></i>
-                                </span>
-                                <span className="hide-menu">Alerts</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="#" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-file-description"></i>
-                                </span>
-                                <span className="hide-menu">Forms</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-typography.html" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-typography"></i>
-                                </span>
-                                <span className="hide-menu">Typography</span>
-                            </a>
-                        </li>
-
                         <li className="nav-small-cap">
                             <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span className="hide-menu">구매 | 발주 </span>
@@ -302,6 +277,30 @@ const ERP_SideMenu = () => {
                         </li>
                         <li className="sidebar-item">
                             <a className="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-file-description"></i>
+                                </span>
+                                <span className="hide-menu">Forms</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-typography"></i>
+                                </span>
+                                <span className="hide-menu">Typography</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                                <span>
+                                    <i className="ti ti-alert-circle"></i>
+                                </span>
+                                <span className="hide-menu">Alerts</span>
+                            </a>
+                        </li>
+                        <li className="sidebar-item">
+                            <a className="sidebar-link" href="#" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-file-description"></i>
                                 </span>

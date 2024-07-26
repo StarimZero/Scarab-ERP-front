@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 import { Button, Form } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 const ERP_EmployBBSUpdatePage = () => {
     const { employ_bbs_id } = useParams();
@@ -31,9 +32,22 @@ const ERP_EmployBBSUpdatePage = () => {
 
     const onSubmit = async(e) => {
         e.preventDefault();
-        if(!window.confirm('변경한 내용을 수정하실래요?')) return;
-        await axios.put('/employ/bbs/update', list);
-        window.location.href=`/erp/employ/read/${employ_bbs_id}`;
+        Swal.fire({
+            title: '변경한 내용을 수정하실래요?',
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "예"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put('/employ/bbs/update', list);
+                window.location.href=`/erp/employ/read/${employ_bbs_id}`;
+            }
+        });
     }
 
     const onReset = () => {

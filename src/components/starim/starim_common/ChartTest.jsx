@@ -7,13 +7,14 @@ const ChartTest = () => {
     const [data, setData] = useState('');
     
     const callAPI = async () => {
-        const res = await axios.get("/erp/purchase/info")
+        const res = await axios.get("/erp/purchase/view")
         console.log(res.data)
         let array=[];
         array.push(['국내', '수량']);
-        res.data.forEach(purchase=>
-        array.push([`${purchase.purchase_items_id}`, parseFloat(purchase.purchase_qnt)])
-        );
+        res.data.forEach(purchase=>{
+          const total = purchase.purchase_qnt * purchase.purchase_price
+        array.push([`${purchase.purchase_items_id}`, total])
+        });
         setData(array);
     }
     

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap'
 import ERP_WareHouseReadPage from './ERP_WareHouseReadPage';
+import Swal from 'sweetalert2';
 
 const ERP_WareHouseListPage = () => {
     
@@ -23,10 +24,27 @@ const ERP_WareHouseListPage = () => {
     }
 
     const onClickWareHouseDelete = (warehouse_id) => {
-        if(!window.confirm(`${warehouse_id}를 삭제하시겠습니까?`)) return;
-        axios.delete(`/erp/warehouse/${warehouse_id}`);
-        callAPI();
-        alert("창고를 삭제하였습니다.")
+        Swal.fire({
+            title: `${warehouse_id}를 삭제하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/erp/warehouse/${warehouse_id}`);
+                Swal.fire({
+                    title: "성공",
+                    text: "창고정보를 삭제하였습니다.",
+                    icon: "success"
+                });
+                window.location.href="/erp/notice/list";
+            }
+        });
     }
 
 

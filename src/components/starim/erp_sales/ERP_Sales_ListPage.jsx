@@ -5,6 +5,7 @@ import ERP_Sales_ReadPage from './ERP_Sales_ReadPage';
 import moment from 'moment';
 import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
+import Swal from 'sweetalert2';
 
 const ERP_Sales_ListPage = () => {
 
@@ -36,15 +37,36 @@ const ERP_Sales_ListPage = () => {
     },[])
 
     const onClickItemDelete = async (sales) => {
-        if(!window.confirm(`${sales.sales_id}를 삭제하시겠습니까?`)) return;
-        const sales_id = sales.sales_id;
-        try {
-            await axios.delete(`/erp/sales/${sales_id}`);
-            callAPI(); 
-            alert("물품을 삭제하였습니다.");
-          } catch {
-            alert("판매물품이 존재합니다.."); 
-          }
+        Swal.fire({
+            title: `${sales.sales_id}를 삭제하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "삭제"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try{
+                    const sales_id = sales.sales_id;
+                    await axios.delete(`/erp/sales/${sales_id}`);
+                    Swal.fire({
+                        title: "성공",
+                        text: "판매정보를 삭제하였습니다.",
+                        icon: "success"
+                    });
+                    callAPI(); 
+                }catch{
+                    Swal.fire({
+                        title: "에러",
+                        text: "판매정보가 존재합니다.",
+                        icon: "error"
+                    });
+                }
+            }
+        });
     };
 
 

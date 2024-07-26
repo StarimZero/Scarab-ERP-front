@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap';
 import ERP_Vendor_ReadPage from './ERP_Vendor_ReadPage';
+import Swal from 'sweetalert2';
 
 const ERP_Vendor_ListPage = () => {
 
@@ -26,17 +27,23 @@ const ERP_Vendor_ListPage = () => {
     }
 
     const onClickVendorDelete = async (vendor) => {
-        if(!window.confirm(`${vendor.vendor_id}를 삭제하시겠습니까?`)) return;
-        const vendor_id = vendor.vendor_id;
-        try {
-            await axios.delete(`/erp/vendor/${vendor_id}`);
-            callAPI(); // 성공적인 삭제 후 목록 새로 고침
-            alert("거래처를 삭제하였습니다.");
-          } catch (error) {
-            console.error("Error deleting item:", error);
-            alert("삭제에 실패하였습니다."); // 사용자에게 오류 알림
-          }
-          
+        Swal.fire({
+            title: `${vendor.vendor_id}를 삭제하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "삭제"
+            
+        }).then(async (result) => {
+            const vendor_id = vendor.vendor_id;
+            if (result.isConfirmed) {
+                await axios.delete(`/erp/vendor/${vendor_id}`);
+                callAPI();
+            }
+        });  
     };
 
 

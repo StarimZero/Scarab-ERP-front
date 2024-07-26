@@ -19698,6 +19698,10 @@ fieldset:disabled .btn {
     display: none
 }
 
+.submenu-link{
+    color: #D6B534;
+}
+
 .sidebar-nav ul .sidebar-item .sidebar-link {
     color: #D6B534;
     display: -webkit-box;

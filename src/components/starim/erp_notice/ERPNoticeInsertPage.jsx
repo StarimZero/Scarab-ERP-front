@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Col, Row, Form } from 'react-bootstrap'
+import Swal from 'sweetalert2';
 
 const ERPNoticeInsertPage = () => {
 
@@ -26,10 +27,23 @@ const ERPNoticeInsertPage = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if(!window.confirm("글을 등록하시겠습니까?")) return;
-        await axios.post(`/erp/notice`, form);
-        alert("게시글 등록완료");
-        window.location.href="/erp/notice/list";
+        Swal.fire({
+            title: "글을 등록 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.post(`/erp/notice`, form);
+                window.location.href="/erp/notice/list";
+            }
+        });
+        
     }
 
 

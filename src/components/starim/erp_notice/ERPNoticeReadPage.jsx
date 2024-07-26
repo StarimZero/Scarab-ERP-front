@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, CardFooter, CardHeader, Col, Row } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ERPNoticeReadPage = () => {
 
@@ -23,24 +24,61 @@ const ERPNoticeReadPage = () => {
 
 
     const onDelete = async () => {
-        if(!window.confirm(`${form.notice_id}번 게시글을 삭제하시겠습니까?`)) return;
-        await axios.delete(`/erp/notice/${form.notice_id}`);
-        alert("글 삭제 완료")
-        window.location.href="/erp/notice/list";
+        Swal.fire({
+            title: "글을 삭제하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "삭제"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.delete(`/erp/notice/${form.notice_id}`);
+                window.location.href="/erp/notice/list";
+            }
+        });   
     }
 
     const onClickNotice = async () => {
-        if(!window.confirm(`${form.notice_id}게시글을 공지로 등록하시겠습니까?`)) return;
-        await axios.put(`/erp/notice/1`, form, notice_id);
-        alert("공지등록완료");
-        window.location.href="/erp/notice/list";
+
+        Swal.fire({
+            title: "공지를 등록 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/erp/notice/1`, form, notice_id);
+                window.location.href="/erp/notice/list";
+            }
+        });   
     }
     
     const onClickUnNotice = async () => {
-        if(!window.confirm(`${form.notice_id}게시글을 공지에서 해제하시겠습니까?`)) return;
-        await axios.put(`/erp/notice/0`, form, notice_id);
-        alert("공지해제완료");
-        window.location.href="/erp/notice/list";
+        Swal.fire({
+            title: "글을 공지에서 해제 하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "해제"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await axios.put(`/erp/notice/0`, form, notice_id);
+                window.location.href="/erp/notice/list";
+            }
+        });
     }
 
 

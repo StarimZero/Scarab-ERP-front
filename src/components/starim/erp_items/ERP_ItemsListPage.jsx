@@ -4,6 +4,7 @@ import { Button, Col, Form, FormControl, InputGroup, Row, Table } from 'react-bo
 import ERP_ItemsReadPage from './ERP_ItemsReadPage';
 import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
+import Swal from 'sweetalert2';
 
 
 const ERP_ItemsListPage = () => {
@@ -41,16 +42,37 @@ const ERP_ItemsListPage = () => {
     }
 
     const onClickItemDelete = async (item) => {
-        if(!window.confirm(`${item.items_id}를 삭제하시겠습니까?`)) return;
-        const items_id = item.items_id;
-        try {
-            await axios.delete(`/erp/items/${items_id}`);
-            callAPI(); 
-            alert("물품을 삭제하였습니다.");
-          } catch (error) {
-            alert("삭제에 실패하였습니다."); 
-          }
-        window.location.reload();
+        Swal.fire({
+            title: `${item.items_id}를 삭제하시겠습니까?`,
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "삭제"
+            
+        }).then(async (result) => {
+            const items_id = item.items_id;
+            if (result.isConfirmed) {
+                try{
+                    await axios.delete(`/erp/items/${items_id}`);
+                    Swal.fire({
+                        title: "삭제완료",
+                        text: "물품을 삭제하였습니다!",
+                        icon: "success"
+                    });
+                    callAPI();
+                }catch{
+                    Swal.fire({
+                        title: "에러",
+                        text: "물품삭제에 실패하였습니다.",
+                        icon: "error"
+                    });
+                }
+                window.location.reload();
+            } 
+        });
     };
 
     const onSubmit = (e) => {

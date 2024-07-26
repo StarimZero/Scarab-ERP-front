@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col,  Form,  Row, Table } from 'react-bootstrap'
 import ERP_Items_Modal from '../starim_common/ERP_Items_Modal';
+import Swal from 'sweetalert2';
 
 const ERP_Sales_InsertPage = () => {
 
@@ -94,26 +95,50 @@ const ERP_Sales_InsertPage = () => {
 
 
         if (!master.sales_date || !master.sales_location || !master.sales_employee) {
-            alert("모든 정보를 입력하세요.");
+            Swal.fire({
+                title: "에러",
+                text: "모든정보를 입력하세요!",
+                icon: "error"
+            });
             setIsClick(false);
             return;
         }
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
             if (!item.sales_qnt || !item.sales_price || !item.sales_warehouse) {
-                alert("모든 정보를 입력하세요.");
+                Swal.fire({
+                    title: "에러",
+                    text: "모든정보를 입력하세요!",
+                    icon: "error"
+                });
                 setIsClick(false);
                 return;
             }
         }
-        const res = await axios.post(`/erp/sales`, master)
-        const sales_id = res.data;
-        //console.log(sales_id);
-        sales_id && await Promise.all(items.map(item => axios.post(`/erp/sales/info`, { ...item, sales_id })));
-        alert("등록완료")
-        setIsClick(true);
-        window.location.href="/erp/sales/list"
-        
+        Swal.fire({
+            title: "판매정보를 등록하시겠습니까?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "취소",
+            confirmButtonText: "등록"
+            
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axios.post(`/erp/sales`, master)
+                const sales_id = res.data;
+                sales_id && await Promise.all(items.map(item => axios.post(`/erp/sales/info`, { ...item, sales_id })));
+                setIsClick(true);
+                Swal.fire({
+                    title: "성공",
+                    text: "판매정보를 수정하였습니다.",
+                    icon: "success"
+                });
+                window.location.href="/erp/sales/list"
+            }
+        });
       };
 
 

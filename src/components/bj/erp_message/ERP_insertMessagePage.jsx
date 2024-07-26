@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import ERP_ModalInsertListPage from './ERP_ModalInsertListPage';
+import Swal from 'sweetalert2';
 
 const ERP_insertMessagePage = () => {
   const [members, setMembers] = useState([]);
@@ -33,7 +34,11 @@ const ERP_insertMessagePage = () => {
 
   const onSendMsg = async () => {
     if (title === '') {
-      alert('제목을 입력하세요');
+      Swal.fire({
+        title: "에러",
+        text: "제목을 입력하세요!",
+        icon: "error"
+    });
       return;
     }
 
@@ -45,12 +50,19 @@ const ERP_insertMessagePage = () => {
         message_content: content
       });
 
-      alert('메세지 전송 완료');
+      Swal.fire({
+        title: "성공",
+        text: "전송성공.",
+        icon: "success"
+    });
       window.location.href = '/erp/message/send';
 
     } catch (error) {
-      console.error('메세지 전송 실패:', error);
-      alert('메세지 전송 실패');
+      Swal.fire({
+        title: "에러",
+        text: "전송실패",
+        icon: "error"
+    });
     }
   };
 
