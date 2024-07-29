@@ -99,7 +99,7 @@ const ERP_Transaction_RecievePage = ({sales}) => {
 
     const callClient = async () => {
         const res = await axios.get(`/erp/client`)
-        console.log(res.data);
+        // console.log(res.data);
         setClientList(res.data);
     }
 
