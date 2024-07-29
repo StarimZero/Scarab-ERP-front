@@ -136,7 +136,6 @@ const Web_Menu = () => {
                                 <div className="web-dropdown1-menu">
                                     <a className="web-dropdown1-item" href="/web/customer/bbs">고객게시판</a>
                                     <a className="web-dropdown1-item" href="/web/customer/faq">FAQ</a>
-                                    <a className="web-dropdown1-item" href="/web/customer/announcement">공지</a>
                                 </div>
                             )}
                         </div>
