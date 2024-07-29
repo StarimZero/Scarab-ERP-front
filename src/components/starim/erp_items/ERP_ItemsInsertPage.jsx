@@ -115,6 +115,7 @@ const ERP_ItemsInsertPage = () => {
                         <Button onClick={onClickInsertTogether}>등록</Button>
                     </div>
                     <div>
+                        <hr/>
                         <h5>작성요령</h5>
                         <p>물품코드 : 영어이름_규격</p>
                         <p>물품이름 : 한글이름_규격</p>

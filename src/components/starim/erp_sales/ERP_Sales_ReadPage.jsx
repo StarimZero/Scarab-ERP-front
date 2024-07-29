@@ -155,7 +155,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
     const utcDate = new Date(sales_date);
     const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * -60000);
     const formattedDate = localDate.toISOString().substring(0, 10);
-    console.log(formattedDate);
+    //console.log(formattedDate);
 
 
     useEffect(() => {
