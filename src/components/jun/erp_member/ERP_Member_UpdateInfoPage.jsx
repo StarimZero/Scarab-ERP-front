@@ -34,40 +34,47 @@ const ERP_Member_UpdateInfoPage = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const errors = validateForm();
-        if (Object.keys(errors).length > 0) {
-            setFormErrors(errors);
-            return;
-        }
-        if (form.member_info_pass !== storedPass) {
-            alert('기존 비밀번호가 일치하지 않습니다.');
-            return;
-        }
-        Swal.fire({
-            title: `비밀번호를 변경하시겠습니까?`,
-            text: "",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Confirm"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                // 비밀번호 변경
-                await axios.put('/erp/member/login', {
-                    member_info_id: member_info_id,
-                    member_info_pass: form.member_info_pass_new,
-                    member_info_key: member_info_key
-                });
+        if (Object.keys(errors).length === 0) {
+            const res = await axios.post('/erp/member/login', { member_info_id, member_info_pass: form.member_info_pass });
+            // console.log(res.data);
+            if (res.data == 2) {
                 Swal.fire({
-                    title: "비밀번호 변경 완료!",
+                    title: "비밀번호 변경 에러",
+                    text: "기존 비밀번호가 일치하지 않습니다!",
+                    icon: "error"
+                });
+                return;
+            } else {
+                Swal.fire({
+                    title: `비밀번호를 변경하시겠습니까?`,
                     text: "",
-                    icon: "success"
-                }).then(() => {
-                    sessionStorage.clear();
-                    window.location.href = '/erp/member/login';
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Confirm"
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        // 비밀번호 변경
+                        await axios.put('/erp/member/login', {
+                            member_info_id: member_info_id,
+                            member_info_pass: form.member_info_pass_new,
+                            member_info_key: member_info_key
+                        });
+                        Swal.fire({
+                            title: "비밀번호 변경 완료!",
+                            text: "",
+                            icon: "success"
+                        }).then(() => {
+                            sessionStorage.clear();
+                            window.location.href = '/erp/member/login';
+                        });
+                    }
                 });
             }
-        });
+        } else {
+            setFormErrors(errors);
+        }
     }
 
     useEffect(() => {

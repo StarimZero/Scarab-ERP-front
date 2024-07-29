@@ -2,8 +2,27 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ERP_Member_RegisterPage = () => {
+    const session_member_info_auth = sessionStorage.getItem("member_info_auth");
+    const session_member_info_key = sessionStorage.getItem("member_info_key");
+    useEffect(() => {
+        if (!session_member_info_key) {
+            window.location.href = '/erp/member/login';
+            sessionStorage.setItem('target', '/erp/attendance/list');
+        }
+        if (session_member_info_auth !== '관리자') {
+            Swal.fire({
+                title: "권한 부족",
+                text: "해당 페이지의 권한이 없습니다.",
+                icon: "error"
+            }).then(()=>{
+                window.location.href = '/erp';
+            })
+        }
+    }, [session_member_info_key]);
+    
     const [form, setForm] = useState({});
     const [dept, setDept] = useState([]);
     const [formErrors, setFormErrors] = useState({});
