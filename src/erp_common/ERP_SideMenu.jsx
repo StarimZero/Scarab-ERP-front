@@ -89,18 +89,18 @@ const ERP_SideMenu = () => {
                             {isMenuOpen && (
                                 <ul className="submenu">
                                     <li className="submenu-item mb-1">
-                                        <a className="submenu-link" href="/erp/message/receive" style={{ color: 'yellow' }}>
-                                            <TbMessageCheck /> 받은 메신저 {ncount > 0 && <><RiAlarmWarningLine color='red' />{ncount}</>}
+                                        <a className="submenu-link" href="/erp/message/receive" >
+                                            <TbMessageCheck /> 받은 메신저 {ncount > 0 && <><RiAlarmWarningLine  color='red'/>{ncount}</>}
                                         </a>
                                     </li>
                                     <li className="submenu-item  mb-1">
-                                        <a className="submenu-link" href="/erp/message/send" style={{ color: 'yellow' }}><TbMessageShare /> 보낸 메신저</a>
+                                        <a className="submenu-link" href="/erp/message/send" ><TbMessageShare /> 보낸 메신저</a>
                                     </li>
                                     <li className="submenu-item  mb-1">
-                                        <a className="submenu-link" href="/erp/message/insert" style={{ color: 'yellow' }}><BsSend /> 메신저 보내기</a>
+                                        <a className="submenu-link" href="/erp/message/insert" ><BsSend /> 메신저 보내기</a>
                                     </li>
                                     <li className="submenu-item  ">
-                                        <a className="submenu-link" href="/erp/message/delete" style={{ color: 'yellow' }}><VscTrash /> 휴지통</a>
+                                        <a className="submenu-link" href="/erp/message/delete" ><VscTrash /> 휴지통</a>
                                     </li>
                                 </ul>
                             )}

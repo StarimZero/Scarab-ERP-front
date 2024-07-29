@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Popup.module.css";
 import { RiCloseLine } from "react-icons/ri";
 import { useCookies } from "react-cookie";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
 const Popup = () => {
@@ -60,21 +62,18 @@ const Popup = () => {
                 <div className={styles.popup}>
                     <RiCloseLine className={styles.closeBtn} onClick={handleClose} />
 
-                    <p className={styles.greeting}>
-                    <span className={styles.point1}>신향에오신것을 환영합니다.</span>
-                    </p>
+                    {/* <p className={styles.greeting}>
+                    <span className={styles.point1}>신향 하반기 공개채용 진행중</span>
+                    </p> */}
                     <div className={styles.main_img_container}>
                     <img
-                        src="http://via.placeholder.com/20x20"
+                        src="/images/logo/employpopup.png"
                         alt='사진'
                         className={styles.main_img}
                     />
                     </div>
-                    <p className={styles.text_line1}>
-                    문구넣기
-                    </p>
                     <p className={styles.text_line2}>
-                    문구넣기
+                        <Link to="/web/employ/bbs"><Button>공고보기</Button></Link>
                     </p>
                     <div className={styles.input_container}>
                     <input

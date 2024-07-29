@@ -6,6 +6,7 @@ import moment from 'moment';
 import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
 import Swal from 'sweetalert2';
+import SalesBarChart from '../starim_common/SalesBarChart';
 
 const ERP_Sales_ListPage = () => {
 
@@ -34,7 +35,7 @@ const ERP_Sales_ListPage = () => {
     useEffect(()=>{
         callAPI();
         callAPIInfo();
-    },[])
+    },[page])
 
     const onClickItemDelete = async (sales) => {
         Swal.fire({
@@ -114,7 +115,9 @@ const ERP_Sales_ListPage = () => {
                         <td>판매코드</td>
                         <td>판매사원</td>
                         <td>판매일</td>
+                        <td>메모</td>
                         <td>삭제</td>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -123,6 +126,7 @@ const ERP_Sales_ListPage = () => {
                             <td><div style={{cursor: "pointer"}}><ERP_Sales_ReadPage sales={sales} /></div></td>
                             <td>{sales.sales_employee}({sales.member_info_name})</td>
                             <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
+                            <td>{sales.sales_memo}</td>
                             <td><Button onClick={()=>onClickItemDelete(sales)}>삭제</Button></td>
                         </tr>
                     )}
@@ -140,6 +144,7 @@ const ERP_Sales_ListPage = () => {
         nextPageText={"›"}
         onChange={(e)=>setPage(e)}/>
     } 
+    <SalesBarChart/>
     </>
   )
 }
