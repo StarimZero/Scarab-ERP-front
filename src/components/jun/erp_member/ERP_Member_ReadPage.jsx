@@ -26,8 +26,8 @@ const ERP_Member_ReadPage = () => {
 
     // 사원 불러오기
     const [member, setMember] = useState('');
-    const { member_info_key, member_info_name, member_info_resident, member_info_phone, member_info_address1, member_info_address2,
-        member_info_email, member_info_photo, member_info_account, member_info_job, dept_key, dept_name, member_info_hiredate, member_info_salary } = member;
+    const { member_info_key, member_info_name, member_info_resident, member_info_phone, member_info_address1, member_info_address2, member_info_email,
+            member_info_photo, member_info_account, member_info_job, dept_key, dept_name, member_info_hiredate, member_info_salary, member_info_auth } = member;
 
     const callMemberInfo = async () => {
         const url = `/erp/member/${member_info_id}`;
@@ -206,6 +206,13 @@ const ERP_Member_ReadPage = () => {
                                         </Form.Select>
                                     </InputGroup>
                                     {formErrors.member_info_job && <Form.Text style={{ color: 'red' }}>{formErrors.member_info_job}</Form.Text>}
+                                    <InputGroup className='mt-3'>
+                                        <InputGroup.Text className='title justify-content-center'>권한</InputGroup.Text>
+                                        <Form.Select name='member_info_auth' value={member_info_auth} onChange={onChangeForm}>
+                                            <option value="일반">일반</option>
+                                            <option value="관리자">관리자</option>
+                                        </Form.Select>
+                                    </InputGroup>
                                     <InputGroup className='my-3'>
                                         <InputGroup.Text className='title justify-content-center'>입사일</InputGroup.Text>
                                         <Form.Control name='member_info_hiredate' value={member_info_hiredate} onChange={onChangeForm} disabled style={{ backgroundColor: 'white' }} />

@@ -15,7 +15,7 @@ const ERP_Transaction_Purchase = () => {
     const [count, setCount] = useState("0");
 
     const callPurchase = async () => {
-        const res = await axios.get(`/erp/purchase?key=${key}&word=${word}&page=${page}&size=${size}`);
+        const res = await axios.get(`/erp/purchase/list?key=${key}&word=${word}&page=${page}&size=${size}`);
         //console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
@@ -52,6 +52,9 @@ const ERP_Transaction_Purchase = () => {
                             </InputGroup>
                         </form>
                     </Col>
+                    <Col lg={6} className='text-end mt-3'>
+                        검색 수: {count}건
+                    </Col>
                 </Row>
                 <Col lg={12}>
                     <Table>
@@ -65,14 +68,12 @@ const ERP_Transaction_Purchase = () => {
                         </thead>
                         <tbody>
                             {list && list.map(purchase =>
-                                purchase.purchase_type === 0 && (
-                                    <tr key={purchase.purchase_id}>
-                                        <td>{purchase.purchase_id}</td>
-                                        <td>{purchase.purchase_employee}({purchase.member_info_name})</td>
-                                        <td>{moment(purchase.purchase_date).format('yy년MM월DD일')}</td>
-                                        <td><ERP_Transaction_PayPage purchase={purchase} /></td>
-                                    </tr>
-                                )
+                                <tr key={purchase.purchase_id}>
+                                    <td>{purchase.purchase_id}</td>
+                                    <td>{purchase.purchase_employee}({purchase.member_info_name})</td>
+                                    <td>{moment(purchase.purchase_date).format('yy년MM월DD일')}</td>
+                                    <td><ERP_Transaction_PayPage purchase={purchase} /></td>
+                                </tr>
                             )}
                         </tbody>
                     </Table>

@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import '../starim_common/paging.css';
 
 
+
 const ERPNoticeListPage = () => {
 
     const [list, setList] = useState([]);

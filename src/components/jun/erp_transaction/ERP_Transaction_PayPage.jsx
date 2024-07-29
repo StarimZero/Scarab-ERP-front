@@ -101,7 +101,7 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
     const callVendor = async () => {
         const res = await axios.get(`/erp/vendor`)
         setVendorList(res.data);
-        console.log(res.data);
+        // console.log(res.data);
     }
 
     // 저장창고불러오기

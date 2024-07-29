@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 const ERP_Attendance_ListPage = () => {
     const member_info_key = sessionStorage.getItem("member_info_key");
     const member_info_name = sessionStorage.getItem('member_info_name');
+    const member_info_id = sessionStorage.getItem("member_info_id");
 
     useEffect(() => {
         if (!member_info_key) {
@@ -15,6 +16,14 @@ const ERP_Attendance_ListPage = () => {
             sessionStorage.setItem('target', '/erp/attendance/list');
         }
     }, [member_info_key]);
+
+    const [member, setMember] = useState({});
+    
+    const callMember = async () => {
+        const url = `/erp/member/${member_info_id}`;
+        const res = await axios.get(url);
+        setMember(res.data);
+    }
 
     const [currentDate, setCurrentDate] = useState(moment());
     const [attendance, setAttendance] = useState({});
@@ -47,6 +56,7 @@ const ERP_Attendance_ListPage = () => {
 
     useEffect(() => {
         callAttendanceList();
+        callMember();
     }, []);
 
     // 출근
@@ -243,7 +253,11 @@ const ERP_Attendance_ListPage = () => {
                         <h4>{currentTime.format('YYYY-MM-DD HH:mm:ss')}</h4>
                     </div>
                     <div className="mb-3">
-                        <FaUser size={50} />
+                        {member.member_info_photo ?
+                            (<img src={member.member_info_photo} width="150" height="150" />)
+                        :
+                            (<FaUser size={70} />)
+                        }
                     </div>
                     <div className="mb-3">
                         {member_info_name ? member_info_name + "님" : "-"}
@@ -254,17 +268,6 @@ const ERP_Attendance_ListPage = () => {
                     <div className="mb-3">
                         <Button variant="secondary" size="lg" block onClick={onLeave}>퇴근하기</Button>
                     </div>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="light" id="dropdown-basic">
-                            근무상태변경
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">상태 1</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">상태 2</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">상태 3</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
                 </div>
             </Col>
             <Col md={10} className='p-5'>

@@ -14,7 +14,7 @@ const ERP_Transaction_Sales = () => {
     const [list, setList] = useState([]);
 
     const callSales = async () => {
-        const res = await axios.get(`/erp/sales?key=${key}&word=${word}&page=${page}&size=${size}`);
+        const res = await axios.get(`/erp/sales/list?key=${key}&word=${word}&page=${page}&size=${size}`);
         // console.log(res.data);
         setList(res.data.documents);
         setCount(res.data.total);
@@ -52,6 +52,9 @@ const ERP_Transaction_Sales = () => {
                             </InputGroup>
                         </form>
                     </Col>
+                    <Col lg={6} className='text-end mt-3'>
+                        검색 수: {count}건
+                    </Col>
                 </Row>
                 <Col lg={12}>
                     <Table>
@@ -65,14 +68,12 @@ const ERP_Transaction_Sales = () => {
                         </thead>
                         <tbody>
                             {list && list.map(sales =>
-                                sales.sales_type === 0 && (
-                                    <tr key={sales.sales_id}>
-                                        <td>{sales.sales_id}</td>
-                                        <td>{sales.sales_employee}({sales.member_info_name})</td>
-                                        <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
-                                        <td><ERP_Transaction_RecievePage sales={sales} /></td>
-                                    </tr>
-                                )
+                                <tr key={sales.sales_id}>
+                                    <td>{sales.sales_id}</td>
+                                    <td>{sales.sales_employee}({sales.member_info_name})</td>
+                                    <td>{moment(sales.sales_date).format('yy년MM월DD일')}</td>
+                                    <td><ERP_Transaction_RecievePage sales={sales} /></td>
+                                </tr>
                             )}
                         </tbody>
                     </Table>
