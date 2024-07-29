@@ -4,10 +4,10 @@ import { Col, Row } from 'react-bootstrap';
 
 
 const Web_bottomPage = () => {
-  
+
   return (
     <>
-    <hr />
+      <hr />
       <div className='web-bottom-page'>
 
         <div className='web-bottom-container'>
@@ -27,15 +27,13 @@ const Web_bottomPage = () => {
               <h5>제품소개</h5>
               <ul>
                 <li><a href="/web/items/read">제품소개</a></li>
-                <li><a href="/web/items/research">연구중인제품</a></li>
               </ul>
             </Col>
             <Col>
               <h5>고객지원</h5>
               <ul>
-                <li><a href='#'>고객 게시판</a></li>
-                <li><a href='#'>FAQ</a></li>
-                <li><a href='#'>공지</a></li>
+                <li><a href='/web/customer/bbs'>고객 게시판</a></li>
+                <li><a href='/web/customer/faq'>FAQ</a></li>
               </ul>
             </Col>
           </Row>

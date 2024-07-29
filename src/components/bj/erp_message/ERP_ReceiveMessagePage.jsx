@@ -18,12 +18,6 @@ const ERP_ReceiveMessagePage = () => {
   const [key, setKey] = useState('message_title');
   const [word, setWord] = useState('');
 
-  const [nlist, setNlist] = useState([]);
-  const [npage, setNPage] = useState(1);
-  const [nsize, setNsize] = useState(5);
-  const [ncount, setNcount] = useState(0);
-  const [nkey, setNkey] = useState('message_title');
-  const [nword, setNword] = useState('');
 
 
   const uid=sessionStorage.getItem('member_info_id');
@@ -35,9 +29,7 @@ const ERP_ReceiveMessagePage = () => {
     setMessages(data);
     setCount(res.data.total);
     //console.log(res.data.total);
-   const res1=await axios.get(`/erp/receivemessage/nlist/${uid}?key=${nkey}&word=${nword}&page=${npage}&size=${nsize}`);
-   setNcount(res1.data.ntotal);
-    //console.log(res1.data)
+
   }
 
 
@@ -109,7 +101,7 @@ const clickRead = async(message_id) => {
   return (
     <div>
         <div>받은메일함</div>
-        <div>안읽은거: {ncount}</div>
+    
        <hr/>
        <Table >
         <thead>

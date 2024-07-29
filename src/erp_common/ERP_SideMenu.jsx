@@ -4,20 +4,12 @@ import { TbMessageCheck } from "react-icons/tb";
 import { BsSend } from "react-icons/bs";
 import { VscTrash } from "react-icons/vsc";
 import { TbMessage } from "react-icons/tb";
-import axios from 'axios';
-import { RiAlarmWarningLine } from "react-icons/ri";
 import { useLocation } from 'react-router-dom';
 
 const ERP_SideMenu = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
    
-    const [nlist, setNlist] = useState([]);
-    const [npage, setNPage] = useState(1);
-    const [nsize, setNsize] = useState(5);
-    const [ncount, setNcount] = useState(0);
-    const [nkey, setNkey] = useState('message_title');
-    const [nword, setNword] = useState('');
-    const uid=sessionStorage.getItem('member_info_id');
+
     const location = useLocation();
 
     const onClickSide = (e) => {
@@ -25,16 +17,6 @@ const ERP_SideMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-
-    const callAPI = async() => {
-        const res1=await axios.get(`/erp/receivemessage/nlist/${uid}?key=${nkey}&word=${nword}&page=${npage}&size=${nsize}`);
-        setNcount(res1.data.ntotal);
-
-      }
-
-    //   useEffect(()=>{
-    //     callAPI();
-    //   }, []);
 
       useEffect(()=>{
         if(location.pathname.includes('/message')){
@@ -85,10 +67,10 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">메신저</span>
                             </a>
                             {isMenuOpen && (
-                                <ul className="submenu">
+                                <ul className="submenu ms-5">
                                     <li className="submenu-item mb-1">
                                         <a className="submenu-link" href="/erp/message/receive" style={{color:'yellow'}}>
-                                            <TbMessageCheck /> 받은 메신저 {ncount > 0 && <><RiAlarmWarningLine  color='red'/>{ncount}</>}
+                                            <TbMessageCheck /> 받은 메신저
                                         </a>
                                     </li>
                                     <li className="submenu-item  mb-1">
@@ -268,7 +250,7 @@ const ERP_SideMenu = () => {
                             </a>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                            <a className="sidebar-link" href="/erp/faq" aria-expanded="false">
                                 <span>
                                     <i className="ti ti-cards"></i>
                                 </span>

@@ -31,7 +31,7 @@ const WEB_CompanyHistoryPage = () => {
               <h1 className='com-history-header'>2016</h1>
               <p>8월) 제1회 신향 농업상생 자원봉사활동</p>
               <p>4월) 2023 국가고객만족도(NCSI) 라면 부문 3위 선정(한국생산성본부)</p>
-              <p>2월) 심향 버터칩 판매</p>
+              <p>2월) 신향 버터칩 판매</p>
             </div>
           </Col>
         </Row>

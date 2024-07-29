@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 const ERP_EmployBBSUpdatePage = () => {
     const { employ_bbs_id } = useParams();
     const [list, setList] = useState({
-        employ_bbs_id:sessionStorage.getItem('employ_bbs_id'),
+        employ_bbs_admin:sessionStorage.getItem('member_info_id'),
         employ_bbs_title:'',
         employ_bbs_contents:''
     });

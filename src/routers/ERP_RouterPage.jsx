@@ -21,6 +21,7 @@ import InventoryRouter from './han/InventoryRouter';
 import EmployBBSRouter from './bj/EmployBBSRouter';
 import AccountRouter from './jun/AccountRouter';
 import TransactionRouter from './jun/TransactionRouter';
+import ERP_FAQRouterPage from './jay/ERP_FAQRouterPage';
 
 
 
@@ -52,6 +53,7 @@ const ERP_RouterPage = () => {
                         <Route path='/notice/*' element={<NoticeRouter/>}/>
                         <Route path='/inventory/*' element={<InventoryRouter/>}/>
                         <Route path='/employ/*' element={<EmployBBSRouter/>}/>
+                        <Route path='/faq/*' element={<ERP_FAQRouterPage/>}/>
                     </Routes>
                 </div>
             </div>

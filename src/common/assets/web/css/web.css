@@ -225,6 +225,7 @@ ul li a {
 
 .blue-content h3 {
   margin-bottom: 10px;
+  color: white;
 }
 
 
@@ -494,6 +495,7 @@ ul li a {
 .web-image-text h1 {
   margin: 0;
   font-size: 2em;
+  color: white;
 }
 
 .web-image-text p {
@@ -501,3 +503,8 @@ ul li a {
   font-size: 1.2em;
 }
 
+
+/*  고객센터  */
+.web-faq-color{
+  color: green;
+}

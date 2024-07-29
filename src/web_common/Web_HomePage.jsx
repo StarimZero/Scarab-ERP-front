@@ -33,7 +33,7 @@ const Web_HomePage = () => {
 
           <div className="web-background-image-container ">
             <Slider {...settings}>
-              {images.map(img => (
+              {images && images.map(img => (
                 <div key={img} className="slider-image-container ">
                   <img src={img} className="slider-image web-responsive-image" />
                 </div>

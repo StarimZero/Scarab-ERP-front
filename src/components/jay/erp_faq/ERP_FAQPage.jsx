@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Accordion, Col, Container, Row, Table } from 'react-bootstrap'
+import { Accordion, Button, Col, Container, Row, Table } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const WEB_FAQPage = () => {
+
+
+const ERP_FAQPage = () => {
     const [list, setList] =useState([]);
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(5);
@@ -24,10 +26,22 @@ const WEB_FAQPage = () => {
     useEffect(()=>{
         callAPI();
     }, [page, key]);
-
+    
   return (
     <Container className='text-center'>
+
         <h1 className='mb-5'>자주 묻는 질문 (FAQ)</h1>
+        {sessionStorage.getItem('member_info_id') && 
+        <div className='text-end mb-3'>
+          
+            
+
+            <a href='/erp/faq/insert'>
+                <Button variant='outline-primary btn-sm'>글쓰기</Button>
+            </a>
+           
+        </div>
+       }
         
         <Row>
             <Col>
@@ -49,4 +63,4 @@ const WEB_FAQPage = () => {
   )
 }
 
-export default WEB_FAQPage
+export default ERP_FAQPage
