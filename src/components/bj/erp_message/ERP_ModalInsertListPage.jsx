@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Table, Row, Col, Form, InputGroup } from 'react-bootstrap';
+import { Table} from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Pagination from 'react-js-pagination';
@@ -15,11 +15,11 @@ const ERP_ModalInsertListPage = ({ onSelect }) => {
   const [size, setSize]=useState(10);
   const [count, setCount] = useState(0);
   const [key, setKey] = useState('');
-  const [word, setWord] = useState('');
+ 
  
   const callAPI = async () => {
       const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
-     //console.log(res.data.list);
+    //console.log(res.data.list);
       setMembers(res.data.list);
       setCount(res.data.total);
   };

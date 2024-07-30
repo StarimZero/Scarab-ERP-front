@@ -6,9 +6,7 @@ import ERP_ModalInsertListPage from './ERP_ModalInsertListPage';
 import Swal from 'sweetalert2';
 
 const ERP_insertMessagePage = () => {
-  const [members, setMembers] = useState([]);
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(50);
+
 
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
@@ -23,14 +21,7 @@ const ERP_insertMessagePage = () => {
     }
   }, [location.state]);
 
-  const callAPI = async () => {
-    const res = await axios.get(`/erp/member?page=${page}&size=${size}`);
-    setMembers(res.data.list);
-  };
 
-  useEffect(() => {
-    callAPI();
-  }, [page]);
 
   const onSendMsg = async () => {
     if (title === '') {
