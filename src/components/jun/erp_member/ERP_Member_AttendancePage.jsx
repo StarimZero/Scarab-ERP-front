@@ -11,14 +11,10 @@ const ERP_Member_AttendancePage = () => {
     const member_info_name = sessionStorage.getItem('member_info_name');
     const member_info_id = sessionStorage.getItem("member_info_id");
 
-    const [member, setMember] = useState({});
     const [attendanceList, setAttendanceList] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const callMember = async () => {
-        const url = `/erp/member/${member_info_id}`;
-        const res = await axios.get(url);
-        setMember(res.data);
-    }
+
 
     const callAttendanceList = async () => {
         const url = `/erp/attendance/listMember/${member_info_key}`;
@@ -28,7 +24,6 @@ const ERP_Member_AttendancePage = () => {
 
     useEffect(() => {
         callAttendanceList();
-        callMember();
     }, []);
 
     const getTileContent = ({ date, view }) => {
@@ -36,9 +31,13 @@ const ERP_Member_AttendancePage = () => {
             const formattedDate = moment(date).format('YYYY-MM-DD');
             const attendanceToday = attendanceList.find(({ member_attendance_date }) => member_attendance_date === formattedDate);
             if (attendanceToday) {
-                return <div className="tile-attended">출근</div>;
+                return (
+                    <div className="tile-attended">
+                        <div className="attendance-dot"></div>출근
+                    </div>
+                );
             } else {
-                return <div className="tile-absent"></div>;
+                return <div className="tile-absent">&nbsp;</div>;
             }
         }
     }
@@ -51,9 +50,13 @@ const ERP_Member_AttendancePage = () => {
             <div className="px-5 calendar-container">
                 <Calendar
                     tileContent={getTileContent}
-                    className="calendar"
-                    showNavigation={true}
+                    onChange={setSelectedDate}
+                    value={selectedDate}
+                    calendarType="gregory"
                     view="month"
+                    prev2Label={null}
+                    next2Label={null}
+                    showNeighboringMonth={false}
                 />
             </div>
         </Row>
