@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import ERP_Transaction_Chart from '../components/jun/erp_chart/ERP_Transaction_Chart'
-import Swal from 'sweetalert2';
 import ChartTest from '../components/starim/starim_common/ChartTest';
 import ERP_Attendance_HomePage from '../components/jun/erp_attendance/ERP_Attendance_HomePage';
-import ERPNoticeListPage from '../components/starim/erp_notice/ERPNoticeListPage';
 import ERP_Notice_List from '../components/jun/erp_chart/ERP_Notice_List';
+import { AiOutlineRise } from "react-icons/ai";
+
 
 const ERP_HomePage = () => {
 
@@ -49,15 +49,15 @@ const ERP_HomePage = () => {
                                     <div class="card-body">
                                         <div class="row alig n-items-start">
                                             <div class="col-8">
-                                                <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
-                                                <h4 class="fw-semibold mb-3">$6,820</h4>
+                                                <h5 class="card-title mb-9 fw-semibold"> Quarter Earnings </h5>
+                                                <h4 class="fw-semibold mb-3">￦1,536,213,250</h4>
                                                 <div class="d-flex align-items-center pb-1">
                                                     <span
                                                         class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
-                                                        <i class="ti ti-arrow-down-right text-danger"></i>
+                                                        <AiOutlineRise style={{color : "red"}}/>
                                                     </span>
-                                                    <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                                                    <p class="fs-3 mb-0">last year</p>
+                                                    <p class="text-dark me-1 fs-3 mb-0">+369%</p>
+                                                    <p class="fs-3 mb-0">last quarter</p>
                                                 </div>
                                             </div>
                                             <div class="col-4">
