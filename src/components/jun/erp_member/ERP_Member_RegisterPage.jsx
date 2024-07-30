@@ -72,7 +72,7 @@ const ERP_Member_RegisterPage = () => {
         const errors = validateForm();
         if (Object.keys(errors).length === 0) {
             await axios.post('/erp/member', form);
-            navigate('/erp/member/login');
+            navigate('/erp/member/list');
         } else {
             setFormErrors(errors);
         }

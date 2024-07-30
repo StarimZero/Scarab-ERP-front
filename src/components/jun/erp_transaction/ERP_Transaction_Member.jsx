@@ -146,7 +146,6 @@ const ERP_Transaction_Member = ({ account_number, callAccount }) => {
                                     <option value="member_info_key">사원번호</option>
                                     <option value="member_info_name">사원명</option>
                                     <option value="dept_key">부서</option>
-                                    <option value="member_info_hiredate">입사일</option>
                                 </Form.Select>
                             </Col>
                             <Col>
