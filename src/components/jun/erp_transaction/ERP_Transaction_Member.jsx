@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 const ERP_Transaction_Member = ({ account_number, callAccount }) => {
 
     const [page, setPage] = useState(1);
-    const [size] = useState(10);
+    const [size] = useState(30);
     const [key, setKey] = useState("");
     const [word, setWord] = useState("");
     const [total, setTotal] = useState(0);
