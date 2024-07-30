@@ -44,14 +44,6 @@ const ERP_SideMenu = () => {
                             <span className="hide-menu">Home</span>
                         </li>
                         <li className="sidebar-item">
-                            <a className="sidebar-link" href="/erp" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span className="hide-menu">메인페이지</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
                             <a className="sidebar-link" href="/erp/notice/list" aria-expanded="false">
                                 <span>
                                     <BsMegaphone size="1.4em" strokeWidth="0.5px" />

@@ -48,7 +48,7 @@ const InventoryPage = () => {
         window.location.href = '/erp/inventory/totalsalebywarehousechart'
     }
     const onClickMove4 = () => {
-        window.location.href='/erp/inventory/salebycountry'
+        window.location.href = '/erp/inventory/salebycountry'
     }
 
     const onSubmit = (e) => {
@@ -79,36 +79,44 @@ const InventoryPage = () => {
     return (
         <>
             <Row className='justify-content-center'>
-                <h1>재고리스트</h1>
-                <h3 className="mb-2" onClick={() => callAPI()} style={{ cursor: 'pointer' }}>전체물품목록</h3>
-                <div>
-                    <Button className='mb-2' onClick={onClickMove}>전체거래내역</Button>
-                    <Button className='ms-5 mb-2' onClick={onClickMove3}>창고별매출비율차트</Button>
-                    <Button className='ms-2 mb-2'onClick={onClickMove4}>해외수출표기</Button>
+                <h1 className='my-4'>재고리스트</h1>
+                <h3 className="my-4" onClick={() => callAPI()} style={{ cursor: 'pointer' }}>전체물품목록</h3>
+                <div className='mb-3'>
+                    <Button onClick={onClickMove}>전체거래내역</Button>
+                    <Button className='ms-3' onClick={onClickMove3}>창고별매출비율차트</Button>
+                    <Button className='ms-3' onClick={onClickMove4}>해외수출표기</Button>
+                    <Button className='ms-3' onClick={onClickMove2}>창고별물품목록</Button>
                 </div>
-                <div>
-                    <Button className='me-2 mb-2' onClick={onClickMove2}>창고별물품목록</Button>
-                </div>
+            </Row>
+            <Row>
                 <div className='mb-2'>
-                    <Col lg={3}>
+                    <Col lg={6}>
                         <form onSubmit={onSubmit} className='mb-2'>
                             <InputGroup>
-                                <Form.Select value={key} onChange={(e) => setKey(e.target.value)} style={{ width: '30%' }}>
-                                    <option value="items_id">코드</option>
-                                    <option value="items_name">이름</option>
-                                    <option value="items_type">타입</option>
-                                </Form.Select>
-                                <FormControl placeholder='검색어를 입력하세요' value={word}
-                                    onChange={(e) => setWord(e.target.value)} style={{ width: '55%' }} />
-                                <Button type="submit" style={{ width: '15%' }}>검색</Button>
+                                <Col className='col-4 me-3'>
+                                    <Form.Select value={key} onChange={(e) => setKey(e.target.value)}>
+                                        <option value="items_id">코드</option>
+                                        <option value="items_name">이름</option>
+                                        <option value="items_type">타입</option>
+                                    </Form.Select>
+                                </Col>
+                                <Col>
+                                    <InputGroup>
+                                        <FormControl placeholder='검색어를 입력하세요' value={word}
+                                            onChange={(e) => setWord(e.target.value)} />
+                                        <Button type="submit" style={{ width: '15%' }}>검색</Button>
+                                    </InputGroup>
+                                </Col>
                             </InputGroup>
                         </form>
                     </Col>
-                    {isSearch ? ("전체물품종류 : " + count + " 개") : ("검색결과 : " + count + " 건")}
+                    <Col>
+                        {isSearch ? ("전체물품종류 : " + count + " 개") : ("검색결과 : " + count + " 건")}
+                    </Col>
                 </div>
             </Row>
             <Row className='justify-content-center'>
-                <Col lg={10}>
+                <Col lg={12}>
                     <Table>
                         <thead className='text-center'>
                             <tr>
