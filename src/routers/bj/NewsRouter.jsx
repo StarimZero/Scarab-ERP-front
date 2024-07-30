@@ -11,7 +11,7 @@ const NewsRouter = () => {
         <div className='web-image-text'>
           <h1>신향뉴스</h1>
           <p>행복하고 희망찬 내일을 위한 새롭고 활기찬 <br/>
-          (주)신향의 소식을 가장 먼저 전해드립니다</p>
+          (주)신향이 새로운 소식을 가장 먼저 전해드립니다</p>
         </div>
     <Routes>
         <Route path='/domestic' element={<WEB_NewsDomesticPage/>}/>

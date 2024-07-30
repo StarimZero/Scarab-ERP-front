@@ -37,7 +37,7 @@ const ERP_ReadSendPage = () => {
         <div className='mt-1'>
             받은사람: {list.message_receiver}
         </div>
-        <div className='mt-2' style={{fontSize:'10px'}}>
+        <div className='mt-2' style={{fontSize:'13px'}}>
         {moment(list.message_senddate).format('yy년MM월DD일 HH시mm분')}
         </div>
    

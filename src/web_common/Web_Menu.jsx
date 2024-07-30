@@ -141,7 +141,7 @@ const Web_Menu = () => {
                         </div>
                     </div>
 
-                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{ color: 'white' }} >{vid} 님</div>}
+                    {sessionStorage.getItem("visitor_id") && <div className='me-1' style={{ color: 'black' }} >{vid} 님</div>}
                     <div className="web-menu-item web-right-box d-inline-block  me-3" onMouseEnter={() => handleMouseOver(setShowDropdownLog)}
                         onMouseLeave={() => handleMouseLeave(setShowDropdownLog)}>
                         <a className="web-nav-link web-nav-link-custom" href="#"><IoPersonCircleOutline size={32} /></a>
