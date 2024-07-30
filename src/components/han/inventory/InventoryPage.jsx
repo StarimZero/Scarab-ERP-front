@@ -84,7 +84,7 @@ const InventoryPage = () => {
                 <div className='mb-3'>
                     <Button onClick={onClickMove}>전체거래내역</Button>
                     <Button className='ms-3' onClick={onClickMove3}>창고별매출비율차트</Button>
-                    <Button className='ms-3' onClick={onClickMove4}>해외수출표기</Button>
+                    {/* <Button className='ms-3' onClick={onClickMove4}>해외수출표기</Button> */}
                     <Button className='ms-3' onClick={onClickMove2}>창고별물품목록</Button>
                 </div>
             </Row>
