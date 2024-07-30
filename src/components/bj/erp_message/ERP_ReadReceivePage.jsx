@@ -10,9 +10,14 @@ const ERP_ReadReceivePage = () => {
   const [list, setList] = useState([]);
   const navi = useNavigate();
 
+
+
   const callAPI = async () => {
       const res = await axios.get(`/erp/receivemessage/read/${message_id}`);
       setList(res.data);
+
+
+    
   }
 
   useEffect(() => {
