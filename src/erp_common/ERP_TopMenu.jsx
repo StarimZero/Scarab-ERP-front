@@ -54,12 +54,6 @@ const ERP_TopMenu = () => {
                             <AiOutlineMenu />
                         </Nav.Link>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link href="#">
-                            <AiOutlineBell />
-                            <div className="notification bg-primary rounded-circle"></div>
-                        </Nav.Link>
-                    </Nav.Item>
                 </Nav>
                 <Navbar.Collapse className="justify-content-end px-0" id="navbarNav">
                     <Nav className="ms-auto align-items-center">
@@ -81,14 +75,6 @@ const ERP_TopMenu = () => {
                                     <NavDropdown.Item onClick={onClickMyPage} className="d-flex align-items-center gap-2 mypage">
                                         <AiOutlineUser className="fs-6" />
                                         <p className="mb-0 fs-6">My Profile</p>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#" className="d-flex align-items-center gap-2">
-                                        <AiOutlineMail className="fs-6" />
-                                        <p className="mb-0 fs-6">My Account</p>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#" className="d-flex align-items-center gap-2">
-                                        <AiOutlineUnorderedList className="fs-6" />
-                                        <p className="mb-0 fs-6">My Task</p>
                                     </NavDropdown.Item>
                                     <div className="d-block text-center">
                                         <Button variant="outline-primary" className="mx-3 mt-2" onClick={onLogout}>
