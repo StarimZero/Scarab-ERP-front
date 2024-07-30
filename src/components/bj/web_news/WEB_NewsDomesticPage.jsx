@@ -15,13 +15,15 @@ const callAPI = async()=> {
 const res = await axios.get('https://newsapi.org/v2/top-headlines', {
   params: {
     country: 'kr',
-    category: 'health',
+    category: 'science',
     apiKey: '1a29f2ac9c1a41aeb70467b6a64ea855', 
   },
 });
 
 setNews(res.data.articles);
 //console.log(res.data.articles);
+// 카테고리 technology  business entertainment health science sports
+
 setLoading(false);
 } 
 useEffect(()=>{
@@ -47,7 +49,7 @@ useEffect(()=>{
 
                 <Card.Img 
                   variant="top" 
-                  src={article.urlToImage || "http://via.placeholder.com/300x300"} 
+                  src={article.urlToImage || "/images/menupage/shlogi3.png"} 
                   alt={article.title} 
                   className="news-image"/>
 

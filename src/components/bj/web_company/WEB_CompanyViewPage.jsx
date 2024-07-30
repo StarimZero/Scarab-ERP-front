@@ -31,7 +31,7 @@ const WEB_CompanyViewPage = () => {
               <strong>설립년도:</strong> 1999년
             </li>
             <li>
-              <strong>대표자:</strong> 김레드
+              <strong>대표자:</strong> 최동식
             </li>
             <li>
               <strong>전체 직원수:</strong> 신향 한국 52명 베트남 125명, 인도 150명
@@ -44,22 +44,7 @@ const WEB_CompanyViewPage = () => {
       </Row>
     </Container>
 
-    <br/><br/><br/><br/><br/><br/>
-    <div className="mt-5">
-        <Row className="align-items-center">
-          <Col xs={12} md={6}>
-            <img src='/images/menupage/shf.png' alt='Company Research' className="img-fluid  compnay-view-img" />
-          </Col>
-          <Col xs={12} md={6}>
-            <div>
-              <h2>최고의 신선도</h2>
-              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 신향은 오늘도 열심히 일합니다.</p>
-
-            </div>
-          </Col>
-        </Row>
-      </div>
-
+    <br/>
 
 
       <Container>
@@ -92,6 +77,22 @@ const WEB_CompanyViewPage = () => {
         </Col>
       </Row>
     </Container>
+
+    <div className="mt-5">
+        <Row className="align-items-center">
+          <Col xs={12} md={6}>
+            <img src='/images/menupage/shf.png' alt='Company Research' className="img-fluid  compnay-view-img" />
+          </Col>
+          <Col xs={12} md={6}>
+            <div>
+              <h2>최고의 신선도</h2>
+              <p>세계인의 식탁에 건강과 행복을 제공하기 위해 신향은 오늘도 열심히 일합니다.</p>
+
+            </div>
+          </Col>
+        </Row>
+      </div>
+
 
     </div>
    

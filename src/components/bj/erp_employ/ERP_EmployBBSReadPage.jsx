@@ -111,8 +111,8 @@ const ERP_EmployBBSReadPage = () => {
                 <Col>
                     <div className='ms-5'>
                         <strong>{list.employ_bbs_title}</strong>
-                        <div style={{ fontSize: '11px' }}>등록일: {moment(list.employ_bbs_regdate).format('yy년MM월DD일 HH시mm분')}</div>
-                        <div style={{ fontSize: '11px' }}>조회수: {list.employ_bbs_viewcnt}</div>
+                        <div style={{ fontSize: '13px' }}>등록일: {moment(list.employ_bbs_regdate).format('yy년MM월DD일 HH시mm분')}</div>
+                        <div style={{ fontSize: '13px' }}>조회수: {list.employ_bbs_viewcnt}</div>
                     </div>
 
                 </Col>

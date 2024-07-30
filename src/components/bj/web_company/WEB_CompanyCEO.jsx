@@ -30,7 +30,7 @@ const WEB_CompanyCEO = () => {
             <Row className='justify-content-center'>
                 <Col lg={8}>
                     <div className='text-center'>
-                        <h3 className='mb-3'>안녕하십니까, 신향의 CEO 김레드입니다.</h3>
+                        <h3 className='mb-3'>안녕하십니까, 신향의 CEO 최동식입니다.</h3>
                         <p style={textStyle}>
                             저희 신향을 방문해주신 여러분께 진심으로 감사의 인사를 전합니다. 신향은 고객 여러분의 건강과 행복을 최우선으로 생각하며,<br />
                             최고 품질의 식품을 제공하기 위해 끊임없이 노력하고 있습니다. 저희 회사는 건강한 재료와 엄격한 품질 관리를 통해 맛있고 안전한 식품을 생산하고 있습니다.<br />
@@ -40,7 +40,7 @@ const WEB_CompanyCEO = () => {
                         </p>
                         <div className='text-end me-5'>
                             <div className='mt-2'>(주)신향 대표이사</div>
-                            <h2>김레드</h2>
+                            <h2>최동식</h2>
                         </div>
                     </div>
                 </Col>
