@@ -88,7 +88,7 @@ const ERP_EmployBBSUpdatePage = () => {
         <Form.Control
             name='employ_bbs_contents' value={employ_bbs_contents} onChange={onChangeForm}
             as="textarea"
-            rows={10}
+            rows={25}
             style={{ width: '90%' }}
             placeholder="내용"/>
 
