@@ -54,7 +54,12 @@ const ERP_Transaction_ListPage = ({ account_number, transactions, setTransaction
 
     useEffect(() => {
         callTransaction();
-    }, [account_number, page])
+    }, [account_number, page]);
+
+    // 금액에 천 단위 구분 기호를 추가하는 함수
+    const formatNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
 
     return (
         <div className='my-5'>
@@ -112,7 +117,6 @@ const ERP_Transaction_ListPage = ({ account_number, transactions, setTransaction
                             <th>거래날짜</th>
                             <th>내용</th>
                             <th>거래금액</th>
-                            <th>남은금액</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,14 +124,13 @@ const ERP_Transaction_ListPage = ({ account_number, transactions, setTransaction
                             <tr key={transaction.transaction_id}>
                                 <td>{formatDate(new Date(transaction.transaction_date))}</td>
                                 <td>{transaction.member_info_key && `${salaryDate} ${transaction.member_info_name} 월급`}
-                                    {transaction.client_id !== 0 && transaction.client_id}
-                                    {transaction.vendor_id !== 0 && transaction.vendor_id}
+                                    {transaction.client_id !== 0 && transaction.client_name}
+                                    {transaction.vendor_id !== 0 && transaction.vendor_name}
                                 </td>
                                 <td>
-                                    {transaction.transaction_deposit !==0 && `+${transaction.transaction_deposit}`}
-                                    {transaction.transaction_withdraw !==0 && `-${transaction.transaction_withdraw}`}
+                                    {transaction.transaction_deposit !==0 && `+${formatNumber(transaction.transaction_deposit)}`}
+                                    {transaction.transaction_withdraw !==0 && `-${formatNumber(transaction.transaction_withdraw)}`}
                                 </td>
-                                <td>-</td>
                             </tr>
                         )}
                     </tbody>

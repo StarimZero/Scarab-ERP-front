@@ -8,6 +8,7 @@ import ERP_Account_InsertPage from './ERP_Account_InsertPage';
 import Swal from 'sweetalert2';
 
 
+
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -99,7 +100,7 @@ const ERP_Account_ListPage = () => {
             confirmButtonText: "Delete"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                if(transactions) {
+                if (transactions) {
                     Swal.fire({
                         title: "계좌 삭제 불가!",
                         text: "해당 계좌는 거래내역이 있어, 삭제가 불가능합니다.",
@@ -129,14 +130,19 @@ const ERP_Account_ListPage = () => {
                     {accounts.map((account, index) =>
                         <Col key={account.account_number}>
                             <Card className='account-component me-2 text-center align-items-center' style={{ position: 'relative' }}>
+                                <Card.Body className='mt-3' style={{ backgroundImage: 'url(/images/logo/visa.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%', position: 'relative' }}>
                                     <div style={{ position: 'absolute', top: 10, right: 10 }}>
                                         <BiTrash size={24} style={{ cursor: 'pointer' }} onClick={onDeleteAccount} />
                                     </div>
-                                <Card.Body>
-                                    <img src="#" width='90%' />
-                                    <div className='ellipsis'>통장 이름 : {account.account_name}</div>
-                                    <div className='ellipsis'>상세 내용 : {account.account_detail}</div>
-                                    <div>현재 자금 : {formatNumber(account.account_total)}원</div>
+                                    <div className='mt-5'>
+                                        <h3>{account.account_name}</h3>
+                                    </div>
+                                    <div>
+                                        <h6>{account.account_detail}</h6>
+                                    </div>
+                                    <div>
+                                        <h5>{formatNumber(account.account_total)}원</h5>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>

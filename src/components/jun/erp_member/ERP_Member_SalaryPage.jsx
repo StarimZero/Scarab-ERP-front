@@ -88,7 +88,7 @@ const ERP_Member_SalaryPage = () => {
                     </Table>
                 )}
                 {!groupedSalaries[selectedYear] && (
-                    <div className="text-center">
+                    <div className="text-center my-5">
                         <p>해당 연도의 급여 내역이 없습니다.</p>
                     </div>
                 )}

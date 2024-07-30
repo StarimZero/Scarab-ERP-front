@@ -150,7 +150,7 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Confirm"
-        }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 const totalAmount = Math.round(items.reduce((total, item) => total + (item.purchase_price * item.purchase_qnt * 1.1), 0));
                 const transactionData = {
@@ -196,12 +196,17 @@ const ERP_Transaction_PayPage = ({ purchase }) => {
                         <Slider {...settings}>
                             {accounts.map((account, index) =>
                                 <Col key={account.account_number}>
-                                    <Card className='account-component me-2 text-center align-items-center'>
-                                        <Card.Body>
-                                            <img src="#" width='90%' />
-                                            <div className='ellipsis'>통장 이름 : {account.account_name}</div>
-                                            <div className='ellipsis'>상세 내용 : {account.account_detail}</div>
-                                            <div>현재 자금 : {formatNumber(account.account_total)}원</div>
+                                    <Card className='account-component me-2 text-center align-items-center' style={{ position: 'relative' }}>
+                                        <Card.Body className='mt-3' style={{ backgroundImage: 'url(/images/logo/visa.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%', position: 'relative' }}>
+                                            <div className='mt-5'>
+                                                <h3>{account.account_name}</h3>
+                                            </div>
+                                            <div>
+                                                <h6>{account.account_detail}</h6>
+                                            </div>
+                                            <div>
+                                                <h5>{formatNumber(account.account_total)}원</h5>
+                                            </div>
                                         </Card.Body>
                                     </Card>
                                 </Col>

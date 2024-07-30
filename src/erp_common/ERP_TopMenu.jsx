@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Navbar, Nav, NavDropdown, Image, Button } from 'react-bootstrap';
 import { AiOutlineMenu, AiOutlineBell, AiOutlineUser, AiOutlineMail, AiOutlineUnorderedList } from 'react-icons/ai';
+import { TbMessage } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -25,6 +26,10 @@ const ERP_TopMenu = () => {
 
     const onClickMyPage = () => {
         navigate('/erp/member/mypage');
+    }
+
+    const onClickMessenger = () => {
+        navigate('/erp/message/receive');
     }
 
     const onLogout = (e) => {
@@ -74,7 +79,11 @@ const ERP_TopMenu = () => {
                                 <div className="message-body">
                                     <NavDropdown.Item onClick={onClickMyPage} className="d-flex align-items-center gap-2 mypage">
                                         <AiOutlineUser className="fs-6" />
-                                        <p className="mb-0 fs-6">My Profile</p>
+                                        <h6 className='ms-2 mt-2'>My Profile</h6>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item onClick={onClickMessenger} className="d-flex align-items-center gap-2 mypage">
+                                        <TbMessage className="fs-6" />
+                                        <h6 className='ms-2 mt-2'>Messenger</h6>
                                     </NavDropdown.Item>
                                     <div className="d-block text-center">
                                         <Button variant="outline-primary" className="mx-3 mt-2" onClick={onLogout}>
