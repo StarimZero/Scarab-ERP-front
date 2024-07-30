@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const ERP_FAQPage = () => {
     const [list, setList] =useState([]);
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(5);
+    const [size, setSize] = useState(50);
 
     const [count, setCount] = useState(0);
     const [key, setKey] = useState('');

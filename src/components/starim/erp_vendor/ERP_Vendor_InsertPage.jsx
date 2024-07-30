@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 
 const ERP_Vendor_InsertPage = () => {
 
+    const inputGroupTextStyle = {
+        width: '120px', 
+    };
 
     const [form, setForm] = useState({
         vendor_name : "",
@@ -68,36 +71,36 @@ const ERP_Vendor_InsertPage = () => {
                 </Card.Header>
                 <Card.Body>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>거래처명</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>거래처명</InputGroup.Text>
                         <Form.Control value={vendor_name} name='vendor_name'  placeholder='거래처명' onChange={onChagneForm}/ >
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>거래처담당자</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>거래처담당자</InputGroup.Text>
                         <Form.Control value={vendor_person} name='vendor_person' placeholder='거래처담당자'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>담당직원</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>담당직원</InputGroup.Text>
                         <ERPVendorMemberModal form={form} setForm={setForm} />
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>전화번호</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}> 전화번호</InputGroup.Text>
                         <Form.Control value={vendor_phone} name='vendor_phone' placeholder='전화번호'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>주소</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>주소</InputGroup.Text>
                         <Form.Control value={vendor_address} name='vendor_address' placeholder='주소'onChange={onChagneForm}/>
                         <AddressModal setForm={setForm} form={form}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>팩스</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>팩스</InputGroup.Text>
                         <Form.Control value={vendor_fax} name='vendor_fax' placeholder='팩스'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>이메일</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>이메일</InputGroup.Text>
                         <Form.Control value={vendor_email} name='vendor_email' placeholder='이메일'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>여신한도</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>여신한도</InputGroup.Text>
                         <Form.Select value={vendor_credit_limit} name='vendor_credit_limit' onChange={onChagneForm}>
                             <option value={parseInt(0)}>기본</option>
                             <option value={parseInt(1)}>신뢰</option>

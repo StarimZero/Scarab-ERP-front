@@ -71,7 +71,7 @@ const ERP_Member_LoginPage = () => {
                     <Card.Body className="p-0">
                         <Row>
                             <Col lg={6}>
-                                <img src="http://via.placeholder.com/50x50" width="100%" alt="Login" />
+                                <img src="/images/logo/shlogi3.png" width="100%" alt="Login" />
                             </Col>
                             <Col lg={6} className="d-flex flex-column justify-content-center">
                                 <div className="p-5">
