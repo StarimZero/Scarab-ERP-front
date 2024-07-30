@@ -80,7 +80,8 @@ const ERP_Sales_InsertPage = () => {
     };
 
     const onChangeItem = (e, index) => {
-        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:e.target.value} : item);
+        const number = parseInt(e.target.value.replace(/,/g, ''));
+        const data=items.map((item, idx)=> index===idx ? {...item, [e.target.name]:number} : item);
         setItems(data);
     }
 
@@ -145,12 +146,12 @@ const ERP_Sales_InsertPage = () => {
   return (
     <>
         <Row className='justify-content-center'>
-            <Col lg={7}>
+            <Col lg={12}>
                 <h1>판매작성</h1>
                 <Card>
                     <Card.Header>
                         
-                        <Row>
+                        <Row className='mb-2'>
                             <Col lg={2}>
                                 <div>일자:</div>
                             </Col>
@@ -208,9 +209,9 @@ const ERP_Sales_InsertPage = () => {
                                             <tr key={item.sales_items_id}>
                                                 <td><ERP_Items_Modal items={items} setItems={setItems} item_index={index} /></td>
                                                 <td><Form.Control value={item.items_name} readOnly/> </td>
-                                                <td><Form.Control value={item.sales_qnt}  name="sales_qnt" onChange={(e)=>onChangeItem(e, index)}/>
+                                                <td><Form.Control value={item.sales_qnt.toLocaleString()}  name="sales_qnt" onChange={(e)=>onChangeItem(e, index)} maxLength={6}/>
                                                 </td>
-                                                <td><Form.Control value={item.sales_price} name="sales_price" onChange={(e)=>onChangeItem(e, index)}/>
+                                                <td><Form.Control value={item.sales_price.toLocaleString()} name="sales_price" onChange={(e)=>onChangeItem(e, index)} maxLength={7}/>
                                                 </td>
                                                 <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1) + "원"} readOnly/></td>
                                                 <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`) + "원"} readOnly/></td>

@@ -18,6 +18,7 @@ const ERP_Sales_ListPage = () => {
     const [count, setCount] = useState("0");
     const [list, setList] = useState([]);
     const [listInfo, setListInfo] = useState([]);
+    
 
     const callAPI = async () => {
         const res = await axios.get(`/erp/sales?key=${key}&word=${word}&page=${page}&size=${size}`);
@@ -36,7 +37,7 @@ const ERP_Sales_ListPage = () => {
         callAPI();
         callAPIInfo();
     }, [page])
-
+    
     const onClickItemDelete = async (sales) => {
         Swal.fire({
             title: `${sales.sales_id}를 삭제하시겠습니까?`,
@@ -58,7 +59,16 @@ const ERP_Sales_ListPage = () => {
                         text: "판매정보를 삭제하였습니다.",
                         icon: "success"
                     });
-                    callAPI();
+                    const last = Math.ceil(count/size);  
+                    if (page >= last && list.length === 1) {
+                        setPage(last - 1);
+                        callAPI(); 
+                    }else{
+                        callAPI();
+                    }
+                    
+                    
+                    
                 } catch {
                     Swal.fire({
                         title: "에러",

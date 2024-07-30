@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const WEB_FAQPage = () => {
     const [list, setList] =useState([]);
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(5);
+    const [size, setSize] = useState(10);
 
     const [count, setCount] = useState(0);
     const [key, setKey] = useState('');
@@ -26,7 +26,7 @@ const WEB_FAQPage = () => {
     }, [page, key]);
 
   return (
-    <Container className='text-center'>
+    <Container className='text-center mb-5' >
         <h1 className='mb-5'>자주 묻는 질문 (FAQ)</h1>
         
         <Row>

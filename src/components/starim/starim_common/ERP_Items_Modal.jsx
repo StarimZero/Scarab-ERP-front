@@ -51,7 +51,7 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
         <Form.Control onClick={handleShow}  defaultValue={items[item_index].sales_items_id} readOnly />
 
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size='xl'>
             <Modal.Header closeButton>
                 <Modal.Title>물품리스트</Modal.Title>
             </Modal.Header>
@@ -81,11 +81,9 @@ const ERP_Items_Modal = ({ items, setItems, item_index}) => {
                             {list && list.map((item, index)=>
                                 item.items_type === key ? (
                                 <tr  key={item.items_id} onClick={() => onItemSelected(item)}>
-                                    <td  style={{ cursor: "pointer" }}>
-                                       {item.items_id}
-                                    </td>
-                                    <td>{item.items_name}</td>
-                                    <td><img src = {item.items_photo || "http://via.placeholder.com/50x50"} width={"50%"}/></td>
+                                    <td  style={{ cursor: "pointer" }}> {item.items_id} </td>
+                                    <td width={"20%"}>{item.items_name}</td>
+                                    <td width={"50%"}><img src = {item.items_photo || "http://via.placeholder.com/50x50"} width={"30%"}/></td>
                                     <td>
                                         {item.items_type === 0 ? "음료" : item.items_type === 1 ? "면" : item.items_type === 2 ? "스낵" : item.items_type === 3 ? "간편식" : item.items_type}
                                     </td>

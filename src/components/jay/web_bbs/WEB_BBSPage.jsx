@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, InputGroup, Row, Table } from 'react-bootstrap';
 import Pagination from "react-js-pagination";
@@ -30,6 +31,7 @@ const WEB_BBSPage = () => {
         e.preventDefault();
         callAPI();
     };
+    
 
     return (
         <Container>
@@ -77,9 +79,9 @@ const WEB_BBSPage = () => {
                         <tr key={bbs.bbs_id}>
                             <td>{bbs.bbs_category}</td>
                             <td>{bbs.bbs_id}</td>
-                            <td><a href={`/web/customer/bbs/read/${bbs.bbs_id}`}> {bbs.bbs_title}</a></td>
+                            <td ><a href={`/web/customer/bbs/read/${bbs.bbs_id}`} style={{ textDecoration: 'none', color: 'inherit' }}> {bbs.bbs_title}</a></td>
                             <td>{bbs.bbs_writer}</td>
-                            <td>{bbs.bbs_regDate}</td>
+                            <td>{moment(bbs.bbs_regDate).format('YYYY-MM-DD')}</td>
                             <td>{bbs.bbs_viewcnt}</td>
                         </tr>
                     ))}

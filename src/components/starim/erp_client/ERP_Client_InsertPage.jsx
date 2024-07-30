@@ -7,7 +7,9 @@ import Swal from 'sweetalert2';
 
 const ERP_Client_InsertPage = () => {
 
-
+    const inputGroupTextStyle = {
+        width: '120px', 
+    };
 
     const [form, setForm] = useState({
         client_name : "",
@@ -76,36 +78,36 @@ const ERP_Client_InsertPage = () => {
                 </Card.Header>
                 <Card.Body>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>거래처명</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>거래처명</InputGroup.Text>
                         <Form.Control value={client_name} name='client_name'  placeholder='거래처명' onChange={onChagneForm} />
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>거래처담당자</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>거래처담당자</InputGroup.Text>
                         <Form.Control value={client_person} name='client_person' placeholder='거래처담당자'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>담당직원</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>담당직원</InputGroup.Text>
                         <ERPClientMemberModal form={form} setForm={setForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>전화번호</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>전화번호</InputGroup.Text>
                         <Form.Control value={client_phone} name='client_phone' placeholder='전화번호'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>주소</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>주소</InputGroup.Text>
                         <Form.Control value={client_address} name='client_address' placeholder='주소'onChange={onChagneForm}/>
                         <AddressModal setForm={setForm} form={form}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>팩스</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>팩스</InputGroup.Text>
                         <Form.Control value={client_fax} name='client_fax' placeholder='팩스'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>이메일</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>이메일</InputGroup.Text>
                         <Form.Control value={client_email} name='client_email' placeholder='이메일'onChange={onChagneForm}/>
                     </InputGroup>
                     <InputGroup className='mb-2'>
-                        <InputGroup.Text>여신한도</InputGroup.Text>
+                        <InputGroup.Text style={inputGroupTextStyle}>여신한도</InputGroup.Text>
                         <Form.Select value={client_credit_limit} name='client_credit_limit' onChange={onChagneForm}>
                             <option value={parseInt(0)}>기본</option>
                             <option value={parseInt(1)}>신뢰</option>
