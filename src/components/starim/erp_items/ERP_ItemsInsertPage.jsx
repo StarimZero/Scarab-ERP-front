@@ -46,7 +46,11 @@ const ERP_ItemsInsertPage = () => {
 
     const onClickInsertTogether = async() => {
         if(items_id==="" || items_name==="" || items_type==="" || file.byte===""){
-            alert("모든정보를 입력하세요")
+            Swal.fire({
+                title: "에러",
+                text: "모든정보를 입력하세요!",
+                icon: "error"
+            });
             return;
         }
         Swal.fire({

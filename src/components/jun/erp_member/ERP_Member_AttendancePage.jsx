@@ -11,11 +11,9 @@ const ERP_Member_AttendancePage = () => {
     const member_info_name = sessionStorage.getItem('member_info_name');
     const member_info_id = sessionStorage.getItem("member_info_id");
 
+
     const [attendanceList, setAttendanceList] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
-
-
-
     const callAttendanceList = async () => {
         const url = `/erp/attendance/listMember/${member_info_key}`;
         const res = await axios.get(url);

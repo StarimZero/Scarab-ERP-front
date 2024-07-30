@@ -37,7 +37,10 @@ const ERP_Sales_ReadPage = ({sales}) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        callAPIItems();
+    }
 
      //거래처불러오기
      const [clientList, setClientList] = useState([]);
@@ -189,7 +192,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                     <Col>
                         <Card>
                             <Card.Header>
-                                <Row>
+                                <Row className='mb-2'>
                                     <Col lg={2}>
                                         <div>일자:</div>
                                     </Col>
@@ -217,10 +220,8 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                     <Col>
                                         <Form.Select value={sales_employee} name='sales_employee' onChange={onChangeMaster} >
                                             <option value={0}>담당자를선택하세요</option>
-                                            {memberList && memberList.map(mem=>
-                                                <option key={mem.member_info_id} value={mem.member_info_id}>
-                                                {mem.member_info_id}({mem.member_info_name})
-                                                </option>
+                                            {memberList && memberList.map(mem=> mem.dept_name.includes("영업") &&
+                                                <option key={mem.member_info_id} value={mem.member_info_id}>{mem.member_info_id}({mem.member_info_name})</option>
                                             )}
                                         </Form.Select>
                                     </Col>
@@ -239,16 +240,16 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                                     <td>부가세</td>
                                                     <td>총금액</td>
                                                     <td>출하창고</td>
-                                                    <td>삭제하기</td>
+                                                    <td>삭제</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {items && items.map((item, index)=>
                                                 <tr key={item.sales_items_id}>
                                                     <td><Form.Control value={item.sales_items_id} readOnly/> </td>
-                                                    <td><Form.Control value={item.sales_qnt.toLocaleString()} name='sales_qnt' onChange={(e)=>onChangeItem(e, index)} /></td>
-                                                    <td><Form.Control value={item.sales_price.toLocaleString()} name='sales_price' onChange={(e)=>onChangeItem(e, index)}/></td>
-                                                    <td><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1).toLocaleString() + "원"} readOnly/></td>
+                                                    <td width={"13%"}><Form.Control value={item.sales_qnt.toLocaleString()} name='sales_qnt' onChange={(e)=>onChangeItem(e, index)} maxLength={6} /></td>
+                                                    <td width={"13%"}><Form.Control value={item.sales_price.toLocaleString()} name='sales_price' onChange={(e)=>onChangeItem(e, index)} maxLength={6}/></td>
+                                                    <td width={"13%"}><Form.Control value={Math.ceil(`${item.sales_price}` * 0.1).toLocaleString() + "원"} readOnly/></td>
                                                     <td><Form.Control value={Math.ceil(`${item.sales_price}` * 1.1 * `${item.sales_qnt}`).toLocaleString() + "원"} readOnly/></td>
                                                     <td>
                                                         <Form.Select value={parseInt(item.sales_warehouse)} name='sales_warehouse' onChange={(e)=>onChangeItem(e, index)}>
@@ -260,7 +261,7 @@ const ERP_Sales_ReadPage = ({sales}) => {
                                                             )}
                                                         </Form.Select>
                                                     </td>
-                                                    <td>
+                                                    <td width={"8%"}>
                                                         <Button size="sm" onClick={()=>onClickDelete(item)}>삭제</Button>
                                                     </td>
                                                 </tr>

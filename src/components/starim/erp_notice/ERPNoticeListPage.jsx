@@ -75,7 +75,7 @@ const ERPNoticeListPage = () => {
         </Row>
         <Row className='justify-content-center'>
             <Col lg={8}>
-                <Table striped bordered hover variant="dark" >
+                <Table >
                     <thead>
                         <tr className='text-center'>
                             <td style={{fontSize: "20px"}}>글번호</td>
@@ -91,7 +91,7 @@ const ERPNoticeListPage = () => {
                             <td className='text-center'>{notice.notice_type === 1 ? '공지' : notice.notice_type}</td>
                             <td >
                             <div>
-                                <a href={`/erp/notice/${notice.notice_id}`} style={{ textDecoration: 'none', color: 'white' }}>
+                                <a href={`/erp/notice/${notice.notice_id}`} style={{ textDecoration: 'none', color: '#D6B534' }}>
                                 {notice.notice_title}
                                 </a>
                             </div>
@@ -108,7 +108,7 @@ const ERPNoticeListPage = () => {
                                     <td className='text-center'>{notice.notice_id}</td>
                                     <td >
                                         <div>
-                                        <Link to={`/erp/notice/${notice.notice_id}`} style={{ textDecoration: 'none', color: 'white' }}>
+                                        <Link to={`/erp/notice/${notice.notice_id}`} style={{ textDecoration: 'none', color: 'black' }}>
                                             {notice.notice_title}
                                         </Link>
                                         </div>
@@ -120,7 +120,6 @@ const ERPNoticeListPage = () => {
                             )}
                     </tbody>
                 </Table>
-                <Link to="/erp/notice/event"><Button  variant='outline-info'>asdf</Button></Link>
             </Col>
         </Row>
         {count > size && 

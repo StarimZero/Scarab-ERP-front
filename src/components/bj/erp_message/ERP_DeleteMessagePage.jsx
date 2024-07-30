@@ -8,11 +8,11 @@ import Swal from 'sweetalert2';
 
 const ERP_DeleteMessagePage = () => {
     const [page, setPage] = useState(1);
-    const [size, setSize] = useState(5);
+    const [size, setSize] = useState(8);
     const [count, setCount] = useState(0);
 
     const [spage, setSpage] = useState(1);
-    const [ssize, setSsize] = useState(5);
+    const [ssize, setSsize] = useState(8);
     const [scount, setScount] = useState(0);
 
     const [checked, setChecked] = useState(0);
@@ -246,14 +246,16 @@ const ERP_DeleteMessagePage = () => {
                         </tbody>
                     </Table>
                    
+                    {count > size && 
                         <Pagination
-                            activePage={page}
-                            itemsCountPerPage={size}
-                            totalItemsCount={count}
+                            activePage={spage}
+                            itemsCountPerPage={ssize}
+                            totalItemsCount={scount}
                             pageRangeDisplayed={5}
                             prevPageText={"‹"}
                             nextPageText={"›"}
-                            onChange={(e) => setPage(e)} />
+                            onChange={(e) => setSpage(e)} />
+                    }
                    
                 </Tab>
 
@@ -288,6 +290,7 @@ const ERP_DeleteMessagePage = () => {
                             )}
                         </tbody>
                     </Table>
+                    {count > size && 
                         <Pagination
                             activePage={spage}
                             itemsCountPerPage={ssize}
@@ -296,6 +299,7 @@ const ERP_DeleteMessagePage = () => {
                             prevPageText={"‹"}
                             nextPageText={"›"}
                             onChange={(e) => setSpage(e)} />
+                    }
                 </Tab>
             </Tabs>
         </div>
