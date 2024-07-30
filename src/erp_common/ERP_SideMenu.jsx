@@ -99,7 +99,7 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">사원목록</span>
                             </a>
                         </li>
-                        {session_member_info_auth == "관리자" &&
+                        {session_member_info_auth === "관리자" &&
                             <li className="sidebar-item">
                                 <a className="sidebar-link" href="/erp/member/register" aria-expanded="false">
                                     <span>
@@ -180,7 +180,7 @@ const ERP_SideMenu = () => {
                                 <span className="hide-menu">판매 리스트</span>
                             </a>
                         </li>
-                        {session_member_info_auth == "관리자" &&
+                        {session_member_info_auth === "관리자" &&
                             <>
                                 <li className="nav-small-cap">
                                     <i className="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -230,14 +230,6 @@ const ERP_SideMenu = () => {
                                     <i className="ti ti-aperture"></i>
                                 </span>
                                 <span className="hide-menu">신향F&B</span>
-                            </a>
-                        </li>
-                        <li className="sidebar-item">
-                            <a className="sidebar-link" href="/erp/faq" aria-expanded="false">
-                                <span>
-                                    <i className="ti ti-cards"></i>
-                                </span>
-                                <span className="hide-menu">FAQ게시판</span>
                             </a>
                         </li>
                     </ul>
